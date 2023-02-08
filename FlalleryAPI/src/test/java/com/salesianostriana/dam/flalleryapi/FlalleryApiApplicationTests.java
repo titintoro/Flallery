@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.Flalleryapi;
+package com.salesianostriana.dam.flalleryapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
