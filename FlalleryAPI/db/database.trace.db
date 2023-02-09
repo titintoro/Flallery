@@ -1,0 +1,24 @@
+2023-02-09 19:56:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table comment (id_comment uuid not null, artwork binary(255), [*]user uuid, primary key (id_comment))"; se esperaba "identifier"
+Syntax error in SQL statement "create table comment (id_comment uuid not null, artwork binary(255), [*]user uuid, primary key (id_comment))"; expected "identifier"; SQL statement:
+create table comment (id_comment uuid not null, artwork binary(255), user uuid, primary key (id_comment)) [42001-214]
+2023-02-09 19:56:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "COMMENT" no encontrada
+Table "COMMENT" not found; SQL statement:
+alter table comment add constraint ARTWORK_ID_FK foreign key (artwork) references artwork [42102-214]
+2023-02-09 19:56:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "alter table comment add constraint USER_ID_FK foreign key ([*]user) references user_entity"; se esperaba "identifier"
+Syntax error in SQL statement "alter table comment add constraint USER_ID_FK foreign key ([*]user) references user_entity"; expected "identifier"; SQL statement:
+alter table comment add constraint USER_ID_FK foreign key (user) references user_entity [42001-214]
+2023-02-09 19:57:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table comment (id_comment uuid not null, artwork binary(255), [*]user uuid, primary key (id_comment))"; se esperaba "identifier"
+Syntax error in SQL statement "create table comment (id_comment uuid not null, artwork binary(255), [*]user uuid, primary key (id_comment))"; expected "identifier"; SQL statement:
+create table comment (id_comment uuid not null, artwork binary(255), user uuid, primary key (id_comment)) [42001-214]
+2023-02-09 19:57:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "COMMENT" no encontrada
+Table "COMMENT" not found; SQL statement:
+alter table comment add constraint ARTWORK_ID_FK foreign key (artwork) references artwork [42102-214]
+2023-02-09 19:57:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "alter table comment add constraint USER_ID_FK foreign key ([*]user) references user_entity"; se esperaba "identifier"
+Syntax error in SQL statement "alter table comment add constraint USER_ID_FK foreign key ([*]user) references user_entity"; expected "identifier"; SQL statement:
+alter table comment add constraint USER_ID_FK foreign key (user) references user_entity [42001-214]

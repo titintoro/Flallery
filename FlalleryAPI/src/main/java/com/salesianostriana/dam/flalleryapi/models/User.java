@@ -14,10 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -51,6 +48,14 @@ public class User implements UserDetails {
 
     private String password;
 
+    @ManyToMany
+    private List<Artwork> savedArtWorks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Artwork> ownedArtworks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
     private String avatar;
 
     private String fullName;

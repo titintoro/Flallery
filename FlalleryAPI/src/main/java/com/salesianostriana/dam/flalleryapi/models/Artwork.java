@@ -10,6 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Table(name="artwork")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,5 +25,10 @@ public class Artwork {
     @OneToMany(mappedBy = "artwork", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    private int likes;
+    @ManyToOne
+    private User owner;
+
+    @ManyToMany
+    private List<User> usersLiked;
+
 }

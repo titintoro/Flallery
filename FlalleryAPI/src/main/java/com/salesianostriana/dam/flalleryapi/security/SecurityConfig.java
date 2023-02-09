@@ -54,11 +54,9 @@ public class SecurityConfig {
         */
 
         // Versión 2
-        AuthenticationManager authenticationManager =
-            authenticationManagerBuilder.authenticationProvider(authenticationProvider())
-                    .build();
 
-        return authenticationManager;
+        return authenticationManagerBuilder.authenticationProvider(authenticationProvider())
+                .build();
 
     }
 
@@ -85,17 +83,17 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults())
                 .csrf().disable()
-                        .exceptionHandling()
-                                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                                .accessDeniedHandler(jwtAccessDeniedHandler)
-                        .and()
-                                .sessionManagement()
-                                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                        .and()
-                                .authorizeRequests()
-                                .antMatchers("/note/**").hasRole("USER")
-                                .antMatchers("/auth/register/admin").hasRole("ADMIN")
-                                .anyRequest().authenticated();
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/note/**").hasRole("USER")
+                .antMatchers("/auth/register/admin").hasRole("ADMIN")
+                .anyRequest().authenticated();
 
 
 

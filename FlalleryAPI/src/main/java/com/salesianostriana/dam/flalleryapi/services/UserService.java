@@ -1,7 +1,7 @@
 package com.salesianostriana.dam.flalleryapi.services;
 
+import com.salesianostriana.dam.flalleryapi.models.dtos.user.CreateUserRequest;
 import lombok.RequiredArgsConstructor;
-import com.salesianostriana.dam.flalleryapi.models.dto.CreateUserRequest;
 import com.salesianostriana.dam.flalleryapi.models.User;
 import com.salesianostriana.dam.flalleryapi.models.UserRole;
 import com.salesianostriana.dam.flalleryapi.repositories.UserRepository;
