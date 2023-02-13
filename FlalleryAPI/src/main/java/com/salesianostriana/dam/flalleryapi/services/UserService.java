@@ -88,6 +88,12 @@ public class UserService {
             userRepository.deleteById(id);
     }
 
+
+    public boolean userExists(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+
     public boolean passwordMatch(User user, String clearPassword) {
         return passwordEncoder.matches(clearPassword, user.getPassword());
     }

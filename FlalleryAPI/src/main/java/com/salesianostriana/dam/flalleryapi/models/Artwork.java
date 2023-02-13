@@ -3,9 +3,7 @@ package com.salesianostriana.dam.flalleryapi.models;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -14,7 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Artwork {
 
     @Id
@@ -27,7 +24,8 @@ public class Artwork {
 
     private String owner;
 
-    @OneToMany(mappedBy = "likedArtwork", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Likes> usersThatLiked;
+    @OneToMany(mappedBy = "lovedArtwork", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Builder.Default
+    private Set<Loved> usersThatLiked = new HashSet<>();
 
 }

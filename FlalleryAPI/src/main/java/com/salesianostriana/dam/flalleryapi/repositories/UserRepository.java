@@ -17,8 +17,9 @@ public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificat
 
     Optional<User> findFirstByUsername(String username);
 
+    boolean existsByUsername(String username);
     @Query("""
-            SELECT l.artwork FROM Like l WHERE l.user.name = :userName
+            SELECT l.lovedArtwork FROM Loved l WHERE l.user = :userName
             """)
     List<Artwork> findArtworksLikedByUser(String userName);
 
