@@ -25,10 +25,9 @@ public class Artwork {
     @OneToMany(mappedBy = "artwork", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    @ManyToOne
-    private User owner;
+    private String owner;
 
-    @ManyToMany
-    private List<User> usersLiked;
+    @OneToMany(mappedBy = "likedArtwork", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Likes> usersThatLiked;
 
 }

@@ -35,8 +35,5 @@ public class Comment {
             foreignKey = @ForeignKey(name="ARTWORK_ID_FK"))
     private Artwork artwork;
 
-    @ManyToOne
-    @JoinColumn(name = "user_entity",
-            foreignKey = @ForeignKey(name="USER_ID_FK"))
-    private User user;
+    private String writer;
 }

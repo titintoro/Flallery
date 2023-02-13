@@ -2,7 +2,12 @@ package com.salesianostriana.dam.flalleryapi.services;
 
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
+import com.salesianostriana.dam.flalleryapi.search.spec.ArtworkSpecificationBuilder;
+import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteria;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,5 +39,13 @@ public class ArtworkService {
         repo.delete(artwork);
     }
 
+    public Page<Artwork> search(List<SearchCriteria> params, Pageable pageable) {
+
+        ArtworkSpecificationBuilder artworkSpecificationBuilder =
+                new ArtworkSpecificationBuilder(params);
+
+        Specification<Artwork> spec =  artworkSpecificationBuilder.build();
+        return repo.findAll(spec, pageable);
+    }
 
 }
