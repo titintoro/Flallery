@@ -238,3 +238,11 @@ create table loved (id_loved uuid not null, user varchar(255), users_that_liked 
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "LOVED" no encontrada
 Table "LOVED" not found; SQL statement:
 alter table loved add constraint LOVEDARTWORK_ID_FK foreign key (users_that_liked) references artwork [42102-214]
+2023-02-13 20:16:25 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table loved (id_loved uuid not null, [*]user varchar(255), loved_artwork binary(255), primary key (id_loved))"; se esperaba "identifier"
+Syntax error in SQL statement "create table loved (id_loved uuid not null, [*]user varchar(255), loved_artwork binary(255), primary key (id_loved))"; expected "identifier"; SQL statement:
+create table loved (id_loved uuid not null, user varchar(255), loved_artwork binary(255), primary key (id_loved)) [42001-214]
+2023-02-13 20:16:25 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "LOVED" no encontrada
+Table "LOVED" not found; SQL statement:
+alter table loved add constraint LOVEDARTWORK_ID_FK foreign key (loved_artwork) references artwork [42102-214]

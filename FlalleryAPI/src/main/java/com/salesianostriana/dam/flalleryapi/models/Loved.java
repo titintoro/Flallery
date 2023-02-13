@@ -32,7 +32,7 @@ public class Loved {
     @Column(columnDefinition = "uuid")
     private UUID id_loved;
 
-    private String user;
+    private String lover;
     @ManyToOne
     @JoinColumn(name = "lovedArtwork",
             foreignKey = @ForeignKey(name="LOVEDARTWORK_ID_FK"))

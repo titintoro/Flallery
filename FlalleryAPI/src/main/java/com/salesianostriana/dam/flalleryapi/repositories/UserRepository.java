@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificat
 
     boolean existsByUsername(String username);
     @Query("""
-            SELECT l.lovedArtwork FROM Loved l WHERE l.user = :userName
+            SELECT l.lovedArtwork FROM Loved l WHERE l.lover = :userName
             """)
     List<Artwork> findArtworksLikedByUser(String userName);
 
@@ -27,6 +27,5 @@ public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificat
             SELECT c FROM Comment c WHERE c.writer = :userName
             """)
     List<Comment> findAllCommentsOfAUser(String userName);
-
 
 }

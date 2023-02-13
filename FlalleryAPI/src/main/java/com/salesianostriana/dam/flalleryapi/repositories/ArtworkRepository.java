@@ -17,7 +17,7 @@ public interface ArtworkRepository extends JpaRepository<Artwork, UUID>, JpaSpec
     Optional<Artwork> findFirstByName(String name);
 
     @Query("""
-            SELECT u FROM User u JOIN Loved l on u.username=l.user WHERE l.lovedArtwork.name = :artworkName
+            SELECT u FROM User u JOIN Loved l on u.username=l.lover WHERE l.lovedArtwork.name = :artworkName
             """)
     List<User> findUsersWhoLikedArtwork(String artworkName);
 
