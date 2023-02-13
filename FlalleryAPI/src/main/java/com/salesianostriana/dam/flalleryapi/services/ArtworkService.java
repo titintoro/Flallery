@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +24,8 @@ public class ArtworkService {
         return repo.save(artwork);
     }
 
-    public Optional<Artwork> findById(String name) {
-        return repo.findFirstByName(name);
+    public Optional<Artwork> findById(UUID uuid) {
+        return repo.findById(uuid);
     }
 
     public List<Artwork> findAll() {
