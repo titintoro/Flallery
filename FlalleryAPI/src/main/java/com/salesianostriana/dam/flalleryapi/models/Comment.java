@@ -30,6 +30,8 @@ public class Comment {
     @Column(columnDefinition = "uuid")
     private UUID idComment;
 
+    private String text;
+
     @ManyToOne
     @JoinColumn(name = "artwork",
             foreignKey = @ForeignKey(name="ARTWORK_ID_FK"))
