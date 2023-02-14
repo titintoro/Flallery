@@ -38,8 +38,10 @@ public class ArtworkService {
         return repo.save(artwork);
     }
 
-    public void delete(Artwork artwork) {
-        repo.delete(artwork);
+    public void delete(Artwork artwork, String username) {
+
+        if (artwork.getOwner().equals(username))
+            repo.delete(artwork);
     }
 
     public Page<Artwork> search(List<SearchCriteria> params, Pageable pageable) {

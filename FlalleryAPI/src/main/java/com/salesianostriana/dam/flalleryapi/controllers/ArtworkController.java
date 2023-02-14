@@ -60,7 +60,9 @@ public class ArtworkController {
 
 
     @PostMapping("/artwork")
-    public ResponseEntity<ArtworkResponse>createArtwork(@RequestBody ArtworkCreateRequest artworkCreateRequest, @AuthenticationPrincipal User user){
+    public ResponseEntity<ArtworkResponse>createArtwork(
+            @RequestBody ArtworkCreateRequest artworkCreateRequest,
+            @AuthenticationPrincipal User user){
 
         Artwork artwork = artworkService.add(artworkCreateRequest.ArtworkCreateRequestToArtwork(user.getFullName()));
 
@@ -74,10 +76,13 @@ public class ArtworkController {
                 .body(new ArtworkResponse().artworkToArtworkResponse(artwork));
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(@PathVariable UUID id) {
+    @DeleteMapping("/artwork")
+    public ResponseEntity<?> delete(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal User user) {
 
-        artworkRepository.deleteById(id);
+        Artwork artwork = artworkService.findById(id).get();
+        artworkService.delete(artwork , user.getUsername());
 
         return ResponseEntity.noContent().build();
 
