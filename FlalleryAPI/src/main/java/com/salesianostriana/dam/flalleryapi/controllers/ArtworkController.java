@@ -1,7 +1,9 @@
 package com.salesianostriana.dam.flalleryapi.controllers;
 
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
-import com.salesianostriana.dam.flalleryapi.models.dtos.ArtworkResponse;
+import com.salesianostriana.dam.flalleryapi.models.User;
+import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkCreateRequest;
+import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.PageDto;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteria;
@@ -12,8 +14,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,7 +31,7 @@ public class ArtworkController {
     private final ArtworkService artworkService;
     private final ArtworkRepository artworkRepository;
 
-    @GetMapping("/product")
+    @GetMapping("/artwork")
     public ResponseEntity<PageDto<Artwork>> search(
             @RequestParam(value = "s", defaultValue = "") String s,
             @PageableDefault(size = 25, page = 0) Pageable pageable) {
@@ -37,13 +42,13 @@ public class ArtworkController {
         Page<Artwork> result = artworkService.search(params, pageable);
 
 
-        if ( result.isEmpty())
+        if (result.isEmpty())
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(new PageDto<Artwork>(result));
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/artwork/{id}")
     public ResponseEntity<ArtworkResponse> getArtwork(@PathVariable UUID id){
 
         ArtworkResponse response = new ArtworkResponse();
@@ -51,6 +56,20 @@ public class ArtworkController {
     }
 
 
+    @PostMapping("/product")
+    public ResponseEntity<ArtworkResponse>createArtwork(@RequestBody ArtworkCreateRequest artworkCreateRequest, @AuthenticationPrincipal User user){
+
+        Artwork artwork = artworkService.add(artworkCreateRequest.ArtworkCreateRequestToArtwork(user.getFullName()));
+
+        URI createdURI = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(artwork.getIdArtwork()).toUri();
+
+        return ResponseEntity
+                .created(createdURI)
+                .body(new ArtworkResponse().artworkToArtworkResponse(artwork));
+    }
 
     @DeleteMapping
     public ResponseEntity<?> delete(@PathVariable UUID id) {

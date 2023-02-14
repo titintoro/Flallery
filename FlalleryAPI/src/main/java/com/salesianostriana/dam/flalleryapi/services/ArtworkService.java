@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.flalleryapi.services;
 
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
+import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
 import com.salesianostriana.dam.flalleryapi.search.spec.ArtworkSpecificationBuilder;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteria;
@@ -47,6 +48,22 @@ public class ArtworkService {
 
         Specification<Artwork> spec =  artworkSpecificationBuilder.build();
         return repo.findAll(spec, pageable);
+    }
+
+    public Artwork addComment(Comment c, UUID uuid) {
+       Artwork response = repo.findById(uuid).get();
+       response.getComments().add(c);
+
+       return repo.save(response);
+    }
+
+    public Artwork deleteComment(UUID idComment, UUID idArtwork, String writer){
+
+        Artwork response = repo.findById(idArtwork).get();
+
+        response.getComments().removeIf(comment -> comment.getIdComment().equals(idComment) && comment.getWriter().equals(writer));
+
+        return repo.save(response);
     }
 
 }
