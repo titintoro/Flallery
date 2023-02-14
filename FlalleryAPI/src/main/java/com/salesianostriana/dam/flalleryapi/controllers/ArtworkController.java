@@ -1,10 +1,12 @@
 package com.salesianostriana.dam.flalleryapi.controllers;
 
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
+import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.User;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkCreateRequest;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.PageDto;
+import com.salesianostriana.dam.flalleryapi.models.dtos.comment.CommentCreateRequest;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteria;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteriaExtractor;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +59,7 @@ public class ArtworkController {
     }
 
 
-    @PostMapping("/product")
+    @PostMapping("/artwork")
     public ResponseEntity<ArtworkResponse>createArtwork(@RequestBody ArtworkCreateRequest artworkCreateRequest, @AuthenticationPrincipal User user){
 
         Artwork artwork = artworkService.add(artworkCreateRequest.ArtworkCreateRequestToArtwork(user.getFullName()));
@@ -77,6 +80,71 @@ public class ArtworkController {
         artworkRepository.deleteById(id);
 
         return ResponseEntity.noContent().build();
+
+    }
+
+    @PostMapping("/artwork/{id}/like")
+    public ResponseEntity<ArtworkResponse> likeArtwork(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal User user){
+
+        Artwork artwork = artworkService.likeArtwork(id,user.getUsername());
+
+
+        URI createdURI = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/artwork/{id}/like")
+                .buildAndExpand(artwork.getIdArtwork()).toUri();
+
+        return ResponseEntity
+                .created(createdURI)
+                .body(new ArtworkResponse().artworkToArtworkResponse(artwork));
+
+    }
+
+
+    @DeleteMapping("/artwork/{id}/like")
+    public ResponseEntity<ArtworkResponse> deleteLike(
+            @PathVariable UUID idArtwork,
+            @AuthenticationPrincipal User user){
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(new ArtworkResponse()
+                        .artworkToArtworkResponse(artworkService.unlike(idArtwork,user.getUsername())));
+
+    }
+
+
+    @PostMapping("/artwork/{id}/comment")
+    public ResponseEntity<Comment> addComment(
+            @PathVariable UUID id,
+            @RequestBody CommentCreateRequest comment,
+            @AuthenticationPrincipal User user){
+
+        Artwork artwork = artworkService.findById(id).get();
+
+        Comment response = comment.commentCreateRequestToComment(artwork,user.getUsername());
+
+        URI createdURI = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/artwork/{id}/comment")
+                .buildAndExpand(response.getIdComment()).toUri();
+
+        return ResponseEntity
+                .created(createdURI)
+                .body(response);
+
+    }
+
+
+    @DeleteMapping("/artwork/{id}/comment/{idComment}")
+    public ResponseEntity<ArtworkResponse> deleteComment(@PathVariable UUID id, UUID idComment, @AuthenticationPrincipal User user){
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(new ArtworkResponse()
+                        .artworkToArtworkResponse(artworkService.deleteComment(idComment,id,user.getUsername())));
 
     }
 

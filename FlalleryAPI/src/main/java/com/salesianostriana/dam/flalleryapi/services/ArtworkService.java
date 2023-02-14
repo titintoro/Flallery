@@ -2,6 +2,7 @@ package com.salesianostriana.dam.flalleryapi.services;
 
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
+import com.salesianostriana.dam.flalleryapi.models.Loved;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
 import com.salesianostriana.dam.flalleryapi.search.spec.ArtworkSpecificationBuilder;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteria;
@@ -62,6 +63,24 @@ public class ArtworkService {
         Artwork response = repo.findById(idArtwork).get();
 
         response.getComments().removeIf(comment -> comment.getIdComment().equals(idComment) && comment.getWriter().equals(writer));
+
+        return repo.save(response);
+    }
+
+
+    public Artwork likeArtwork(UUID idArtwork, String liker){
+
+        Artwork response = repo.findById(idArtwork).get();
+
+        response.getUsersThatLiked().add(Loved.builder().lovedArtwork(response).lover(liker).build())
+
+        return repo.save(response);;
+
+    }
+
+    public Artwork unlike(UUID idArtwork, String unliker ){
+        Artwork response = repo.findById(idArtwork).get();
+        response.getUsersThatLiked().removeIf(like-> like.getLover().equals(unliker));
 
         return repo.save(response);
     }

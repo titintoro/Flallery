@@ -1,9 +1,6 @@
 package com.salesianostriana.dam.flalleryapi.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import java.util.UUID;
 @Table(name="loved")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Loved {
 
     @Id
