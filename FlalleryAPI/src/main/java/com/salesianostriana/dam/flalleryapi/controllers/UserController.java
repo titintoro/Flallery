@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -32,7 +33,7 @@ public class UserController {
 
 
     @PostMapping("/auth/register")
-    public ResponseEntity<UserResponse> createUserWithUserRole(@RequestBody CreateUserRequest createUserRequest) {
+    public ResponseEntity<UserResponse> createUserWithUserRole(@Valid @RequestBody CreateUserRequest createUserRequest) {
         User user = userService.createUserWithUserRole(createUserRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.fromUser(user));

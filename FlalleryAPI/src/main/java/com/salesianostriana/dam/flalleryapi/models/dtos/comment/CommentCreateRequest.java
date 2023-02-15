@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Builder
 public class CommentCreateRequest {
 
+    @NotEmpty(message = "{commentCreateRequest.text.notempty}")
     private String text;
 
 

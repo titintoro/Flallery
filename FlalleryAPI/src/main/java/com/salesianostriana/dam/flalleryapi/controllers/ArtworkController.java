@@ -35,7 +35,7 @@ public class ArtworkController {
     private final ArtworkRepository artworkRepository;
 
     @GetMapping("/artwork")
-    public ResponseEntity<PageDto<Artwork>> search(
+    public ResponseEntity<PageDto<ArtworkResponse>> search(
             @RequestParam(value = "s", defaultValue = "") String s,
             @PageableDefault(size = 25, page = 0) Pageable pageable) {
 
@@ -43,19 +43,25 @@ public class ArtworkController {
 
 
         Page<Artwork> result = artworkService.search(params, pageable);
-
+        Page<ArtworkResponse> response = result.map(ArtworkResponse::artworkToArtworkResponse);
 
         if (result.isEmpty())
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok(new PageDto<Artwork>(result));
+        return ResponseEntity.ok(new PageDto<ArtworkResponse>(response));
     }
 
     @GetMapping("/artwork/{id}")
     public ResponseEntity<ArtworkResponse> getArtwork(@PathVariable UUID id){
 
-        ArtworkResponse response = new ArtworkResponse();
-        return ResponseEntity.of(Optional.of(response.artworkToArtworkResponse(artworkService.findById(id).get())));
+        Optional<Artwork> artwork = artworkService.findById(id);
+        if (artwork.isPresent()){
+            ArtworkResponse response = new ArtworkResponse();
+            return ResponseEntity.of(Optional.of(response.artworkToArtworkResponse(artwork.get())));
+        }
+
+        return ResponseEntity.notFound().build();
+
     }
 
 
@@ -64,7 +70,7 @@ public class ArtworkController {
             @RequestBody ArtworkCreateRequest artworkCreateRequest,
             @AuthenticationPrincipal User user){
 
-        Artwork artwork = artworkService.add(artworkCreateRequest.ArtworkCreateRequestToArtwork(user.getFullName()));
+        Artwork artwork = artworkService.add(artworkCreateRequest.ArtworkCreateRequestToArtwork(user.getUsername()));
 
         URI createdURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -81,10 +87,14 @@ public class ArtworkController {
             @PathVariable UUID id,
             @AuthenticationPrincipal User user) {
 
-        Artwork artwork = artworkService.findById(id).get();
-        artworkService.delete(artwork , user.getUsername());
 
-        return ResponseEntity.noContent().build();
+        Optional<Artwork> artwork = artworkService.findById(id);
+        if (artwork.isPresent()){
+            artworkService.delete(artwork.get() , user.getUsername());
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.notFound().build();
 
     }
 

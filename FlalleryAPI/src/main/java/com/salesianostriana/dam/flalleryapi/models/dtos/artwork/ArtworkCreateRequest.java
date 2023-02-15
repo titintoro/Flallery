@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 import java.util.*;
 
 
@@ -17,6 +18,8 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArtworkCreateRequest {
+
+    @NotEmpty(message = "{artworkCreateRequest.name.notempty}")
     private String name;
 
     private String imgUrl;

@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.flalleryapi.models;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.*;
@@ -15,6 +16,18 @@ import java.util.*;
 public class Artwork {
 
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(
+                            name = "uuid_gen_strategy_class",
+                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
+                    )
+            }
+    )
+    @Column(columnDefinition = "uuid")
     private UUID idArtwork;
 
     private String name;
