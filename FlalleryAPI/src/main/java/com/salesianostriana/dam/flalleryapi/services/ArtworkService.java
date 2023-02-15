@@ -74,9 +74,9 @@ public class ArtworkService {
 
         Artwork response = repo.findById(idArtwork).get();
 
-        response.getUsersThatLiked().add(Loved.builder().lovedArtwork(response).lover(liker).build())
+        response.getUsersThatLiked().add(Loved.builder().lovedArtwork(response).lover(liker).build());
 
-        return repo.save(response);;
+        return repo.save(response);
 
     }
 
