@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.flalleryapi.services;
 
+import com.salesianostriana.dam.flalleryapi.models.Artwork;
+import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.dtos.user.CreateUserRequest;
 import lombok.RequiredArgsConstructor;
 import com.salesianostriana.dam.flalleryapi.models.User;
@@ -48,9 +50,20 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+
     public Optional<User> findByUsername(String username) {
         return userRepository.findFirstByUsername(username);
     }
+
+
+    public List<Artwork> findArtworksLikedByUser (String userName){ return userRepository.findArtworksLikedByUser(userName);}
+
+
+    public List<Artwork> findArtworksOfAUser (String userName){return userRepository.findArtworksOfAUser(userName);}
+
+
+    public List<Comment> findAllCommentsOfAUser (String userName) { return userRepository.findAllCommentsOfAUser(userName);}
+
 
     public Optional<User> edit(User user) {
 
@@ -97,6 +110,7 @@ public class UserService {
     public boolean passwordMatch(User user, String clearPassword) {
         return passwordEncoder.matches(clearPassword, user.getPassword());
     }
+
 
 }
 

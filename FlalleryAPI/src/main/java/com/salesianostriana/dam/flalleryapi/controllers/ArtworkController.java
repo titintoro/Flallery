@@ -11,6 +11,13 @@ import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteria;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteriaExtractor;
 import com.salesianostriana.dam.flalleryapi.services.ArtworkService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +41,38 @@ public class ArtworkController {
     private final ArtworkService artworkService;
     private final ArtworkRepository artworkRepository;
 
+
+    @Operation(summary = "Get a list of all Artworks")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Artworks Founded",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Artwork.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {
+                                                     "content": [
+                                                         {
+                                                             "name": "Guerra Romana en témperas",
+                                                             "uuid": "c0a8002c-8659-1f7a-8186-5a0082f10001",
+                                                             "comments": [],
+                                                             "owner": "Titin",
+                                                             "description": "Guerra de los años 90 hecha en témperas"
+                                                         }
+                                                     ],
+                                                     "totalPages": 1,
+                                                     "totalElements": 1,
+                                                     "pageSize": 1
+                                                 }
+                                            ]                                          
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No Artworks Found",
+                    content = @Content),
+    })
     @GetMapping("/artwork")
     public ResponseEntity<PageDto<ArtworkResponse>> search(
             @RequestParam(value = "s", defaultValue = "") String s,
@@ -51,6 +90,31 @@ public class ArtworkController {
         return ResponseEntity.ok(new PageDto<ArtworkResponse>(response));
     }
 
+
+    @Operation(summary = "Get a single Artwork")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Artwork Found",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Artwork.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {
+                                                     "name": "Guerra Romana en témperas",
+                                                     "uuid": "c0a8002c-8659-1f7a-8186-5a0082f10001",
+                                                     "comments": [],
+                                                     "owner": "Titin",
+                                                     "description": "Guerra de los años 90 hecha en témperas"
+                                                 }
+                                            ]                                        \s
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No Artwork Found",
+                    content = @Content),
+    })
     @GetMapping("/artwork/{id}")
     public ResponseEntity<ArtworkResponse> getArtwork(@PathVariable UUID id){
 
@@ -65,6 +129,30 @@ public class ArtworkController {
     }
 
 
+    @Operation(summary = "Create a new Artwork")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Artwork Created Successfully",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Artwork.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {
+                                                     "name": "Guerra Romana en témperas",
+                                                     "uuid": "c0a8002c-8659-1f7a-8186-5a0082f10001",
+                                                     "comments": [],
+                                                     "owner": "Titin",
+                                                     "description": "Guerra de los años 90 hecha en témperas"
+                                                 }
+                                            ]                                          
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "400",
+                    description = "Bad Artwork Creation Request",
+                    content = @Content),
+    })
     @PostMapping("/artwork")
     public ResponseEntity<ArtworkResponse>createArtwork(
             @RequestBody ArtworkCreateRequest artworkCreateRequest,
@@ -82,6 +170,18 @@ public class ArtworkController {
                 .body(new ArtworkResponse().artworkToArtworkResponse(artwork));
     }
 
+
+    @Operation(summary = "Delete an Artwork")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "No content",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Artwork.class))
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No Artwork founded",
+                    content = @Content),
+    })
     @DeleteMapping("/artwork")
     public ResponseEntity<?> delete(
             @PathVariable UUID id,
@@ -98,6 +198,31 @@ public class ArtworkController {
 
     }
 
+
+    @Operation(summary = "Like an Artwork")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Artwork liked Successfully",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Artwork.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {
+                                                    "name": "Guerra Romana en témperas",
+                                                    "uuid": "c0a8002c-8659-1f7a-8186-5a0082f10001",
+                                                    "comments": [],
+                                                    "owner": "Titin",
+                                                    "description": "Guerra de los años 90 hecha en témperas"
+                                                }
+                                            ]                                          
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "400",
+                    description = "Bad Artwork like Request",
+                    content = @Content),
+    })
     @PostMapping("/artwork/{id}/like")
     public ResponseEntity<ArtworkResponse> likeArtwork(
             @PathVariable UUID id,
@@ -162,6 +287,10 @@ public class ArtworkController {
                         .artworkToArtworkResponse(artworkService.deleteComment(idComment,id,user.getUsername())));
 
     }
+
+
+
+
 
 }
 

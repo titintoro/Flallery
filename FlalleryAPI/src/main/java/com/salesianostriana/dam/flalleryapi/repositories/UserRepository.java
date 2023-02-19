@@ -18,14 +18,19 @@ public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificat
     Optional<User> findFirstByUsername(String username);
 
     boolean existsByUsername(String username);
+
     @Query("""
             SELECT l.lovedArtwork FROM Loved l WHERE l.lover = :userName
             """)
     List<Artwork> findArtworksLikedByUser(String userName);
 
     @Query("""
+            SELECT a FROM Artwork a WHERE a.owner = :userName
+            """)
+    List<Artwork> findArtworksOfAUser(String userName);
+
+    @Query("""
             SELECT c FROM Comment c WHERE c.writer = :userName
             """)
     List<Comment> findAllCommentsOfAUser(String userName);
-
 }

@@ -1,6 +1,12 @@
 package com.salesianostriana.dam.flalleryapi.controllers;
 
+import com.salesianostriana.dam.flalleryapi.models.Artwork;
+import com.salesianostriana.dam.flalleryapi.models.Comment;
+import com.salesianostriana.dam.flalleryapi.models.dtos.PageDto;
+import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkResponse;
+import com.salesianostriana.dam.flalleryapi.models.dtos.comment.CommentResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.user.*;
+import com.salesianostriana.dam.flalleryapi.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import com.salesianostriana.dam.flalleryapi.security.jwt.access.JwtProvider;
 import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshToken;
@@ -9,6 +15,9 @@ import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshTokenReq
 import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshTokenService;
 import com.salesianostriana.dam.flalleryapi.models.User;
 import com.salesianostriana.dam.flalleryapi.services.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,6 +40,7 @@ public class UserController {
     private final AuthenticationManager authManager;
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
+    private final UserRepository userRepository;
 
 
     @PostMapping("/auth/register")
@@ -101,6 +112,56 @@ public class UserController {
 
     }
 
+    @GetMapping("/user/artwork/like")
+    public ResponseEntity<List<ArtworkResponse>> getAllLikedArtworksOfAUser(
+            @AuthenticationPrincipal User user){
+
+
+        List<Artwork> result = userService.findArtworksLikedByUser(user.getUsername());
+
+        List<ArtworkResponse> response = result.stream().map(ArtworkResponse::artworkToArtworkResponse).toList();
+
+
+        if (response.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(response);
+
+    }
+
+
+    @GetMapping("/user/artwork")
+    public ResponseEntity<List<ArtworkResponse>> getAllArtworksOfAUser(
+            @AuthenticationPrincipal User user){
+
+
+        List<Artwork> result = userService.findArtworksOfAUser(user.getUsername());
+
+        List<ArtworkResponse> response = result.stream().map(ArtworkResponse::artworkToArtworkResponse).toList();
+
+
+        if (response.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(response);
+
+    }
+
+
+    @GetMapping("/user/comment")
+    public ResponseEntity<List<CommentResponse>> getAllCommentsOfAUser(
+            @AuthenticationPrincipal User user) {
+
+        List<Comment> result = userService.findAllCommentsOfAUser(user.getUsername());
+
+        List<CommentResponse> response = result.stream().map(CommentResponse::commentToCommentResponse).toList();
+
+
+        if (response.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(response);
+    }
 
 
     @PutMapping("/user/changePassword")

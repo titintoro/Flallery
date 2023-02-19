@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.flalleryapi.repositories;
 
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
+import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -20,6 +21,9 @@ public interface ArtworkRepository extends JpaRepository<Artwork, UUID>, JpaSpec
             SELECT u FROM User u JOIN Loved l on u.username=l.lover WHERE l.lovedArtwork.name = :artworkName
             """)
     List<User> findUsersWhoLikedArtwork(String artworkName);
+
+
+
 
 
 }

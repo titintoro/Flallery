@@ -44,6 +44,8 @@ public class ArtworkService {
             repo.delete(artwork);
     }
 
+
+
     public Page<Artwork> search(List<SearchCriteria> params, Pageable pageable) {
 
         ArtworkSpecificationBuilder artworkSpecificationBuilder =
