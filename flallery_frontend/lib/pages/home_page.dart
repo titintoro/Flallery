@@ -1,3 +1,4 @@
+import 'package:flallery_frontend/models/artwork_list_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flallery_frontend/blocs/authentication/authentication.dart';
@@ -29,6 +30,9 @@ class HomePage extends StatelessWidget {
                   fontSize: 24
                 ),
               ),
+              ListView.builder(itemBuilder: (context, index) {
+                
+              },itemCount: ,) ,
               const SizedBox(
                 height: 12,
               ),
