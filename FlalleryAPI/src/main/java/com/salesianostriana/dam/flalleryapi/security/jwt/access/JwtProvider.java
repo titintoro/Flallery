@@ -28,14 +28,14 @@ public class JwtProvider {
 
     public static final String TOKEN_TYPE = "JWT";
     public static final String TOKEN_HEADER = "Authorization";
-    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String TOKEN_PREFIX = "Bearer";
 
     @Value("${jwt.secret}")
     private String jwtSecret;
 
     @Value("${jwt.duration}")
-    //private int jwtLifeInDays;
-    private int jwtLifeInMinutes;
+    private int jwtLifeInDays;
+    //private int jwtLifeInMinutes;
 
     private JwtParser jwtParser;
 
@@ -66,7 +66,7 @@ public class JwtProvider {
                         LocalDateTime
                                 .now()
                                 //.plusDays(jwtLifeInDays)
-                                .plusMinutes(jwtLifeInMinutes)
+                                .plusMinutes(jwtLifeInDays)
                                 .atZone(ZoneId.systemDefault())
                                 .toInstant()
                 );

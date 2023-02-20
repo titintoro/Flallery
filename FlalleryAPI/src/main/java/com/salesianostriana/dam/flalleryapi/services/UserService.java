@@ -65,6 +65,12 @@ public class UserService {
     public List<Comment> findAllCommentsOfAUser (String userName) { return userRepository.findAllCommentsOfAUser(userName);}
 
 
+    public void deleteArtworksOfAUSer(String owner) { userRepository.deleteArtworksOfAUSer(owner);}
+
+
+    public void deleteCommentsOfAUSer(String owner) { userRepository.deleteCommentsOfAUSer(owner);}
+
+
     public Optional<User> edit(User user) {
 
         // El username no se puede editar
@@ -91,14 +97,16 @@ public class UserService {
 
     }
 
-    public void delete(User user) {
-        deleteById(user.getId());
-    }
+    public void delete(User user) { userRepository.deleteById(user.getId());}
 
-    public void deleteById(UUID id) {
+
+    public void deleteById(UUID id, String name) {
         // Prevenimos errores al intentar borrar algo que no existe
-        if (userRepository.existsById(id))
+        if (userRepository.existsById(id)) {
+            userRepository.deleteCommentsOfAUSer(name);
+            userRepository.deleteArtworksOfAUSer(name);
             userRepository.deleteById(id);
+        }
     }
 
 

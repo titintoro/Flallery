@@ -31,6 +31,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -185,6 +186,20 @@ public class UserController {
         }
 
         return null;
+    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<?> deleteMyUser(@AuthenticationPrincipal User user, @RequestParam UUID id){
+
+            Optional<User> userUtil = userService.findById(id);
+            if (userUtil.isPresent()) {
+                User userResponse = userUtil.get();
+
+                if (userResponse.getPassword().equals(user.getPassword()))
+                    userService.deleteById(id, user.getUsername());
+        }
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

@@ -33,6 +33,7 @@ public class Artwork {
     private String name;
 
     private String imgUrl;
+
     private String description;
     @OneToMany(mappedBy = "artwork", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
@@ -43,4 +44,8 @@ public class Artwork {
     @Builder.Default
     private Set<Loved> usersThatLiked = new HashSet<>();
 
+    @PreRemove
+    public void deleteCommentFromArtwork(){
+
+    }
 }

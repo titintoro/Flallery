@@ -5,6 +5,7 @@ import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -33,4 +34,12 @@ public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificat
             SELECT c FROM Comment c WHERE c.writer = :userName
             """)
     List<Comment> findAllCommentsOfAUser(String userName);
+
+    @Modifying
+    @Query("delete from Artwork a where a.owner=:owner")
+    void deleteArtworksOfAUSer(String owner);
+
+    @Modifying
+    @Query("delete from Comment c where c.writer=:owner")
+    void deleteCommentsOfAUSer(String owner);
 }

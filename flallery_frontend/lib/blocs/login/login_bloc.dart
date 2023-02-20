@@ -3,7 +3,6 @@ import 'package:flallery_frontend/rest/rest_client.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 import '../authentication/authentication.dart';
-import '../../exceptions/exceptions.dart';
 import '../../services/services.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
