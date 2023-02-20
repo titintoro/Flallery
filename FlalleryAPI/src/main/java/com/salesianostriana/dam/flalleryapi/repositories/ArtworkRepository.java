@@ -5,6 +5,7 @@ import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,14 @@ public interface ArtworkRepository extends JpaRepository<Artwork, UUID>, JpaSpec
     List<User> findUsersWhoLikedArtwork(String artworkName);
 
 
+    @Modifying
+    @Query("delete from Comment c where c.artwork.name=:artworkName")
+    void deleteCommentsOfAnArtwork(String artworkName);
+
+
+    @Modifying
+    @Query("delete from Loved l where l.lovedArtwork.name=:artworkName")
+    void deleteLovesOfAnArtwork(String artworkName);
 
 
 

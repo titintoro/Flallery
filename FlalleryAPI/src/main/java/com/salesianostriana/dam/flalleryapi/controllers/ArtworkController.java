@@ -26,6 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -155,10 +156,12 @@ public class ArtworkController {
     })
     @PostMapping("/artwork")
     public ResponseEntity<ArtworkResponse>createArtwork(
-            @RequestBody ArtworkCreateRequest artworkCreateRequest,
-            @AuthenticationPrincipal User user){
+            @RequestPart("artwork") ArtworkCreateRequest artworkCreateRequest,
+            @AuthenticationPrincipal User user,
+            @RequestPart("file")MultipartFile file){
 
-        Artwork artwork = artworkService.add(artworkCreateRequest.ArtworkCreateRequestToArtwork(user.getUsername()));
+        Artwork artwork = artworkService.save(artworkCreateRequest,file,user.getUsername());
+
 
         URI createdURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()

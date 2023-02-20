@@ -21,16 +21,14 @@ public class ArtworkCreateRequest {
 
     @NotEmpty(message = "{artworkCreateRequest.name.notempty}")
     private String name;
-
-    private String imgUrl;
     private String description;
 
 
-    public Artwork ArtworkCreateRequestToArtwork(String ownerName) {
+    public Artwork ArtworkCreateRequestToArtwork(String ownerName, String imgUrl) {
         return Artwork.builder()
                 .owner(ownerName)
                 .name(this.name)
-                .imgUrl(this.imgUrl)
+                .imgUrl(imgUrl)
                 .comments(new ArrayList<>())
                 .usersThatLiked(new HashSet<>())
                 .description(this.description)

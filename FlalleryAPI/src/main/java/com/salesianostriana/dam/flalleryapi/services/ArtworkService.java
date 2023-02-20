@@ -3,6 +3,7 @@ package com.salesianostriana.dam.flalleryapi.services;
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.Loved;
+import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkCreateRequest;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
 import com.salesianostriana.dam.flalleryapi.search.spec.ArtworkSpecificationBuilder;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteria;
@@ -11,7 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,6 +24,19 @@ import java.util.UUID;
 public class ArtworkService {
 
     private final ArtworkRepository repo;
+    private final StorageService storageService;
+
+
+    @Transactional
+    public Artwork save(ArtworkCreateRequest artworkCreateRequest, MultipartFile file, String owner) {
+        String filename = storageService.store(file);
+
+        Artwork artwork = repo.save(
+                artworkCreateRequest.ArtworkCreateRequestToArtwork(owner, filename));
+
+        return artwork;
+    }
+
 
     public Artwork add(Artwork artwork) {
         return repo.save(artwork);
@@ -41,6 +57,8 @@ public class ArtworkService {
     public void delete(Artwork artwork, String username) {
 
         if (artwork.getOwner().equals(username))
+            repo.deleteLovesOfAnArtwork(artwork.getName());
+            repo.deleteCommentsOfAnArtwork(artwork.getName());
             repo.delete(artwork);
     }
 
