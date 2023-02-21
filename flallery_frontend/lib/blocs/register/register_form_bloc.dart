@@ -4,14 +4,31 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 
 class RegisterFormBloc extends FormBloc<String, String> {
-  final email = TextFieldBloc(
+  final username = TextFieldBloc(
     validators: [
       FieldBlocValidators.required,
-      FieldBlocValidators.email,
+    ],
+  );
+
+  final avatar = TextFieldBloc(
+    validators: [
+      FieldBlocValidators.required,
+    ],
+  );
+
+  final fullName = TextFieldBloc(
+    validators: [
+      FieldBlocValidators.required,
     ],
   );
 
   final password = TextFieldBloc(
+    validators: [
+      FieldBlocValidators.required,
+    ],
+  );
+
+  final verifyPassword = TextFieldBloc(
     validators: [
       FieldBlocValidators.required,
     ],
@@ -22,8 +39,11 @@ class RegisterFormBloc extends FormBloc<String, String> {
   RegisterFormBloc() {
     addFieldBlocs(
       fieldBlocs: [
-        email,
+        username,
+        avatar,
         password,
+        verifyPassword,
+        fullName,
         showSuccessResponse,
       ],
     );
@@ -31,20 +51,17 @@ class RegisterFormBloc extends FormBloc<String, String> {
 
   @override
   void onSubmitting() async {
-    debugPrint(email.value);
+    debugPrint(username.value);
     debugPrint(password.value);
+    debugPrint(verifyPassword.value);
+    debugPrint(fullName.value);
+    debugPrint(avatar.value);
     debugPrint(showSuccessResponse.value.toString());
 
     await Future<void>.delayed(const Duration(seconds: 1));
 
     if (showSuccessResponse.value) {
-       final result = await _authenticationService.registerOwner(
-                username.value,
-                password.value,
-                verifyPassword.value,
-                email.value,
-                name.value);
-            emitSuccess();
+      emitSuccess();
     } else {
       emitFailure(failureResponse: 'This is an awesome error!');
     }
@@ -60,11 +77,11 @@ class RegisterForm extends StatelessWidget {
       create: (context) => RegisterFormBloc(),
       child: Builder(
         builder: (context) {
-          final registerFormBloc = context.read<RegisterFormBloc>();
+          final loginFormBloc = context.read<RegisterFormBloc>();
 
           return Scaffold(
             resizeToAvoidBottomInset: false,
-            appBar: AppBar(title: const Text('Login')),
+            appBar: AppBar(title: const Text('Register')),
             body: FormBlocListener<RegisterFormBloc, String, String>(
               onSubmitting: (context, state) {
                 LoadingDialog.show(context);
@@ -90,29 +107,62 @@ class RegisterForm extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       TextFieldBlocBuilder(
-                        textFieldBloc: registerFormBloc.email,
-                        keyboardType: TextInputType.emailAddress,
+                        textFieldBloc: loginFormBloc.username,
+                        keyboardType: TextInputType.name,
                         autofillHints: const [
                           AutofillHints.username,
                         ],
                         decoration: const InputDecoration(
-                          labelText: 'Email',
-                          prefixIcon: Icon(Icons.email),
+                          labelText: 'Username',
+                          prefixIcon: Icon(Icons.man),
                         ),
                       ),
                       TextFieldBlocBuilder(
-                        textFieldBloc: registerFormBloc.password,
-                        suffixButton: SuffixButton.obscureText,
-                        autofillHints: const [AutofillHints.password],
+                        textFieldBloc: loginFormBloc.password,
+                        keyboardType: TextInputType.visiblePassword,
+                        autofillHints: const [
+                          AutofillHints.password,
+                        ],
                         decoration: const InputDecoration(
                           labelText: 'Password',
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: Icon(Icons.password),
+                        ),
+                      ),
+                      TextFieldBlocBuilder(
+                        textFieldBloc: loginFormBloc.verifyPassword,
+                        keyboardType: TextInputType.visiblePassword,
+                        autofillHints: const [
+                          AutofillHints.password,
+                        ],
+                        decoration: const InputDecoration(
+                          labelText: 'Verify Password',
+                          prefixIcon: Icon(Icons.password),
+                        ),
+                      ),
+                      TextFieldBlocBuilder(
+                        textFieldBloc: loginFormBloc.avatar,
+                        keyboardType: TextInputType.url,
+                        autofillHints: const [
+                          AutofillHints.url,
+                        ],
+                        decoration: const InputDecoration(
+                          labelText: 'Avatar',
+                          prefixIcon: Icon(Icons.insert_emoticon_sharp),
+                        ),
+                      ),
+                      TextFieldBlocBuilder(
+                        textFieldBloc: loginFormBloc.fullName,
+                        suffixButton: SuffixButton.obscureText,
+                        autofillHints: const [AutofillHints.name],
+                        decoration: const InputDecoration(
+                          labelText: 'Full Name',
+                          prefixIcon: Icon(Icons.abc),
                         ),
                       ),
                       SizedBox(
                         width: 250,
                         child: CheckboxFieldBlocBuilder(
-                          booleanFieldBloc: registerFormBloc.showSuccessResponse,
+                          booleanFieldBloc: loginFormBloc.showSuccessResponse,
                           body: Container(
                             alignment: Alignment.centerLeft,
                             child: const Text('Show success response'),
@@ -120,8 +170,8 @@ class RegisterForm extends StatelessWidget {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: registerFormBloc.submit,
-                        child: const Text('LOGIN'),
+                        onPressed: loginFormBloc.submit,
+                        child: const Text('REGISTER'),
                       ),
                     ],
                   ),

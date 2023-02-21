@@ -1,3 +1,4 @@
+import 'package:flallery_frontend/blocs/register/register_form_bloc.dart';
 import 'package:flallery_frontend/models/artwork_list_response.dart';
 import 'package:flallery_frontend/services/artwork_service.dart';
 import 'package:flallery_frontend/view/artwork_list.dart';
@@ -92,9 +93,8 @@ class _HomePageState extends State<HomePage> {
         );
         
       case 2:
-        return Center(
-          child: Text('Hola'),
-        );
+        return RegisterForm();
+        
 
       default:
         throw Exception("Fallo");
