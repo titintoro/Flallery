@@ -2,6 +2,7 @@ package com.salesianostriana.dam.flalleryapi.controllers;
 
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
+import com.salesianostriana.dam.flalleryapi.models.UserRole;
 import com.salesianostriana.dam.flalleryapi.models.dtos.PageDto;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.comment.CommentResponse;
@@ -205,6 +206,14 @@ public class UserController {
     @GetMapping("/me")
     public UserResponse getMyUser(@AuthenticationPrincipal User user){
        return UserResponse.fromUser(user);
+    }
+
+    @DeleteMapping("auth/user/{id}")
+    public ResponseEntity<?> deleteOtherUser(@AuthenticationPrincipal User user, @RequestParam UUID id){
+        if (user.getRoles().contains(UserRole.ADMIN)){
+            userService.deleteById(id, user.getUsername());
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

@@ -1,5 +1,5 @@
 class ArtworkResponse {
-  List<Content>? content;
+  List<Artwork>? content;
   int? totalPages;
   int? totalElements;
   int? pageSize;
@@ -9,9 +9,9 @@ class ArtworkResponse {
 
   ArtworkResponse.fromJson(Map<String, dynamic> json) {
     if (json['content'] != null) {
-      content = <Content>[];
+      content = <Artwork>[];
       json['content'].forEach((v) {
-        content!.add(new Content.fromJson(v));
+        content!.add(new Artwork.fromJson(v));
       });
     }
     totalPages = json['totalPages'];
@@ -31,16 +31,16 @@ class ArtworkResponse {
   }
 }
 
-class Content {
+class Artwork {
   String? name;
   String? uuid;
   List<Comments>? comments;
   String? owner;
   String? description;
 
-  Content({this.name, this.uuid, this.comments, this.owner, this.description});
+  Artwork({this.name, this.uuid, this.comments, this.owner, this.description});
 
-  Content.fromJson(Map<String, dynamic> json) {
+  Artwork.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     uuid = json['uuid'];
     if (json['comments'] != null) {

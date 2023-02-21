@@ -12,9 +12,9 @@ class ArtworkListItem extends StatelessWidget {
     return Material(
       child: ListTile(
         leading: Text('${artwork.name}', style: textTheme.bodySmall),
-        title: Text(artwork.description),
+        title: Text(artwork.description!),
         isThreeLine: true,
-        subtitle: Text(artwork.owner),
+        subtitle: Text(artwork.owner!),
         dense: true,
       ),
     );

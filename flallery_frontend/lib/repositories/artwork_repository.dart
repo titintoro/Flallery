@@ -17,10 +17,10 @@ class ArtworkRepository {
     _client = getIt<RestAuthenticatedClient>();
   }
 
-  Future<List<Artwork>> fetchArtwork(int index) async {
-    String url = "/artwork?page=$index";
+  Future<ArtworkResponse> fetchArtwork(int index) async {
+    String url = "/artwork?page=$index&size=$_artworkLimit";
 
     var jsonResponse = await _client.get(url);
-    return Artwo
+    return ArtworkResponse.fromJson(jsonDecode(jsonResponse));
   }
 }

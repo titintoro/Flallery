@@ -46,23 +46,23 @@ class ArtworkBloc extends Bloc<ArtworkEvent, ArtworkState> {
     try {
       if (state.status == ArtworkStatus.initial) {
         //final artworks = await _fetchArtworks();
-        final artworks = await repo.fetchArtworks();
+        final artworks = await repo.fetchArtwork(1);
         return emit(
           state.copyWith(
             status: ArtworkStatus.success,
-            artworkList: artworks,
+            artworkList: artworks.content,
             hasReachedMax: false,
           ),
         );
       }
       //final artworks = await _fetchArtworks(state.artworks.length);
-      final artworks = await repo.fetchArtworks(state.artworkList.length);
-      artworks.isEmpty
+      final artworks = await repo.fetchArtwork(state.artworkList.length);
+      artworks.content!.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
           : emit(
               state.copyWith(
                 status: ArtworkStatus.success,
-                artworkList: List.of(state.artworkList)..addAll(artworks),
+                artworkList: List.of(state.artworkList)..addAll(artworks as Iterable<Artwork>),
                 hasReachedMax: false,
               ),
             );
