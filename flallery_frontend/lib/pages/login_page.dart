@@ -117,7 +117,7 @@ class __SignInFormState extends State<_SignInForm> {
                 children: <Widget>[
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: 'Email address',
+                      labelText: 'Username',
                       filled: true,
                       isDense: true,
                     ),
@@ -126,7 +126,7 @@ class __SignInFormState extends State<_SignInForm> {
                     autocorrect: false,
                     validator: (value) {
                       if (value == null) {
-                        return 'Email is required.';
+                        return 'Username is required.';
                       }
                       return null;
                     },
@@ -167,7 +167,7 @@ class __SignInFormState extends State<_SignInForm> {
                     //textColor: Colors.white,
                     //padding: const EdgeInsets.all(16),
                     //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(8.0)),
-                    child: Text('Register'),
+                    child: Text('REGISTER'),
                     onPressed:
                         state is LoginLoading ? () {} : _onLoginButtonPressed,
                   )
