@@ -17,19 +17,8 @@ import java.util.UUID;
 public class Comment {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator",
-            parameters = {
-                    @Parameter(
-                            name = "uuid_gen_strategy_class",
-                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
-                    )
-            }
-    )
-    @Column(columnDefinition = "uuid")
-    private UUID idComment;
+    @GeneratedValue
+    private Long idComment;
 
     private String text;
 

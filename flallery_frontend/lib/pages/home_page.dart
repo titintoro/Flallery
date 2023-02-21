@@ -1,4 +1,5 @@
 import 'package:flallery_frontend/models/artwork_list_response.dart';
+import 'package:flallery_frontend/view/artwork_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flallery_frontend/blocs/authentication/authentication.dart';
@@ -78,8 +79,8 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Perfil'),
-          BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Hola'),
-          BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Siuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Gestión'),
         ],
         onTap: (value) => setState(() {
           _index = value;
@@ -134,7 +135,7 @@ class _HomePageState extends State<HomePage> {
         );
       case 2:
         return Center(
-          child: Text('Hola'),
+          child: ArtworksPage(),
         );
       default:
         throw Exception("Fallo");

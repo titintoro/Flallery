@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flallery_frontend/repositories/artwork_repository.dart';
 import 'package:flallery_frontend/models/artwork_list_response.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/src/client.dart';
 //import 'package:http/http.dart' as http;
 import 'package:stream_transform/stream_transform.dart';
 
@@ -25,7 +26,7 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 }
 
 class ArtworkBloc extends Bloc<ArtworkEvent, ArtworkState> {
-  ArtworkBloc(/*{required this.httpClient}*/) : super(const ArtworkState()) {
+  ArtworkBloc({required Client httpClient}/*{required this.httpClient}*/) : super(const ArtworkState()) {
   //ArtworkBloc({required this.repo}) : super(const ArtworkState()) {
     repo = GetIt.I.get<ArtworkRepository>();
     on<ArtworkFetched>(

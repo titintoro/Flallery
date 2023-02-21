@@ -202,5 +202,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @GetMapping("/me")
+    public UserResponse getMyUser(@AuthenticationPrincipal User user){
+       return UserResponse.fromUser(user);
+    }
 
 }
