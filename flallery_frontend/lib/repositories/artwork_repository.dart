@@ -18,7 +18,7 @@ class ArtworkRepository {
   }
 
   Future<ArtworkResponse> fetchArtwork(int index) async {
-    String url = "/artwork?page=$index&size=$_artworkLimit";
+    String url = "/artwork?page=$index";
 
     var jsonResponse = await _client.get(url);
     return ArtworkResponse.fromJson(jsonDecode(jsonResponse));

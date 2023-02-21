@@ -3,9 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flallery_frontend/repositories/artwork_repository.dart';
 import 'package:flallery_frontend/models/artwork_list_response.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flallery_frontend/services/artwork_service.dart';
 import 'package:http/src/client.dart';
 //import 'package:http/http.dart' as http;
 import 'package:stream_transform/stream_transform.dart';
@@ -16,8 +15,8 @@ part 'artwork_list_event.dart';
 part 'artwork_list_state.dart';
 
 //const _artworkLimit = 20;
+var page = 0;
 const throttleDuration = Duration(milliseconds: 100);
-
 
 EventTransformer<E> throttleDroppable<E>(Duration duration) {
   return (events, mapper) {
@@ -26,49 +25,46 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 }
 
 class ArtworkBloc extends Bloc<ArtworkEvent, ArtworkState> {
-  ArtworkBloc({required Client httpClient}/*{required this.httpClient}*/) : super(const ArtworkState()) {
-  //ArtworkBloc({required this.repo}) : super(const ArtworkState()) {
-    repo = GetIt.I.get<ArtworkRepository>();
+  final ArtworkService _artworkService;
+  // final int id;
+  ArtworkBloc(ArtworkService artworkService)
+      : assert(artworkService != null),
+        _artworkService = artworkService,
+        super(const ArtworkState()) {
     on<ArtworkFetched>(
       _onArtworkFetched,
       transformer: throttleDroppable(throttleDuration),
     );
   }
-  
-  late ArtworkRepository repo;
-
 
   Future<void> _onArtworkFetched(
     ArtworkFetched event,
     Emitter<ArtworkState> emit,
   ) async {
-    if (state.hasReachedMax) return;
+    if (state.hasReachedMax) {
+      return;
+    }
     try {
       if (state.status == ArtworkStatus.initial) {
-        //final artworks = await _fetchArtworks();
-        final artworks = await repo.fetchArtwork(1);
+        page = 0;
+        final artworks = await _artworkService.getAllArtworks(page);
         return emit(
           state.copyWith(
             status: ArtworkStatus.success,
             artworkList: artworks.content,
-            hasReachedMax: false,
+            hasReachedMax: artworks.totalPages! - 1 <= page,
           ),
         );
       }
-      //final artworks = await _fetchArtworks(state.artworks.length);
-      final artworks = await repo.fetchArtwork(state.artworkList.length);
-      artworks.content!.isEmpty
-          ? emit(state.copyWith(hasReachedMax: true))
-          : emit(
-              state.copyWith(
-                status: ArtworkStatus.success,
-                artworkList: List.of(state.artworkList)..addAll(artworks as Iterable<Artwork>),
-                hasReachedMax: false,
-              ),
-            );
-    } catch (_) {
+      page++;
+      final artworks = await _artworkService.getAllArtworks(page);
+      emit(state.copyWith(
+        status: ArtworkStatus.success,
+        artworkList: List.of(state.artworkList)..addAll(artworks.content as Iterable<Artwork>),
+        hasReachedMax: artworks.totalPages! - 1 <= page,
+      ));
+    } catch(_) {
       emit(state.copyWith(status: ArtworkStatus.failure));
     }
   }
-  
 }

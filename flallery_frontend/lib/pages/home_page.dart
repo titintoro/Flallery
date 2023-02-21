@@ -1,10 +1,13 @@
 import 'package:flallery_frontend/models/artwork_list_response.dart';
+import 'package:flallery_frontend/services/artwork_service.dart';
+import 'package:flallery_frontend/view/artwork_list.dart';
 import 'package:flallery_frontend/view/artwork_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flallery_frontend/blocs/authentication/authentication.dart';
 import 'package:flallery_frontend/config/locator.dart';
 import 'package:flallery_frontend/services/services.dart';
+import '../blocs/artwork_list/artwork_list_bloc.dart';
 import '../models/models.dart';
 /*
 class HomePage extends StatelessWidget {
@@ -62,11 +65,14 @@ class HomePage extends StatefulWidget {
   final User user;
   const HomePage({super.key, required this.user});
 
+  
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  final ArtworkService artworkService = ArtworkService();
   int _index = 0;
   @override
   Widget build(BuildContext context) {
@@ -134,9 +140,12 @@ class _HomePageState extends State<HomePage> {
           child: Text('Hola'),
         );
       case 2:
-        return Center(
-          child: ArtworksPage(),
+        return BlocProvider(
+          create: (_) =>
+              ArtworkBloc(this.artworkService)..add(ArtworkFetched()),
+          child: const ArtworksList(),
         );
+
       default:
         throw Exception("Fallo");
     }
