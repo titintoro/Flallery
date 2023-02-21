@@ -115,6 +115,11 @@ class __SignInFormState extends State<_SignInForm> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                                    SizedBox(height: 16),
+                  Image.network(
+                    'https://pbs.twimg.com/profile_images/1097292569321631744/kZTPOpVe_400x400.png',
+                    width: 200,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Username',
