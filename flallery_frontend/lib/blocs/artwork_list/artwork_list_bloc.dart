@@ -8,7 +8,7 @@ import 'package:flallery_frontend/models/artwork_list_response.dart';
 import 'package:get_it/get_it.dart';
 //import 'package:http/http.dart' as http;
 import 'package:stream_transform/stream_transform.dart';
-import 'package:flallery_frontend/repositories/artwork_repository.dart';
+
 
 
 part 'artwork_list_event.dart';

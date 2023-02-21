@@ -16,7 +16,7 @@ class ArtworkRepository {
   Future<List<Artwork>> fetchArtworks([int startIndex = 0]) async {
     final response = await httpClient.get(
       Uri.https(
-        'jsonplaceholder.typicode.com',
+        'localhost:8080',
         '/artworks',
         <String, String>{'_start': '$startIndex', '_limit': '$_artworkLimit'},
       ),
