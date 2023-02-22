@@ -47,7 +47,7 @@ public class ArtworkController {
     @Operation(summary = "Get a list of all Artworks")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Artworks Founded",
+                    description = "Artworks Found",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = Artwork.class)),
                             examples = {@ExampleObject(
@@ -183,7 +183,7 @@ public class ArtworkController {
                             array = @ArraySchema(schema = @Schema(implementation = Artwork.class))
                     )}),
             @ApiResponse(responseCode = "404",
-                    description = "No Artwork founded",
+                    description = "No Artwork found",
                     content = @Content),
     })
     @DeleteMapping("/artwork")
