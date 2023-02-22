@@ -1,9 +1,10 @@
+import 'package:flallery_frontend/pages/login_page.dart';
+import 'package:flallery_frontend/services/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
-
-
 class RegisterFormBloc extends FormBloc<String, String> {
+  late final JwtAuthenticationService authenticationService = new JwtAuthenticationService();
   final username = TextFieldBloc(
     validators: [
       FieldBlocValidators.required,
@@ -44,26 +45,18 @@ class RegisterFormBloc extends FormBloc<String, String> {
         password,
         verifyPassword,
         fullName,
-        showSuccessResponse,
       ],
     );
   }
-
   @override
   void onSubmitting() async {
-    debugPrint(username.value);
-    debugPrint(password.value);
-    debugPrint(verifyPassword.value);
-    debugPrint(fullName.value);
-    debugPrint(avatar.value);
-    debugPrint(showSuccessResponse.value.toString());
-
-    await Future<void>.delayed(const Duration(seconds: 1));
-
-    if (showSuccessResponse.value) {
+    // await Future<void>.delayed(const Duration(seconds: 1));
+    try {
+      final result = await authenticationService.registerUser(username.value,
+          password.value, verifyPassword.value, avatar.value, fullName.value);
       emitSuccess();
-    } else {
-      emitFailure(failureResponse: 'This is an awesome error!');
+    } on Exception catch (_) {
+      emitFailure();
     }
   }
 }
@@ -77,7 +70,7 @@ class RegisterForm extends StatelessWidget {
       create: (context) => RegisterFormBloc(),
       child: Builder(
         builder: (context) {
-          final loginFormBloc = context.read<RegisterFormBloc>();
+          final registerFormBloc = context.read<RegisterFormBloc>();
 
           return Scaffold(
             resizeToAvoidBottomInset: false,
@@ -107,7 +100,7 @@ class RegisterForm extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       TextFieldBlocBuilder(
-                        textFieldBloc: loginFormBloc.username,
+                        textFieldBloc: registerFormBloc.username,
                         keyboardType: TextInputType.name,
                         autofillHints: const [
                           AutofillHints.username,
@@ -118,7 +111,7 @@ class RegisterForm extends StatelessWidget {
                         ),
                       ),
                       TextFieldBlocBuilder(
-                        textFieldBloc: loginFormBloc.password,
+                        textFieldBloc: registerFormBloc.password,
                         keyboardType: TextInputType.visiblePassword,
                         autofillHints: const [
                           AutofillHints.password,
@@ -129,7 +122,7 @@ class RegisterForm extends StatelessWidget {
                         ),
                       ),
                       TextFieldBlocBuilder(
-                        textFieldBloc: loginFormBloc.verifyPassword,
+                        textFieldBloc: registerFormBloc.verifyPassword,
                         keyboardType: TextInputType.visiblePassword,
                         autofillHints: const [
                           AutofillHints.password,
@@ -140,7 +133,7 @@ class RegisterForm extends StatelessWidget {
                         ),
                       ),
                       TextFieldBlocBuilder(
-                        textFieldBloc: loginFormBloc.avatar,
+                        textFieldBloc: registerFormBloc.avatar,
                         keyboardType: TextInputType.url,
                         autofillHints: const [
                           AutofillHints.url,
@@ -151,7 +144,7 @@ class RegisterForm extends StatelessWidget {
                         ),
                       ),
                       TextFieldBlocBuilder(
-                        textFieldBloc: loginFormBloc.fullName,
+                        textFieldBloc: registerFormBloc.fullName,
                         suffixButton: SuffixButton.obscureText,
                         autofillHints: const [AutofillHints.name],
                         decoration: const InputDecoration(
@@ -159,18 +152,10 @@ class RegisterForm extends StatelessWidget {
                           prefixIcon: Icon(Icons.abc),
                         ),
                       ),
-                      SizedBox(
-                        width: 250,
-                        child: CheckboxFieldBlocBuilder(
-                          booleanFieldBloc: loginFormBloc.showSuccessResponse,
-                          body: Container(
-                            alignment: Alignment.centerLeft,
-                            child: const Text('Show success response'),
-                          ),
-                        ),
-                      ),
                       ElevatedButton(
-                        onPressed: loginFormBloc.submit,
+                        onPressed: () {
+                          registerFormBloc.onSubmitting();
+                        },
                         child: const Text('REGISTER'),
                       ),
                     ],
@@ -235,7 +220,7 @@ class SuccessScreen extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton.icon(
               onPressed: () => Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => const RegisterForm())),
+                  MaterialPageRoute(builder: (_) => RegisterForm())),
               icon: const Icon(Icons.replay),
               label: const Text('AGAIN'),
             ),

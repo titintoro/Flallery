@@ -1,3 +1,4 @@
+import 'package:flallery_frontend/blocs/register/register_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flallery_frontend/config/locator.dart';
@@ -173,9 +174,9 @@ class __SignInFormState extends State<_SignInForm> {
                     //padding: const EdgeInsets.all(16),
                     //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(8.0)),
                     child: Text('REGISTER'),
-                    onPressed:
-                        state is LoginLoading ? () {} : _onLoginButtonPressed,
-                  )
+                     onPressed: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => RegisterForm())),
+            ),
                 ],
               ),
             ),

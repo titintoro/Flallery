@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 //import 'dart:developer';
+import 'package:flallery_frontend/models/register_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flallery_frontend/config/locator.dart';
 import 'package:flallery_frontend/models/models.dart';
@@ -65,6 +66,16 @@ class JwtAuthenticationService extends AuthenticationService {
     }
     return null;
   }
+
+
+  @override
+  Future<UserRegisterResponse> registerUser(String username, String password,
+      String verifyPassword, String avatar, String fullName) async {
+    UserRegisterResponse response = await _authenticationRepository.registerUser(
+        username, password, verifyPassword, avatar, fullName);
+    return response;
+  }
+
 
   @override
   Future<User> signInWithEmailAndPassword(String email, String password) async {
