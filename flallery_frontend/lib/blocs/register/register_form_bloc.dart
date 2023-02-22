@@ -1,3 +1,4 @@
+import 'package:flallery_frontend/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
@@ -235,7 +236,7 @@ class SuccessScreen extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton.icon(
               onPressed: () => Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => const RegisterForm())),
+                  MaterialPageRoute(builder: (_) => LoginPage())),
               icon: const Icon(Icons.replay),
               label: const Text('AGAIN'),
             ),

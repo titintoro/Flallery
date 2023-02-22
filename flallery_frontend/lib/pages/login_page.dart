@@ -117,8 +117,9 @@ class __SignInFormState extends State<_SignInForm> {
                 children: <Widget>[
                                     SizedBox(height: 16),
                   Image.network(
-                    'https://pbs.twimg.com/profile_images/1097292569321631744/kZTPOpVe_400x400.png',
+                    'https://cdn-icons-png.flaticon.com/512/3600/3600917.png',
                     width: 200,
+                    height: 200,
                   ),
                   TextFormField(
                     decoration: InputDecoration(
