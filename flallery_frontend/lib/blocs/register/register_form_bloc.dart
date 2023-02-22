@@ -1,5 +1,8 @@
 import 'package:flallery_frontend/pages/login_page.dart';
+<<<<<<< HEAD
 import 'package:flallery_frontend/services/authentication_service.dart';
+=======
+>>>>>>> 7a34b67d362d198003a5d5e3d71c228049de5306
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
@@ -220,7 +223,11 @@ class SuccessScreen extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton.icon(
               onPressed: () => Navigator.of(context).pushReplacement(
+<<<<<<< HEAD
                   MaterialPageRoute(builder: (_) => RegisterForm())),
+=======
+                  MaterialPageRoute(builder: (_) => LoginPage())),
+>>>>>>> 7a34b67d362d198003a5d5e3d71c228049de5306
               icon: const Icon(Icons.replay),
               label: const Text('AGAIN'),
             ),

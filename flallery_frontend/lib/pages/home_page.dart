@@ -15,8 +15,6 @@ class HomePage extends StatefulWidget {
   final User user;
   const HomePage({super.key, required this.user});
 
-  
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -86,15 +84,14 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       case 1:
-      return BlocProvider(
+        return BlocProvider(
           create: (_) =>
               ArtworkBloc(this.artworkService)..add(ArtworkFetched()),
           child: const ArtworksList(),
         );
-        
+
       case 2:
         return RegisterForm();
-        
 
       default:
         throw Exception("Fallo");
