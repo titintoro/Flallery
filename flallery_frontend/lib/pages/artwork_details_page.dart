@@ -119,7 +119,16 @@ class _ArtworkDetailsPageState extends State<ArtworkDetailsPage> {
               'Comments: ${widget.artwork.comments}',
               style: textTheme.bodySmall,
             ),
-            
+            /*
+            ListView.builder(
+              itemCount: widget.artwork.comments?.length ?? 0,
+              itemBuilder: (BuildContext context, int index) {
+              return Text(
+                widget.artwork.comments?[index].text ?? '',
+                style: TextStyle(fontSize: 16),
+            );
+            },),
+            */
             SizedBox(height: 32.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

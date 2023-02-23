@@ -31,11 +31,14 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _body(_index),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.amber,
+
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Perfil'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.photo_filter), label: 'Galería'),
+          BottomNavigationBarItem(icon: Icon(Icons.photo_filter), label: 'Galería'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Gestión'),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Crear'), // new button
         ],
         onTap: (value) => setState(() {
           _index = value;
@@ -97,6 +100,9 @@ class _HomePageState extends State<HomePage> {
 
       case 2:
         return Center(child: Text('Admin Page'));
+      
+      case 3:
+        return Center(child: Text('Artwork Page'));
 
       default:
         throw Exception("Fallo");
