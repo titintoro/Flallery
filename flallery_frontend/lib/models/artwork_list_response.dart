@@ -35,10 +35,17 @@ class Artwork {
   String? name;
   String? uuid;
   List<Comments>? comments;
+  String? imgUrl;
   String? owner;
   String? description;
 
-  Artwork({this.name, this.uuid, this.comments, this.owner, this.description});
+  Artwork(
+      {this.name,
+      this.uuid,
+      this.comments,
+      this.imgUrl,
+      this.owner,
+      this.description});
 
   Artwork.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -49,6 +56,7 @@ class Artwork {
         comments!.add(new Comments.fromJson(v));
       });
     }
+    imgUrl = json['imgUrl'];
     owner = json['owner'];
     description = json['description'];
   }
@@ -60,6 +68,7 @@ class Artwork {
     if (this.comments != null) {
       data['comments'] = this.comments!.map((v) => v.toJson()).toList();
     }
+    data['imgUrl'] = this.imgUrl;
     data['owner'] = this.owner;
     data['description'] = this.description;
     return data;

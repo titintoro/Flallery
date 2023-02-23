@@ -41,8 +41,12 @@ class ArtworkListItem extends StatelessWidget {
           );
         },
         child: ListTile(
-    //      leading: Image.network("http://localhost:8080/file/download/$artwork.imgUrl"),
-          title: Text(artwork.name!, style: textTheme.bodyLarge,),
+          leading:
+              Image.network("http://localhost:8080/download/${artwork.imgUrl}"),
+          title: Text(
+            artwork.name!,
+            style: textTheme.bodyLarge,
+          ),
           isThreeLine: true,
           subtitle: Text(artwork.owner!),
           dense: true,

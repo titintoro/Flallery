@@ -33,7 +33,8 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Perfil'),
-          BottomNavigationBarItem(icon: Icon(Icons.photo_filter), label: 'Galería'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.photo_filter), label: 'Galería'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Gestión'),
         ],
         onTap: (value) => setState(() {
@@ -57,6 +58,8 @@ class _HomePageState extends State<HomePage> {
                   'Hola, ${widget.user.fullName}',
                   style: TextStyle(fontSize: 24),
                 ),
+                Text(''),
+                Image.network('${widget.user.avatar}'),
                 Text(''),
                 const SizedBox(
                   height: 12,

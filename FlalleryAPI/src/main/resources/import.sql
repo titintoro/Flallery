@@ -1,0 +1,14 @@
+insert into user_entity (id, username, password, avatar, full_name, account_non_expired, account_non_locked, credentials_non_expired, enabled, created_at, last_password_change_at) values ('751c3611-8882-5751-9f0d-d216dd047ebc', 'mcampos', '{bcrypt}$2a$12$m77uPBFFzvknI7wwVPcmYuJkhbJ.nJlyE5ZhH/vg9weFCilvfhzA.', 'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg', 'Miguel', true, true, true, true, '2021-09-26', '2021-09-26');
+insert into user_entity (id, username, password, avatar, full_name, account_non_expired, account_non_locked, credentials_non_expired, enabled, created_at, last_password_change_at) values ('e641d9ec-ca50-4002-b87b-464b6c7686a9', 'lmlopez', '{bcrypt}$2a$12$m77uPBFFzvknI7wwVPcmYuJkhbJ.nJlyE5ZhH/vg9weFCilvfhzA.', 'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg', 'Luis Miguel', true, true, true, true, '2021-09-26', '2021-09-26');
+
+insert into user_roles(user_id,roles) values ('751c3611-8882-5751-9f0d-d216dd047ebc', '2')
+insert into user_roles(user_id,roles) values ('e641d9ec-ca50-4002-b87b-464b6c7686a9', '1')
+
+insert into artwork (id_artwork, description, img_url, name, owner) values ('e641d9ec-ca50-4002-b87b-464b6c7686a1', 'Drama|Musical|Romance', 'p05cjdsl.jpg', 'Porgy and Bess', 'lmlopez');
+insert into artwork (id_artwork, description, img_url, name, owner) values ('e641d9ec-ca50-4002-b87b-464b6c7686a2', 'Horror|Thriller|Western', '223736.jpg', 'Blood River', 'lmlopez');
+insert into artwork (id_artwork, description, img_url, name, owner) values ('e641d9ec-ca50-4002-b87b-464b6c7686a3', 'Comedy|Horror|Mystery|Thriller', 'p05cjdsl.jpg', 'Dylan Dog: Dead of Night', 'lmlopez');
+insert into artwork (id_artwork, description, img_url, name, owner) values ('e641d9ec-ca50-4002-b87b-464b6c7686a4', 'Comedy|Romance', '223736.jpg', 'Serendipity', 'lmlopez');
+insert into artwork (id_artwork, description, img_url, name, owner) values ('e641d9ec-ca50-4002-b87b-464b6c7686a5', 'Horror|Thriller', '223736.jpg', 'Loner (Woetoli)', 'mcampos');
+insert into artwork (id_artwork, description, img_url, name, owner) values ('e641d9ec-ca50-4002-b87b-464b6c7686a6', 'Documentary', 'p05cjdsl.jpg', 'Dreamworlds II: Desire, Sex, Power in Music Video', 'mcampos');
+insert into artwork (id_artwork, description, img_url, name, owner) values ('e641d9ec-ca50-4002-b87b-464b6c7686a7', 'Documentary', 'p05cjdsl.jpg', 'Order of Myths, The', 'mcampos');
+insert into artwork (id_artwork, description, img_url, name, owner) values ('e641d9ec-ca50-4002-b87b-464b6c7686a8', 'Comedy|Drama|Romance', 'p05cjdsl.jpg', 'Last Kiss, The (Ultimo bacio, L'')', 'mcampos');
