@@ -18,7 +18,7 @@ public class ArtworkResponse {
     private String name;
     private UUID uuid;
     private List<CommentResponse> comments;
-
+    private String imgUrl;
     private String owner;
 
     private String description;
@@ -27,6 +27,7 @@ public class ArtworkResponse {
         return ArtworkResponse.builder()
                 .name(artwork.getName())
                 .uuid(artwork.getIdArtwork())
+                .imgUrl(artwork.getImgUrl())
                 .owner(artwork.getOwner())
                 .description(artwork.getDescription())
                 .comments(artwork.getComments().stream().map(CommentResponse::commentToCommentResponse).toList())
