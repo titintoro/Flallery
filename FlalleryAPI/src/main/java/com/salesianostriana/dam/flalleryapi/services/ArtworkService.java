@@ -24,7 +24,7 @@ import java.util.UUID;
 public class ArtworkService {
 
     private final ArtworkRepository repo;
-    private final StorageService storageService;
+    private final FileSystemStorageService storageService;
 
 
     @Transactional

@@ -7,6 +7,7 @@ import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkCreateReq
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.PageDto;
 import com.salesianostriana.dam.flalleryapi.models.dtos.comment.CommentCreateRequest;
+import com.salesianostriana.dam.flalleryapi.models.dtos.comment.CommentResponse;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteria;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteriaExtractor;
@@ -46,7 +47,7 @@ public class ArtworkController {
     @Operation(summary = "Get a list of all Artworks")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Artworks Founded",
+                    description = "Artworks Found",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = Artwork.class)),
                             examples = {@ExampleObject(
@@ -182,7 +183,7 @@ public class ArtworkController {
                             array = @ArraySchema(schema = @Schema(implementation = Artwork.class))
                     )}),
             @ApiResponse(responseCode = "404",
-                    description = "No Artwork founded",
+                    description = "No Artwork found",
                     content = @Content),
     })
     @DeleteMapping("/artwork")
@@ -260,7 +261,7 @@ public class ArtworkController {
 
 
     @PostMapping("/artwork/{id}/comment")
-    public ResponseEntity<Comment> addComment(
+    public ResponseEntity<CommentResponse> addComment(
             @PathVariable UUID id,
             @RequestBody CommentCreateRequest comment,
             @AuthenticationPrincipal User user){
@@ -268,7 +269,8 @@ public class ArtworkController {
         Artwork artwork = artworkService.findById(id).get();
 
         Comment response = comment.commentCreateRequestToComment(artwork,user.getUsername());
-
+        artwork.getComments().add(response);
+        artworkRepository.save(artwork);
         URI createdURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/artwork/{id}/comment")
@@ -276,7 +278,7 @@ public class ArtworkController {
 
         return ResponseEntity
                 .created(createdURI)
-                .body(response);
+                .body(CommentResponse.commentToCommentResponse(response));
 
     }
 

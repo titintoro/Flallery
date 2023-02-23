@@ -42,6 +42,23 @@ class _ArtworksListState extends State<ArtworksList> {
                   : state.artworkList.length + 1,
               controller: _scrollController,
             );
+            /*
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, // number of columns in the grid
+                crossAxisSpacing: 1.0, // horizontal space between items
+                mainAxisSpacing: 1.0, // vertical space between items
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return index >= state.artworkList.length
+                    ? const BottomLoader()
+                    : ArtworkListItem(artwork: state.artworkList[index]);
+              },
+              itemCount: state.hasReachedMax
+                  ? state.artworkList.length
+                  : state.artworkList.length + 1,
+              controller: _scrollController,
+            ); */
           case ArtworkStatus.initial:
             return const Center(child: CircularProgressIndicator());
         }

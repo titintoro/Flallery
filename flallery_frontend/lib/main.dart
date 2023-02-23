@@ -64,8 +64,9 @@ class MyApp extends StatelessWidget {
     //GlobalContext.ctx = context;
     return MaterialApp(
       title: 'Authentication Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.amber,
       ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {

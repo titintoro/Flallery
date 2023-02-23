@@ -1,3 +1,4 @@
+import 'package:flallery_frontend/blocs/register/register_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flallery_frontend/config/locator.dart';
@@ -19,7 +20,8 @@ class LoginPage extends StatelessWidget {
               if (state is AuthenticationNotAuthenticated) {
                 return _AuthForm();
               }
-              if (state is AuthenticationFailure || state is SessionExpiredState) {
+              if (state is AuthenticationFailure ||
+                  state is SessionExpiredState) {
                 var msg = (state as AuthenticationFailure).message;
                 return Center(
                     child: Column(
@@ -83,7 +85,8 @@ class __SignInFormState extends State<_SignInForm> {
 
     _onLoginButtonPressed() {
       if (_key.currentState!.validate()) {
-        _loginBloc.add(LoginInWithEmailButtonPressed(email: _emailController.text, password: _passwordController.text));
+        _loginBloc.add(LoginInWithEmailButtonPressed(
+            email: _emailController.text, password: _passwordController.text));
       } else {
         setState(() {
           _autoValidate = true;
@@ -106,14 +109,24 @@ class __SignInFormState extends State<_SignInForm> {
           }
           return Form(
             key: _key,
-            autovalidateMode: _autoValidate ? AutovalidateMode.always : AutovalidateMode.disabled,
+            autovalidateMode: _autoValidate
+                ? AutovalidateMode.always
+                : AutovalidateMode.disabled,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                                    SizedBox(height: 16),
+                  Image.network(
+                    'https://cdn-icons-png.flaticon.com/512/3600/3600917.png',
+                    width: 200,
+                    height: 200,
+                  ),
+                  Text(''),
+                  Text(''),
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: 'Email address',
+                      labelText: 'Username',
                       filled: true,
                       isDense: true,
                     ),
@@ -122,7 +135,7 @@ class __SignInFormState extends State<_SignInForm> {
                     autocorrect: false,
                     validator: (value) {
                       if (value == null) {
-                        return 'Email is required.';
+                        return 'Username is required.';
                       }
                       return null;
                     },
@@ -148,15 +161,27 @@ class __SignInFormState extends State<_SignInForm> {
                   const SizedBox(
                     height: 16,
                   ),
+                  Text(''),
                   //RaisedButton(
-                  ElevatedButton(  
+                  ElevatedButton(
                     //color: Theme.of(context).primaryColor,
                     //textColor: Colors.white,
                     //padding: const EdgeInsets.all(16),
                     //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(8.0)),
                     child: Text('LOG IN'),
-                    onPressed: state is LoginLoading ? () {} : _onLoginButtonPressed,
-                  )
+                    onPressed:
+                        state is LoginLoading ? () {} : _onLoginButtonPressed,
+                  ),
+                  Text(''),
+                  ElevatedButton(
+                    //color: Theme.of(context).primaryColor,
+                    //textColor: Colors.white,
+                    //padding: const EdgeInsets.all(16),
+                    //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(8.0)),
+                    child: Text('REGISTER'),
+                     onPressed: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => RegisterForm())),
+            ),
                 ],
               ),
             ),
@@ -173,7 +198,5 @@ class __SignInFormState extends State<_SignInForm> {
     ));*/
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
-
-
   }
 }
