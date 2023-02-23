@@ -20,8 +20,9 @@ El proyecto Flallery ha sido desarrollado por Valentín Tola Rodríguez.
     • DevTools version 2.21.1
 
     Para iniciar el proyecto es necesario realizar los siguientes pasos:
-    1-  Abrir el terminal y dirigirse a la carpeta FlalleryAPI donde tendremos nuestra API, ejecutar el comando "docker-compose up" 
-        para levantar la base de datos y el cliente PostgreSQL en docker (es necesario que tengas instalado docker desktop y esté arrancado).
+    1-  Abrir el terminal y dirigirse a la carpeta FlalleryAPI donde tendremos nuestra API,
+        ejecutar el comando "docker-compose up" para levantar la base de datos y el cliente PostgreSQL 
+        en docker (es necesario que tengas instalado docker desktop y esté arrancado).
     2-  Abrir la misma carpeta con nuestro IDE (recomendable IntelliJ para un mejor funcionamiento) y arrancar el proyecto.
     3-  Abrir la carpeta flallery_frontend con Visual Studio Code y realizar los siguientes comandos
         - flutter pub get
@@ -32,9 +33,11 @@ El proyecto Flallery ha sido desarrollado por Valentín Tola Rodríguez.
 
 ## Apuntes
 
-    -   Queda implementar muchas cosas en flutter por motivos de tiempo no me ha sido posible, trataré de realizarlo las próximas semanas:
-        - Mostrar listado de comentarios, esta comentado pero no es funcional.
-        - Crear, comentar, likear y borrar Artworks, por motivos de regla de negocio no permito editarlos una vez subidos como ocurre en cualquier red social como tiktok o instagram.
+    -   Queda implementar muchas cosas en flutter por motivos de tiempo no me ha sido posible, 
+        trataré de realizarlo las próximas semanas:
+        -   Mostrar listado de comentarios, esta comentado pero no es funcional.
+        -   Crear, comentar, likear y borrar Artworks, por motivos de regla de negocio no permito
+            editarlos una vez subidos como ocurre en cualquier red social como tiktok o instagram.
 
     -   Por algún motivo cuando realizas un registro de usuario en frontend y luego realizas el login, 
         la página se queda cargando, pulsa shift+R en el terminal para entrar correctamente.
