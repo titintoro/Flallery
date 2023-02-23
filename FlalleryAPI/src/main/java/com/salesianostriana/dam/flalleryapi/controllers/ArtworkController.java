@@ -2,6 +2,7 @@ package com.salesianostriana.dam.flalleryapi.controllers;
 
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
+import com.salesianostriana.dam.flalleryapi.models.Loved;
 import com.salesianostriana.dam.flalleryapi.models.User;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkCreateRequest;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkResponse;
@@ -247,6 +248,14 @@ public class ArtworkController {
     }
 
 
+    @Operation(summary = "Unlike an Artwork")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "No content",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Loved.class))
+                    )})
+    })
     @DeleteMapping("/artwork/{id}/like")
     public ResponseEntity<ArtworkResponse> deleteLike(
             @PathVariable UUID idArtwork,
@@ -260,6 +269,25 @@ public class ArtworkController {
     }
 
 
+    @Operation(summary = "Comment an Artwork")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Artwork commented Successfully",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Comment.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                                "text": "Una obra bastante buena",
+                                                "writer": "titintoro"
+                                            }                                          
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "400",
+                    description = "Bad Artwork comment Request",
+                    content = @Content),
+    })
     @PostMapping("/artwork/{id}/comment")
     public ResponseEntity<CommentResponse> addComment(
             @PathVariable UUID id,
@@ -282,7 +310,14 @@ public class ArtworkController {
 
     }
 
-
+    @Operation(summary = "Delete a Comment")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "No content",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Comment.class))
+                    )})
+    })
     @DeleteMapping("/artwork/{id}/comment/{idComment}")
     public ResponseEntity<ArtworkResponse> deleteComment(@PathVariable UUID id, UUID idComment, @AuthenticationPrincipal User user){
 

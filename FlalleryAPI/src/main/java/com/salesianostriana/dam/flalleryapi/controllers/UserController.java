@@ -354,6 +354,15 @@ public class UserController {
         return null;
     }
 
+
+    @Operation(summary = "Delete my User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "No content",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = User.class))
+                    )})
+    })
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteMyUser(@AuthenticationPrincipal User user, @RequestParam UUID id){
 
@@ -368,11 +377,41 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+
+    @Operation(summary = "Get my User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "User Found",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = User.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                                "id": "c0a8002c-867f-1b6f-8186-7f5c8ab70000",
+                                                "username": "titintoro",
+                                                "avatar": "https://avatar.com",
+                                                "fullName": "Valentín Tola",
+                                                "createdAt": "23/02/2023 18:40:16"
+                                            }                                        \s
+                                            """
+                            )}
+                    )})
+
+    })
     @GetMapping("/me")
     public UserResponse getMyUser(@AuthenticationPrincipal User user){
        return UserResponse.fromUser(user);
     }
 
+
+    @Operation(summary = "Delete other User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "No content",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = User.class))
+                    )})
+    })
     @DeleteMapping("auth/user/{id}")
     public ResponseEntity<?> deleteOtherUser(@AuthenticationPrincipal User user, @RequestParam UUID id){
         if (user.getRoles().contains(UserRole.ADMIN)){
