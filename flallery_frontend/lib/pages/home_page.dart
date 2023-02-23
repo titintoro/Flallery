@@ -26,14 +26,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('FLALLERY'),
         backgroundColor: Colors.amber,
       ),
       body: _body(_index),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Perfil'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.photo_filter), label: 'Galería'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Gestión'),
         ],
         onTap: (value) => setState(() {
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                   /*style: TextButton.styleFrom(
                   primary: Theme.of(context).primaryColor,
                 ),*/
-                  child: Text('Logout'),
+                  child: Text('Log out'),
                   onPressed: () {
                     BlocProvider.of<AuthenticationBloc>(context)
                         .add(UserLoggedOut());
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
         );
 
       case 2:
-        return RegisterForm();
+        return Center(child: Text('Admin Page'));
 
       default:
         throw Exception("Fallo");
