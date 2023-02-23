@@ -57,6 +57,7 @@ class _HomePageState extends State<HomePage> {
                   'Hola, ${widget.user.fullName}',
                   style: TextStyle(fontSize: 24),
                 ),
+                Text(''),
                 const SizedBox(
                   height: 12,
                 ),
@@ -71,6 +72,7 @@ class _HomePageState extends State<HomePage> {
                         .add(UserLoggedOut());
                   },
                 ),
+                Text(''),
                 ElevatedButton(
                     onPressed: () async {
                       print("Check");

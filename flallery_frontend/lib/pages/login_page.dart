@@ -122,6 +122,8 @@ class __SignInFormState extends State<_SignInForm> {
                     width: 200,
                     height: 200,
                   ),
+                  Text(''),
+                  Text(''),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Username',
@@ -159,6 +161,7 @@ class __SignInFormState extends State<_SignInForm> {
                   const SizedBox(
                     height: 16,
                   ),
+                  Text(''),
                   //RaisedButton(
                   ElevatedButton(
                     //color: Theme.of(context).primaryColor,
@@ -169,6 +172,7 @@ class __SignInFormState extends State<_SignInForm> {
                     onPressed:
                         state is LoginLoading ? () {} : _onLoginButtonPressed,
                   ),
+                  Text(''),
                   ElevatedButton(
                     //color: Theme.of(context).primaryColor,
                     //textColor: Colors.white,
