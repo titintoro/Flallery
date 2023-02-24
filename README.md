@@ -28,14 +28,20 @@ El proyecto Flallery ha sido desarrollado por Valentín Tola Rodríguez.
         - flutter pub get
         - flutter run -d windows
     
-    Si todo va bien debemos tener nuestro proyecto funcionando correctamente
+    Si todo va bien debemos tener nuestro proyecto funcionando correctamente.
+
+Usuarios:
+ADMIN --> Username: mcampos, Password: Salesianos123_
+USER --> Username: lmlopez, Password: Salesianos123_
+
+Swagger / Documentación de endpoints: http://localhost:8080/swagger-ui/index.html#/
+Colección de Postman agregada.
 
 
 ## Apuntes
 
     -   Queda implementar muchas cosas en flutter por motivos de tiempo no me ha sido posible, 
         trataré de realizarlo las próximas semanas:
-        -   Mostrar listado de comentarios, esta comentado pero no es funcional.
         -   Crear, comentar, likear y borrar Artworks, por motivos de regla de negocio no permito
             editarlos una vez subidos como ocurre en cualquier red social como tiktok o instagram.
 

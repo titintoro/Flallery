@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: 24),
                 ),
                 Text(''),
-                Image.network('${widget.user.avatar}'),
+                Image.network('${widget.user.avatar}', width: 100, errorBuilder: (context, error, stackTrace) => Image.network('https://www.scottishartpaintings.co.uk/library/inventory/Simon-Laurie-20990-Porter-Head-on-Yellow.jpg',width: 200,),),
                 Text(''),
                 const SizedBox(
                   height: 12,

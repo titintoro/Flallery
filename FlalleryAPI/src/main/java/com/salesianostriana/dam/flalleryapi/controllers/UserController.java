@@ -36,6 +36,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -79,6 +80,58 @@ public class UserController {
         User user = userService.createUserWithUserRole(createUserRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.fromUser(user));
+    }
+
+
+    @Operation(summary = "Get a list of all Users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Users Found",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = User.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                 {
+                                                     "id": "751c3611-8882-5751-9f0d-d216dd047ebc",
+                                                     "username": "mcampos",
+                                                     "avatar": "https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg",
+                                                     "fullName": "Miguel",
+                                                     "createdAt": "26/09/2021 00:00:00"
+                                                 },
+                                                 {
+                                                     "id": "e641d9ec-ca50-4002-b87b-464b6c7686a9",
+                                                     "username": "lmlopez",
+                                                     "avatar": "https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg",
+                                                     "fullName": "Luis Miguel",
+                                                     "createdAt": "26/09/2021 00:00:00"
+                                                 },
+                                                 {
+                                                     "id": "ac1b033c-8683-171d-8186-83372eeb0000",
+                                                     "username": "titintoro",
+                                                     "avatar": "https://avatar.com",
+                                                     "fullName": "Valentín Tola",
+                                                     "createdAt": "24/02/2023 12:37:57"
+                                                 }
+                                             ]                                          
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No Users Found",
+                    content = @Content),
+    })
+    @GetMapping("/auth/user/")
+    public ResponseEntity<List<UserResponse>>getAllUSers(@AuthenticationPrincipal User user){
+        if (user.getRoles().contains(UserRole.ADMIN)){
+
+            List<UserResponse> responseList = userService.findAll().stream().map(UserResponse::fromUser).toList();
+            if (responseList.isEmpty())
+                return ResponseEntity.notFound().build();
+
+            return ResponseEntity.ok(responseList);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
 
@@ -363,15 +416,16 @@ public class UserController {
                             array = @ArraySchema(schema = @Schema(implementation = User.class))
                     )})
     })
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<?> deleteMyUser(@AuthenticationPrincipal User user, @RequestParam UUID id){
+    @Transactional
+    @DeleteMapping("/user/")
+    public ResponseEntity<?> deleteMyUser(@AuthenticationPrincipal User user){
 
-            Optional<User> userUtil = userService.findById(id);
+            Optional<User> userUtil = userService.findById(user.getId());
             if (userUtil.isPresent()) {
                 User userResponse = userUtil.get();
 
                 if (userResponse.getPassword().equals(user.getPassword()))
-                    userService.deleteById(id, user.getUsername());
+                    userService.deleteById(user.getId(), user.getUsername());
         }
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -412,8 +466,9 @@ public class UserController {
                             array = @ArraySchema(schema = @Schema(implementation = User.class))
                     )})
     })
+    @Transactional
     @DeleteMapping("auth/user/{id}")
-    public ResponseEntity<?> deleteOtherUser(@AuthenticationPrincipal User user, @RequestParam UUID id){
+    public ResponseEntity<?> deleteOtherUser(@AuthenticationPrincipal User user, @PathVariable UUID id){
         if (user.getRoles().contains(UserRole.ADMIN)){
             userService.deleteById(id, user.getUsername());
         }

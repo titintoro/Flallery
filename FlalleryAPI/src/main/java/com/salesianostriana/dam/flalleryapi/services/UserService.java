@@ -3,6 +3,7 @@ package com.salesianostriana.dam.flalleryapi.services;
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.dtos.user.CreateUserRequest;
+import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import com.salesianostriana.dam.flalleryapi.models.User;
 import com.salesianostriana.dam.flalleryapi.models.UserRole;
@@ -22,6 +23,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final RefreshTokenService refreshTokenService;
 
     public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
         User user =  User.builder()
@@ -99,12 +101,19 @@ public class UserService {
 
     }
 
-    public void delete(User user) { userRepository.deleteById(user.getId());}
+    public void delete(User user) {
+        if (userRepository.existsById(user.getId())) {
+            refreshTokenService.deleteByUser(userRepository.findById(user.getId()).get());
+            userRepository.deleteCommentsOfAUSer(user.getUsername());
+            userRepository.deleteArtworksOfAUSer(user.getUsername());
+            userRepository.deleteById(user.getId());
+    }}
 
 
     public void deleteById(UUID id, String name) {
         // Prevenimos errores al intentar borrar algo que no existe
         if (userRepository.existsById(id)) {
+            refreshTokenService.deleteByUser(userRepository.findById(id).get());
             userRepository.deleteCommentsOfAUSer(name);
             userRepository.deleteArtworksOfAUSer(name);
             userRepository.deleteById(id);

@@ -150,7 +150,7 @@ class RegisterForm extends StatelessWidget {
                           AutofillHints.url,
                         ],
                         decoration: const InputDecoration(
-                          labelText: 'Avatar',
+                          labelText: 'Avatar (URL Image)',
                           prefixIcon: Icon(Icons.insert_emoticon_sharp),
                         ),
                       ),
