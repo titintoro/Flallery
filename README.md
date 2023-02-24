@@ -28,8 +28,8 @@ Frontend: El frontend de Flallery se ha desarrollado utilizando Dart y Flutter u
     Si todo va bien debemos tener nuestro proyecto funcionando correctamente.
 
 Usuarios:
-- ADMIN --> Username: mcampos, Password: Salesianos123_
-- USER --> Username: lmlopez, Password: Salesianos123_
+- ADMIN --> Username: mcampos // Password: Salesianos123_
+- USER --> Username: lmlopez // Password: Salesianos123_
 
 Pruebas
 - Swagger / Documentación de endpoints: http://localhost:8080/swagger-ui/index.html#/
