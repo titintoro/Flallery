@@ -12,8 +12,8 @@ Frontend: El frontend de Flallery se ha desarrollado utilizando Dart y Flutter u
 
 ### Versiones y Arranque
 
-    • Flutter version 3.8.0-14.0.pre.10 
-    • Dart version 3.0.0 (build 3.0.0-259.0.dev)
+    • Flutter version 3.8.0-14.0.pre.10 CHANNEL MASTER
+    • Dart version 3.0.0 (build 3.0.0-259.0.dev) 
     • DevTools version 2.21.1
 
     Para iniciar el proyecto es necesario realizar los siguientes pasos:
