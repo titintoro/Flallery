@@ -13,6 +13,10 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@NamedEntityGraph(name = "Artwork.commentsAndLoved", attributeNodes = {
+        @NamedAttributeNode("comments"),
+        @NamedAttributeNode("usersThatLiked")
+})
 public class Artwork {
 
     @Id
@@ -35,14 +39,14 @@ public class Artwork {
     private String imgUrl;
 
     private String description;
-    @OneToMany(mappedBy = "artwork", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
     private String owner;
 
-    @OneToMany(mappedBy = "lovedArtwork", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lovedArtwork", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
-    private Set<Loved> usersThatLiked = new HashSet<>();
+    private List<Loved> usersThatLiked = new ArrayList<>();
 
     @PreRemove
     public void deleteCommentFromArtwork(){

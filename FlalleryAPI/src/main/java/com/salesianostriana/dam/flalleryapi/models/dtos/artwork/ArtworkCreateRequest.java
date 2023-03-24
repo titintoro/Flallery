@@ -30,7 +30,7 @@ public class ArtworkCreateRequest {
                 .name(this.name)
                 .imgUrl(imgUrl)
                 .comments(new ArrayList<>())
-                .usersThatLiked(new HashSet<>())
+                .usersThatLiked(new ArrayList<>())
                 .description(this.description)
                 .build();
     }

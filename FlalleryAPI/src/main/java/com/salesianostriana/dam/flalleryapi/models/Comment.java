@@ -14,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@NamedEntityGraph(name = "Comment.artwork", attributeNodes = @NamedAttributeNode("artwork"))
 public class Comment {
 
     @Id
@@ -22,7 +23,7 @@ public class Comment {
 
     private String text;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artwork",
             foreignKey = @ForeignKey(name="ARTWORK_ID_FK"))
     private Artwork artwork;
