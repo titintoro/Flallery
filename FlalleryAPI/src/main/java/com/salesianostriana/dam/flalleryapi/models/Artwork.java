@@ -44,6 +44,16 @@ public class Artwork {
     @Builder.Default
     private Set<Loved> usersThatLiked = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "category",
+            foreignKey = @ForeignKey(name="CATEGORY_ID_FK"))
+    private ArtworkCategory category;
+
+    @OneToOne
+    @JoinColumn(name = "venta",
+            foreignKey = @ForeignKey(name="VENTA_ID_FK"))
+    private Venta venta;
+
     @PreRemove
     public void deleteCommentFromArtwork(){
 
