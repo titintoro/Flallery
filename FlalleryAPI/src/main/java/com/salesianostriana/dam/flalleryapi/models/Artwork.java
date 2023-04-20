@@ -54,6 +54,9 @@ public class Artwork {
             foreignKey = @ForeignKey(name="VENTA_ID_FK"))
     private Venta venta;
 
+    private boolean disponibleParaComprar;
+
+
     @PreRemove
     public void deleteCommentFromArtwork(){
 

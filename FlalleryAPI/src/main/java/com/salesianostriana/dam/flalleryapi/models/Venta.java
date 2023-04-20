@@ -27,4 +27,6 @@ public class Venta {
     private String usernameComprador;
 
     private String usernameVendedor;
+
+
 }

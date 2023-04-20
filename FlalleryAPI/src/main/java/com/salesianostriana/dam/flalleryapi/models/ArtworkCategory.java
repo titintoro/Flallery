@@ -22,4 +22,17 @@ public class ArtworkCategory {
     private List<Artwork> artworkList;
 
     private String name;
+
+    @PreRemove
+    private void setCategorySinCategoria(){
+
+        ArtworkCategory ac = ArtworkCategory.builder()
+                .idCategory(1L)
+                .name("Sin categoria")
+                .build();
+
+        for (Artwork a: artworkList) {
+            a.setCategory(ac);
+        };
+    }
 }
