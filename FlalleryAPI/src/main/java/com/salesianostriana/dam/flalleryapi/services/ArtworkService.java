@@ -1,9 +1,11 @@
 package com.salesianostriana.dam.flalleryapi.services;
 
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
+import com.salesianostriana.dam.flalleryapi.models.ArtworkCategory;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.Loved;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkCreateRequest;
+import com.salesianostriana.dam.flalleryapi.repositories.ArtworkCategoryRepository;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
 import com.salesianostriana.dam.flalleryapi.search.spec.ArtworkSpecificationBuilder;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteria;
@@ -24,17 +26,25 @@ import java.util.UUID;
 public class ArtworkService {
 
     private final ArtworkRepository repo;
+
+    private final ArtworkCategoryRepository categoryRepo;
     private final FileSystemStorageService storageService;
 
 
     @Transactional
-    public Artwork save(ArtworkCreateRequest artworkCreateRequest, MultipartFile file, String owner) {
+    public Artwork save( ArtworkCreateRequest artworkCreateRequest, MultipartFile file, String owner) {
         String filename = storageService.store(file);
 
-        Artwork artwork = repo.save(
-                artworkCreateRequest.ArtworkCreateRequestToArtwork(owner, filename));
+        Optional<ArtworkCategory> category = categoryRepo.findFirstByName(artworkCreateRequest.getCategoryName());
 
-        return artwork;
+        if (category.isPresent()){
+            Artwork artwork = repo.save(
+                    artworkCreateRequest.ArtworkCreateRequestToArtwork(category.get(), owner, filename));
+            return artwork;
+        }
+
+        return null;
+
     }
 
 

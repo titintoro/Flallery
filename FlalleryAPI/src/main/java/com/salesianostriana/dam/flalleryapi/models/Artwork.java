@@ -48,6 +48,19 @@ public class Artwork {
     @Builder.Default
     private List<Loved> usersThatLiked = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "category",
+            foreignKey = @ForeignKey(name="CATEGORY_ID_FK"))
+    private ArtworkCategory category;
+
+    @OneToOne
+    @JoinColumn(name = "venta",
+            foreignKey = @ForeignKey(name="VENTA_ID_FK"))
+    private Venta venta;
+
+    private boolean disponibleParaComprar;
+
+
     @PreRemove
     public void deleteCommentFromArtwork(){
 
