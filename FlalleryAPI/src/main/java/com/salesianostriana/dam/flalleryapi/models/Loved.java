@@ -31,7 +31,7 @@ public class Loved {
     private UUID id_loved;
 
     private String lover;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "lovedArtwork",
             foreignKey = @ForeignKey(name="LOVEDARTWORK_ID_FK"))
     private Artwork lovedArtwork;

@@ -15,6 +15,7 @@ import java.util.Optional;
 public class ArtworkCategoryService {
 
     private final ArtworkCategoryRepository artworkCategoryRepository;
+    private final ArtworkRepository artworkRepository;
 
     public List<ArtworkCategory> findAll(){ return artworkCategoryRepository.findAll();}
 
@@ -25,7 +26,7 @@ public class ArtworkCategoryService {
     }
 
 
-    public void delete(ArtworkCategory a) {
+    public void delete(ArtworkCategory ac) {
         ArtworkCategory sinCategoria;
 
         if (artworkCategoryRepository.findById(1L).isPresent()){
@@ -36,8 +37,15 @@ public class ArtworkCategoryService {
                     .idCategory(1L)
                     .name("Sin categoria")
                     .build();
+            artworkCategoryRepository.save(sinCategoria);
         }
 
+        for (Artwork a: ac.getArtworkList()
+             ) {
+            a.setCategory(sinCategoria);
+        }
 
-        artworkCategoryRepository.delete(a);}
+        artworkRepository.saveAll(ac.getArtworkList());
+
+        artworkCategoryRepository.delete(ac);}
 }

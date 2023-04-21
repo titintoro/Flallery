@@ -12,13 +12,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@NamedEntityGraph(name = "ArtworkCategory.artwork", attributeNodes = {
+        @NamedAttributeNode("artworkList")
+})
 public class ArtworkCategory {
 
     @GeneratedValue
     @Id
     private Long idCategory;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Artwork> artworkList;
 
     private String name;

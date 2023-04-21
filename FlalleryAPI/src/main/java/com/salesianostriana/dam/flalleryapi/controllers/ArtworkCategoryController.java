@@ -174,7 +174,7 @@ public class ArtworkCategoryController {
                     description = "No Artwork found",
                     content = @Content),
     })
-    @DeleteMapping("/artwork")
+    @DeleteMapping("/category/")
     public ResponseEntity<?> delete(
             @PathVariable Long id,
             @AuthenticationPrincipal User user) {
