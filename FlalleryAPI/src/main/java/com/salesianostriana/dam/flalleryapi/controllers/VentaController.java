@@ -126,7 +126,7 @@ public class VentaController {
             Optional<Venta> venta = ventaService.findVentaByID(id);
             if (venta.isPresent()){
                 VentaResponse response = new VentaResponse();
-                return ResponseEntity.of(Optional.of(response.ventaToVentaResponse(venta.get())));
+                return ResponseEntity.of(Optional.of(VentaResponse.ventaToVentaResponse(venta.get())));
             }
 
             return ResponseEntity.notFound().build();
@@ -179,7 +179,7 @@ public class VentaController {
 
             return ResponseEntity
                     .created(createdURI)
-                    .body(new VentaResponse().ventaToVentaResponse(venta));
+                    .body(VentaResponse.ventaToVentaResponse(venta));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }

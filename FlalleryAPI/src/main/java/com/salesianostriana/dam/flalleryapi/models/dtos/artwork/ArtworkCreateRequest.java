@@ -32,6 +32,7 @@ public class ArtworkCreateRequest {
                 .owner(ownerName)
                 .name(this.name)
                 .imgUrl(imgUrl)
+                .category(category)
                 .disponibleParaComprar(Boolean.TRUE)
                 .comments(new ArrayList<>())
                 .usersThatLiked(new ArrayList<>())

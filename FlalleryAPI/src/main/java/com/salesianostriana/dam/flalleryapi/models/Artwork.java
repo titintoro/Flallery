@@ -53,11 +53,6 @@ public class Artwork {
             foreignKey = @ForeignKey(name="CATEGORY_ID_FK"))
     private ArtworkCategory category;
 
-    @OneToOne
-    @JoinColumn(name = "venta",
-            foreignKey = @ForeignKey(name="VENTA_ID_FK"))
-    private Venta venta;
-
     private boolean disponibleParaComprar;
 
 

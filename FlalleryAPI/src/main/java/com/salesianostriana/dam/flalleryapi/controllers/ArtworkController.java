@@ -122,12 +122,7 @@ public class ArtworkController {
     public ResponseEntity<ArtworkResponse> getArtwork(@PathVariable UUID id){
 
         Optional<Artwork> artwork = artworkService.findById(id);
-        if (artwork.isPresent()){
-            ArtworkResponse response = new ArtworkResponse();
-            return ResponseEntity.of(Optional.of(response.artworkToArtworkResponse(artwork.get())));
-        }
-
-        return ResponseEntity.notFound().build();
+        return artwork.map(value -> ResponseEntity.of(Optional.of(ArtworkResponse.artworkToArtworkResponse(value)))).orElseGet(() -> ResponseEntity.notFound().build());
 
     }
 
@@ -172,7 +167,7 @@ public class ArtworkController {
 
         return ResponseEntity
                 .created(createdURI)
-                .body(new ArtworkResponse().artworkToArtworkResponse(artwork));
+                .body(ArtworkResponse.artworkToArtworkResponse(artwork));
     }
 
 
@@ -243,7 +238,7 @@ public class ArtworkController {
 
         return ResponseEntity
                 .created(createdURI)
-                .body(new ArtworkResponse().artworkToArtworkResponse(artwork));
+                .body(ArtworkResponse.artworkToArtworkResponse(artwork));
 
     }
 
@@ -263,7 +258,7 @@ public class ArtworkController {
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
-                .body(new ArtworkResponse()
+                .body(ArtworkResponse
                         .artworkToArtworkResponse(artworkService.unlike(idArtwork,user.getUsername())));
 
     }
@@ -323,7 +318,7 @@ public class ArtworkController {
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
-                .body(new ArtworkResponse()
+                .body(ArtworkResponse
                         .artworkToArtworkResponse(artworkService.deleteComment(idComment,id,user.getUsername())));
 
     }
