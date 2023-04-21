@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.flalleryapi.services;
 
+import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.ArtworkCategory;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkCategoryRepository;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
@@ -24,5 +25,19 @@ public class ArtworkCategoryService {
     }
 
 
-    public void delete(ArtworkCategory a) { artworkCategoryRepository.delete(a);}
+    public void delete(ArtworkCategory a) {
+        ArtworkCategory sinCategoria;
+
+        if (artworkCategoryRepository.findById(1L).isPresent()){
+            sinCategoria = artworkCategoryRepository.findById(1L).get();
+        }
+        else {
+            sinCategoria = ArtworkCategory.builder()
+                    .idCategory(1L)
+                    .name("Sin categoria")
+                    .build();
+        }
+
+
+        artworkCategoryRepository.delete(a);}
 }

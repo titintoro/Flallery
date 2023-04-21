@@ -18,7 +18,7 @@ public class ArtworkCategory {
     @Id
     private Long idCategory;
 
-    @OneToMany
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Artwork> artworkList;
 
     private String name;
