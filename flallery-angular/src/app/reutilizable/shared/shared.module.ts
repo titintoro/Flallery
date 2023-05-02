@@ -104,4 +104,4 @@ import { MomentDateModule } from '@angular/material-moment-adapter'; /*npm insta
     MatNativeDateModule
   ]
 })
-export class ReusableModule { }
+export class SharedModule { }

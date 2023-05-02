@@ -15,6 +15,7 @@ export class LoginService {
 
   login(request:LoginRequest):Observable<JwtUserResponse>{
 
-    return this.http.post<JwtUserResponse>(`${this.urlApi}/login`, request)
+    return this.http.post<JwtUserResponse>(`${this.urlApi}`, request)
+    
   }
 }
