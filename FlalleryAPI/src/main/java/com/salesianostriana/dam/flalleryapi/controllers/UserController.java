@@ -82,6 +82,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.fromUser(user));
     }
 
+    @PutMapping("/auth/editUser")
+    public ResponseEntity<UserResponse> editMyUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
+        User user = userService.createUserWithUserRole(createUserRequest);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.fromUser(user));
+    }
+
 
     @Operation(summary = "Get a list of all Users")
     @ApiResponses(value = {
@@ -381,6 +388,7 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
+
 
 
     @PutMapping("/user/changePassword")
