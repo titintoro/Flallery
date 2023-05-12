@@ -45,6 +45,7 @@ export class LoginComponent {
         if (data) {
           this._utilService.guardarSesionUsuario(data)
           this.router.navigate(["pages"])
+          localStorage.setItem("auth_token", data.token)
         } else {
           this._utilService.mostrarAlerta("No se encontraron coincidencias", "Oops")
         }

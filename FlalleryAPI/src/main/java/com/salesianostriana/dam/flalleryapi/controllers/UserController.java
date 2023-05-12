@@ -195,7 +195,7 @@ public class UserController {
                     description = "Unauthorized",
                     content = @Content),
     })
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @PostMapping("/auth/login")
     public ResponseEntity<JwtUserResponse> login(@RequestBody LoginRequest loginRequest) {
 
