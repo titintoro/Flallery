@@ -55,8 +55,5 @@
 
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close color="warm">Volver</button>
-  <button mat-raised-button color="primary"
-    [disabled]="createUserForm.invalid"
-    (click)="guardarEditar_Usuario"
-  >{{botonAccion}}</button>
+  <button mat-raised-button color="primary" [disabled]="createUserForm.invalid" (click)="guardarEditar_Usuario()">{{botonAccion}}</button>
 </mat-dialog-actions>

@@ -10,6 +10,7 @@ import { HistorialVentaComponent } from './pages/historial-venta/historial-venta
 import { ReporteComponent } from './pages/reporte/reporte.component';
 import { SharedModule } from 'src/app/reutilizable/shared/shared.module';
 import { ModalUsuarioComponent } from './modals/modal-usuario/modal-usuario.component';
+import { ModalArtworkComponent } from './modals/modal-artwork/modal-artwork.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ModalUsuarioComponent } from './modals/modal-usuario/modal-usuario.comp
     VentaComponent,
     HistorialVentaComponent,
     ReporteComponent,
-    ModalUsuarioComponent
+    ModalUsuarioComponent,
+    ModalArtworkComponent
   ],
   imports: [
     CommonModule,

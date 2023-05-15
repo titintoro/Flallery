@@ -25,6 +25,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -151,7 +152,7 @@ public class ArtworkController {
                     description = "Bad Artwork Creation Request",
                     content = @Content),
     })
-    @PostMapping("/artwork")
+    @PostMapping(value = "/artwork", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ArtworkResponse>createArtwork(
             @RequestPart("artwork") ArtworkCreateRequest artworkCreateRequest,
             @AuthenticationPrincipal User user,

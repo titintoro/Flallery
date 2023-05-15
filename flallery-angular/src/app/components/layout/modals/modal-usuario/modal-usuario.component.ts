@@ -53,39 +53,52 @@ export class ModalUsuarioComponent {
     }
   }
 
-  guardarEditar_Usuario(){
-    const _usuario:CreateUserRequest = {
-      username: this.datosUsuario.username,
-      password: this.datosUsuario.password,
-      verifyPassword: this.datosUsuario.verifyPassword,
-      avatar: this.datosUsuario.avatar,
-      fullName: this.datosUsuario.fullName
-    }
+  guardarEditar_Usuario() {
+    console.log(this.datosUsuario);
 
-    if(this.datosUsuario == null){
+    if (this.datosUsuario != null) {
+      const _usuario: CreateUserRequest = {
+        username: this.datosUsuario.username,
+        password: this.datosUsuario.password,
+        verifyPassword: this.datosUsuario.verifyPassword,
+        avatar: this.datosUsuario.avatar,
+        fullName: this.datosUsuario.fullName
+      };
+
       this._userService.registrarUsuario(_usuario).subscribe({
-        next:(data)=>{
-          if(data){
-              this._utilService.mostrarAlerta("El usuario fue registrado","Éxito")
-              this.modalActual.close("true");
+        next: (data) => {
+          if (data) {
+            this._utilService.mostrarAlerta("El usuario fue registrado", "Éxito");
+            this.modalActual.close("true");
           } else {
-            this._utilService.mostrarAlerta("No se pudo crear el usuario","Error")
-          }},
-          error:(e)=>{}
-        })
-      } else {
-        this._userService.registrarUsuario(_usuario).subscribe({
-          next:(data)=>{
-            if(data){
-                this._utilService.mostrarAlerta("El usuario fue registrado","Éxito")
-                this.modalActual.close("true");
-            } else {
-              this._utilService.mostrarAlerta("No se pudo crear el usuario","Error")
-            }},
-            error:(e)=>{}
-          })
-      }
+            this._utilService.mostrarAlerta("No se pudo crear el usuario", "Error");
+          }
+        },
+        error: (e) => {}
+      });
+    } else {
+      // Handle the case where datosUsuario is null, for example, when creating a new user
+      const _usuario: CreateUserRequest = {
+        username: this.createUserForm.value.username,
+        password: this.createUserForm.value.password,
+        verifyPassword: this.createUserForm.value.verifyPassword,
+        avatar: this.createUserForm.value.avatar,
+        fullName: this.createUserForm.value.fullName
+      };
+
+      this._userService.registrarUsuario(_usuario).subscribe({
+        next: (data) => {
+          if (data) {
+            this._utilService.mostrarAlerta("El usuario fue registrado", "Éxito");
+            this.modalActual.close("true");
+          } else {
+            this._utilService.mostrarAlerta("No se pudo crear el usuario", "Error");
+          }
+        },
+        error: (e) => {}
+      });
     }
+  }
   }
 
 
