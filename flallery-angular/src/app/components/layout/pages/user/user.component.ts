@@ -28,6 +28,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
     private _utilService: UtilService
   ) { }
 
+
   obtenerUsuarios() {
     this._usuarioService.lista().subscribe({
       next: (data) => {
@@ -40,18 +41,22 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
     })
   }
 
+
   ngOnInit(): void {
     this.obtenerUsuarios();
   }
+
 
   ngAfterViewInit(): void {
     this.dataListaUsuarios.paginator = this.paginacionTabla;
   }
 
+
   aplicarFiltroTabla(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataListaUsuarios.filter = filterValue.trim().toLocaleLowerCase();
   }
+
 
   nuevoUsuario() {
     this.dialog.open(ModalUsuarioComponent, {
@@ -60,6 +65,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
       if (res == "true") this.obtenerUsuarios();
     });
   }
+
 
   editUsuario(userResponse: UserResponse) {
     this.dialog.open(ModalUsuarioComponent, {
@@ -70,6 +76,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
     });
   }
 
+  
   eliminarUsuario(userResponse: UserResponse) {
     Swal.fire({
       title: '¿Desea eliminar el usuario?',

@@ -16,6 +16,7 @@ export class ModalUsuarioComponent {
 
   createUserForm: FormGroup;
   ocultarPassword: boolean = true;
+  ocultarVerifyPassword: boolean =true;
   tituloAccion: string = "Agregar";
   botonAccion: string = "Guardar";
 

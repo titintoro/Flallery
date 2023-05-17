@@ -24,20 +24,41 @@ export class ArtworkComponent {
 
   columnasTable: string[] = ['id', 'categoria', 'fullName', 'createdAt', 'acciones'];
   artworks: ArtworkResponse[] = [];
+  filteredArtworks: ArtworkResponse[] = [];
 
   dataInicio: UserResponse[] = [];
   dataListaUsuarios = new MatTableDataSource(this.dataInicio);
+  dataListaArtworks = new MatTableDataSource(this.artworks);
   @ViewChild(MatPaginator) paginacionTabla!: MatPaginator;
 
   constructor(
     private artworkCategoryService: ArtworkCategoryService,
     private dialog: MatDialog,
-    private artworkService: ArtworkService) { }
+    private artworkService: ArtworkService,
+    private _utilService: UtilService) { }
+
 
   ngOnInit(): void {
     this.loadArtworks();
     console.log(this.artworks)
+    this.filteredArtworks = this.artworks;
   }
+
+
+  applyFilterCard(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.filteredArtworks = this.artworks.filter((artwork) => {
+      return (
+        artwork.name.toLowerCase().includes(filterValue) ||
+        artwork.categoryName.toLowerCase().includes(filterValue) ||
+        artwork.owner.toLowerCase().includes(filterValue)
+      );
+    });
+    if(this.filteredArtworks.length=== 0){
+      this._utilService.mostrarAlerta("No se han encontrado resultados","Oops!")
+    }
+  }
+
 
   loadArtworks(): void {
     this.artworks = [];
@@ -48,6 +69,13 @@ export class ArtworkComponent {
     );
   }
 
+
+  aplicarFiltroTabla(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataListaArtworks.filter = filterValue.trim().toLocaleLowerCase();
+  }
+
+
   openDetailsDialog(artwork: ArtworkResponse): void {
     this.dialog.open(ArtworkDetailsDialogComponent, {
       width: '70%',
@@ -55,12 +83,14 @@ export class ArtworkComponent {
     });
   }
 
+
   openEditDialog(artwork: ArtworkResponse): void {
     this.dialog.open(ArtworkEditDialogComponent, {
       width: '500px',
       data: artwork
     });
   }
+
 
   openCreateArtworkDialog() {
     const dialogRef = this.dialog.open(ModalArtworkComponent, {
@@ -77,6 +107,7 @@ export class ArtworkComponent {
           response => {
             // Handle success response
             console.log('Artwork created successfully!', response);
+            this._utilService.mostrarAlerta("El artwork fue registrado", "Éxito")
             this.loadArtworks()
           }
         )

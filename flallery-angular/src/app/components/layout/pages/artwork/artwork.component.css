@@ -2,7 +2,18 @@
   padding: 30px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 30px;
+}
+
+.artwork-card:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.grid-item:hover {
+  transform: scale(1.05);
+  transition: 0.5s;
 }
 
 .artwork-image {
