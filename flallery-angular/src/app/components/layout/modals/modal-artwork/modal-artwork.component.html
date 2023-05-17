@@ -9,9 +9,17 @@
       <textarea matInput placeholder="Description" [(ngModel)]="artwork.description" name="description" required></textarea>
     </mat-form-field><br>
 
-    <mat-form-field>
-      <input matInput placeholder="Category Name" [(ngModel)]="artwork.categoryName" name="categoryName" required>
-    </mat-form-field> <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="artwork.categoryName" name="categoryName">
+        <mat-option
+          *ngFor="let artworkCategory of artworkCategoryList"
+          value="{{artworkCategory.name}}"
+        >
+          {{ artworkCategory.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field><br>
 
     <input type="file" (change)="onFileSelected($event)">
   </form>

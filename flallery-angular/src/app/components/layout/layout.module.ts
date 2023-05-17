@@ -11,6 +11,9 @@ import { ReporteComponent } from './pages/reporte/reporte.component';
 import { SharedModule } from 'src/app/reutilizable/shared/shared.module';
 import { ModalUsuarioComponent } from './modals/modal-usuario/modal-usuario.component';
 import { ModalArtworkComponent } from './modals/modal-artwork/modal-artwork.component';
+import { ArtworkDetailsDialogComponent } from './modals/artwork-details-dialog/artwork-details-dialog.component';
+import { ArtworkEditDialogComponent } from './modals/artwork-edit-dialog/artwork-edit-dialog.component';
+import { ArtworkImagePipe } from 'src/app/pipes/artwork-image.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { ModalArtworkComponent } from './modals/modal-artwork/modal-artwork.comp
     HistorialVentaComponent,
     ReporteComponent,
     ModalUsuarioComponent,
-    ModalArtworkComponent
+    ModalArtworkComponent,
+    ArtworkDetailsDialogComponent,
+    ArtworkEditDialogComponent,
+    ArtworkImagePipe
   ],
   imports: [
     CommonModule,

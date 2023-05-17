@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ArtworkCreateRequest } from 'src/app/models/request-dtos/artwork-create-request.interface';
 import { CreateUserRequest } from 'src/app/models/request-dtos/create-user-request.interface';
-import { ArtworkCategory } from 'src/app/models/response-dtos/artwork-category-response';
+import { ArtworkCategory, ArtworkCategoryList } from 'src/app/models/response-dtos/artwork-category-response';
+import { ArtworkCategoryService } from 'src/app/services/artwork-category.service';
 
 @Component({
   selector: 'app-modal-artwork',
@@ -21,17 +22,19 @@ export class ModalArtworkComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ModalArtworkComponent>,
+    private artworkCategoryService: ArtworkCategoryService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-  ngOnInit(): void {}
+  artworkCategoryList: ArtworkCategoryList = [];
+  ngOnInit(): void {
+    this.artworkCategoryService.getAllCategories().subscribe(res=> this.artworkCategoryList = res)
+  }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
     this.selectedFile = file;
   }
-
-  
 
   createArtwork() {
     // Perform validation or additional processing if needed

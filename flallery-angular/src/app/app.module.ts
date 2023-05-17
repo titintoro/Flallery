@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { SharedModule } from './reutilizable/shared/shared.module';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { ArtworkImagePipe } from './pipes/artwork-image.pipe';
 
 @NgModule({
   declarations: [
