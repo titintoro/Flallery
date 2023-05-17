@@ -3,6 +3,7 @@ package com.salesianostriana.dam.flalleryapi.services;
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.dtos.user.CreateUserRequest;
+import com.salesianostriana.dam.flalleryapi.models.dtos.user.UserEditRequest;
 import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import com.salesianostriana.dam.flalleryapi.models.User;
@@ -75,7 +76,7 @@ public class UserService {
     public void deleteCommentsOfAUSer(String owner) { userRepository.deleteCommentsOfAUSer(owner);}
 
 
-    public Optional<User> edit(User user) {
+    public Optional<User> edit(UserEditRequest user) {
 
         // El username no se puede editar
         // La contraseña se edita en otro método

@@ -35,7 +35,7 @@ export class ModalArtworkComponent {
     const file = event.target.files[0];
     this.selectedFile = file;
   }
-
+  
   createArtwork() {
     // Perform validation or additional processing if needed
     // Create the artwork object

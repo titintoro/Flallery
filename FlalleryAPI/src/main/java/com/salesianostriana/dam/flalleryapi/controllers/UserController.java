@@ -83,10 +83,10 @@ public class UserController {
     }
 
     @PutMapping("/auth/editUser")
-    public ResponseEntity<UserResponse> editMyUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
-        User user = userService.createUserWithUserRole(createUserRequest);
+    public ResponseEntity<UserResponse> editMyUser(@Valid @RequestBody UserEditRequest userEditRequest) {
+        Optional<User> userResponse= userService.edit(userEditRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.fromUser(user));
+        return userResponse.map(user -> ResponseEntity.status(HttpStatus.OK).body(UserResponse.fromUser(user))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 

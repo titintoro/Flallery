@@ -5,6 +5,8 @@ import { User } from 'src/app/models/response-dtos/user-list-response.interface'
 import { UserService } from 'src/app/services/user.service';
 import { UtilService } from 'src/app/reutilizable/util.service';
 import { CreateUserRequest } from 'src/app/models/request-dtos/create-user-request.interface';
+import { EditUserRequest } from 'src/app/models/request-dtos/edit-user-request.interface';
+import { UserResponse } from 'src/app/models/response-dtos/create-user-response.interface';
 @Component({
   selector: 'app-modal-usuario',
   templateUrl: './modal-usuario.component.html',
@@ -19,15 +21,13 @@ export class ModalUsuarioComponent {
 
   constructor(
     private modalActual: MatDialogRef<ModalUsuarioComponent>,
-    @Inject(MAT_DIALOG_DATA) public datosUsuario: CreateUserRequest,
+    @Inject(MAT_DIALOG_DATA) public datosUsuario: UserResponse,
     private fb: FormBuilder,
     private _userService: UserService,
     private _utilService: UtilService
   ) {
     this.createUserForm = this.fb.group({
       username: ["", Validators.required],
-      password: ["", Validators.required],
-      verifyPassword: ["", Validators.required],
       avatar: ["", Validators.required],
       fullName: ["", Validators.required]
     });
@@ -45,25 +45,27 @@ export class ModalUsuarioComponent {
 
       this.createUserForm.patchValue({
         username: this.datosUsuario.username,
-        password: this.datosUsuario.password,
-        verifyPassword: this.datosUsuario.verifyPassword,
         avatar: this.datosUsuario.avatar,
         fullName: this.datosUsuario.fullName
-        });
+      });
     }
   }
 
   guardarEditar_Usuario() {
-    console.log(this.datosUsuario);
 
-    if (this.datosUsuario != null) {
-      const _usuario: CreateUserRequest = {
-        username: this.datosUsuario.username,
-        password: this.datosUsuario.password,
-        verifyPassword: this.datosUsuario.verifyPassword,
-        avatar: this.datosUsuario.avatar,
-        fullName: this.datosUsuario.fullName
-      };
+
+
+    const _usuario: CreateUserRequest = {
+      username: this.createUserForm.value.username,
+      password: this.createUserForm.value.password,
+      verifyPassword: this.createUserForm.value.verifyPassword,
+      avatar: this.createUserForm.value.avatar,
+      fullName: this.createUserForm.value.fullName
+    };
+
+    console.log(_usuario);
+
+    if (this.datosUsuario == null) {
 
       this._userService.registrarUsuario(_usuario).subscribe({
         next: (data) => {
@@ -74,32 +76,30 @@ export class ModalUsuarioComponent {
             this._utilService.mostrarAlerta("No se pudo crear el usuario", "Error");
           }
         },
-        error: (e) => {}
+        error: (e) => { }
       });
     } else {
-      // Handle the case where datosUsuario is null, for example, when creating a new user
-      const _usuario: CreateUserRequest = {
-        username: this.createUserForm.value.username,
-        password: this.createUserForm.value.password,
-        verifyPassword: this.createUserForm.value.verifyPassword,
+
+      const _usuarioEdit: EditUserRequest = {
+        id: this.datosUsuario.id,
         avatar: this.createUserForm.value.avatar,
         fullName: this.createUserForm.value.fullName
       };
 
-      this._userService.registrarUsuario(_usuario).subscribe({
+      this._userService.editar(_usuarioEdit).subscribe({
         next: (data) => {
           if (data) {
-            this._utilService.mostrarAlerta("El usuario fue registrado", "Éxito");
+            this._utilService.mostrarAlerta("El usuario fue editado", "Éxito");
             this.modalActual.close("true");
           } else {
-            this._utilService.mostrarAlerta("No se pudo crear el usuario", "Error");
+            this._utilService.mostrarAlerta("No se pudo editar el usuario", "Error");
           }
         },
-        error: (e) => {}
+        error: (e) => { }
       });
     }
   }
-  }
+}
 
 
 

@@ -14,29 +14,29 @@ import { UserResponse } from 'src/app/models/response-dtos/create-user-response.
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit/*, AfterViewInit*/{
+export class UserComponent implements OnInit/*, AfterViewInit*/ {
 
-  columnasTable:string[] = ['id','username','fullName','createdAt','acciones'];
+  columnasTable: string[] = ['id', 'username', 'fullName', 'createdAt', 'acciones'];
 
-  dataInicio:UserResponse[]=[];
+  dataInicio: UserResponse[] = [];
   dataListaUsuarios = new MatTableDataSource(this.dataInicio);
-  @ViewChild(MatPaginator) paginacionTabla!:MatPaginator;
+  @ViewChild(MatPaginator) paginacionTabla!: MatPaginator;
 
   constructor(
-    private dialog:MatDialog,
-    private _usuarioService:UserService,
-    private _utilService:UtilService
-  ){}
+    private dialog: MatDialog,
+    private _usuarioService: UserService,
+    private _utilService: UtilService
+  ) { }
 
-  obtenerUsuarios(){
+  obtenerUsuarios() {
     this._usuarioService.lista().subscribe({
-      next:(data) =>{
-        if(data)
+      next: (data) => {
+        if (data)
           this.dataListaUsuarios.data = data;
         else
           this._utilService.mostrarAlerta("No se encontraron datos", "Oops!")
       },
-      error:(e)=>{}
+      error: (e) => { }
     })
   }
 
@@ -45,54 +45,49 @@ export class UserComponent implements OnInit/*, AfterViewInit*/{
   }
 
   ngAfterViewInit(): void {
-    this.dataListaUsuarios.paginator=this.paginacionTabla;
+    this.dataListaUsuarios.paginator = this.paginacionTabla;
   }
 
-  aplicarFiltroTabla(event: Event){
+  aplicarFiltroTabla(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataListaUsuarios.filter = filterValue.trim().toLocaleLowerCase();
   }
 
-  nuevoUsuario(){
-    this.dialog.open(ModalUsuarioComponent,{
-      disableClose:true
-    }).afterClosed().subscribe(res =>{
-      if(res=="true")this.obtenerUsuarios();
+  nuevoUsuario() {
+    this.dialog.open(ModalUsuarioComponent, {
+      disableClose: true
+    }).afterClosed().subscribe(res => {
+      if (res == "true") this.obtenerUsuarios();
     });
   }
 
-  editUsuario(userResponse:UserResponse){
-    this.dialog.open(ModalUsuarioComponent,{
-      disableClose:true,
-      data:userResponse
-    }).afterClosed().subscribe(res =>{
-      if(res=="true")this.obtenerUsuarios();
+  editUsuario(userResponse: UserResponse) {
+    this.dialog.open(ModalUsuarioComponent, {
+      disableClose: true,
+      data: userResponse
+    }).afterClosed().subscribe(res => {
+      if (res == "true") this.obtenerUsuarios();
     });
   }
 
-  eliminarUsuario(userResponse:UserResponse){
+  eliminarUsuario(userResponse: UserResponse) {
     Swal.fire({
-      title:'¿Desea eliminar el usuario?',
+      title: '¿Desea eliminar el usuario?',
       text: userResponse.fullName,
-      icon:"warning",
-      confirmButtonColor:'#3085d6',
+      icon: "warning",
+      confirmButtonColor: '#3085d6',
       confirmButtonText: "Si, eliminar",
       showCancelButton: true,
       cancelButtonColor: '#d33',
       cancelButtonText: 'No, volver'
-    }).then((res) =>{
-      if(res.isConfirmed){
+    }).then((res) => {
+      if (res.isConfirmed) {
 
         this._usuarioService.eliminar(userResponse.id).subscribe({
-          next:(data)=>{
-            if(data){
-              this._utilService.mostrarAlerta("El usuario fué eliminado","Listo!");
-              this.obtenerUsuarios();
-            } else{
-              this._utilService.mostrarAlerta("No se pudo eliminar el usuario", "Error")
-            }
+          next: (data) => {
+            this._utilService.mostrarAlerta("El usuario fué eliminado", "Listo!");
+            this.obtenerUsuarios();
           },
-          error:(err)=>{}
         })
 
       }
