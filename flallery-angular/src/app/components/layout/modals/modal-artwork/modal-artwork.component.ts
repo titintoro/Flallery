@@ -23,7 +23,7 @@ export class ModalArtworkComponent {
   constructor(
     public dialogRef: MatDialogRef<ModalArtworkComponent>,
     private artworkCategoryService: ArtworkCategoryService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public datosArtwork: ArtworkCreateRequest
   ) {}
 
   artworkCategoryList: ArtworkCategoryList = [];

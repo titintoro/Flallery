@@ -5,15 +5,15 @@
       <mat-icon mat-list-icon>add</mat-icon>Nuevo Usuario
     </button>
   </mat-card-title>
+  <br>
   <mat-divider></mat-divider>
 
   <mat-card-content class="dashboard-card-content">
-    <!--
-    <mat-form-field appearance="standard">
+
+    <mat-form-field appearance="outline">
       <mat-label>Buscar</mat-label>
-      <input type="text" maInput (keyup)="aplicarFiltroTabla($event)"/>
+      <input type="text" matInput (keyup)="aplicarFiltroTabla($event)" />
     </mat-form-field>
-      -->
 
     <div class="mat-elevation-z2">
       <table mat-table [dataSource]="dataListaUsuarios">

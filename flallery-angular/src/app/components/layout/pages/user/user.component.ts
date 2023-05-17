@@ -43,16 +43,16 @@ export class UserComponent implements OnInit/*, AfterViewInit*/{
   ngOnInit(): void {
     this.obtenerUsuarios();
   }
-  /*
+
   ngAfterViewInit(): void {
     this.dataListaUsuarios.paginator=this.paginacionTabla;
   }
 
   aplicarFiltroTabla(event: Event){
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataListaUsuarios.filter = filterValue.trim().toLocaleLowerCase;
+    this.dataListaUsuarios.filter = filterValue.trim().toLocaleLowerCase();
   }
-  */
+
   nuevoUsuario(){
     this.dialog.open(ModalUsuarioComponent,{
       disableClose:true
