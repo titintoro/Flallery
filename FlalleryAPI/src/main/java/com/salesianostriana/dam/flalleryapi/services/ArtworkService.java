@@ -1,9 +1,6 @@
 package com.salesianostriana.dam.flalleryapi.services;
 
-import com.salesianostriana.dam.flalleryapi.models.Artwork;
-import com.salesianostriana.dam.flalleryapi.models.ArtworkCategory;
-import com.salesianostriana.dam.flalleryapi.models.Comment;
-import com.salesianostriana.dam.flalleryapi.models.Loved;
+import com.salesianostriana.dam.flalleryapi.models.*;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkCreateRequest;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkCategoryRepository;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
@@ -64,12 +61,14 @@ public class ArtworkService {
         return repo.save(artwork);
     }
 
-    public void delete(Artwork artwork, String username) {
+    public void delete(Artwork artwork, User user) {
 
-        if (artwork.getOwner().equals(username))
+        if (artwork.getOwner().equals(user.getUsername()) || user.getRoles().contains(UserRole.ADMIN)){
             repo.deleteLovesOfAnArtwork(artwork.getName());
             repo.deleteCommentsOfAnArtwork(artwork.getName());
             repo.delete(artwork);
+        }
+
     }
 
 

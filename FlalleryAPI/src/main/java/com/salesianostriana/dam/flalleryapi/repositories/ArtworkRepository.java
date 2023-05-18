@@ -25,13 +25,17 @@ public interface ArtworkRepository extends JpaRepository<Artwork, UUID>, JpaSpec
 
 
     @Modifying
-    @Query("delete from Comment c where c.artwork.name=:artworkName")
+    @Query("DELETE FROM Comment c WHERE c.id IN (SELECT co.id FROM Comment co WHERE co.artwork.name = :artworkName)")
     void deleteCommentsOfAnArtwork(String artworkName);
 
 
+
     @Modifying
-    @Query("delete from Loved l where l.lovedArtwork.name=:artworkName")
+    @Query("DELETE FROM Loved l WHERE l.id IN (SELECT lo.id FROM Loved lo WHERE lo.lovedArtwork.name = :artworkName)")
     void deleteLovesOfAnArtwork(String artworkName);
+
+
+
 
 
 

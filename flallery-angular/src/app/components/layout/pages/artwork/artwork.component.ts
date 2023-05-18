@@ -93,6 +93,31 @@ export class ArtworkComponent {
     });
   }
 
+  deleteArtwork(artwork: ArtworkResponse) {
+    Swal.fire({
+      title: '¿Desea eliminar el artwork?',
+      text: artwork.name,
+      icon: "warning",
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: "Si, eliminar",
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No, volver'
+    }).then((res) => {
+      if (res.isConfirmed) {
+
+        this.artworkService.deleteArtwork(artwork.uuid).subscribe({
+          next: (data) => {
+            this._utilService.mostrarAlerta("El artwork fué eliminado", "Listo!");
+            this.loadArtworks();
+            console.log(this.artworks)
+          },
+        })
+
+      }
+    })
+  }
+
 
   openCreateArtworkDialog() {
     const dialogRef = this.dialog.open(ModalArtworkComponent, {

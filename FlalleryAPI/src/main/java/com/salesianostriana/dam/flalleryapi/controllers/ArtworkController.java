@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -183,15 +184,18 @@ public class ArtworkController {
                     description = "No Artwork found",
                     content = @Content),
     })
-    @DeleteMapping("/artwork")
+
+    @Transactional
+    @DeleteMapping("/artwork/{id}")
     public ResponseEntity<?> delete(
             @PathVariable UUID id,
             @AuthenticationPrincipal User user) {
 
 
         Optional<Artwork> artwork = artworkService.findById(id);
+
         if (artwork.isPresent()){
-            artworkService.delete(artwork.get() , user.getUsername());
+            artworkService.delete(artwork.get() , user);
             return ResponseEntity.noContent().build();
         }
 

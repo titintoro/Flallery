@@ -32,6 +32,11 @@ export class ArtworkService {
 
     return this.http.get<ArtworkResponse[]>('http://localhost:8080/user/artwork/');
   }
+
+  deleteArtwork(id: string): Observable<ArtworkResponse[]> {
+
+    return this.http.delete<any>(`http://localhost:8080/artwork/${id}`);
+  }
 }
 
 

@@ -11,7 +11,7 @@ import { SharedModule } from './reutilizable/shared/shared.module';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { ArtworkImagePipe } from './pipes/artwork-image.pipe';
 import { UserImagePipe } from './pipes/user-image.pipe';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +24,8 @@ import { UserImagePipe } from './pipes/user-image.pipe';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   providers: [
     authInterceptorProviders
