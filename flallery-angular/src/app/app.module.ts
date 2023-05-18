@@ -10,13 +10,15 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { SharedModule } from './reutilizable/shared/shared.module';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { ArtworkImagePipe } from './pipes/artwork-image.pipe';
+import { UserImagePipe } from './pipes/user-image.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    LayoutComponent
+    LayoutComponent,
+    UserImagePipe
   ],
   imports: [
     BrowserModule,

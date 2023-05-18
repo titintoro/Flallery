@@ -15,7 +15,7 @@ public class UserResponse {
 
     protected String id;
     protected String username, avatar, fullName;
-
+    protected boolean enabled;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     protected LocalDateTime createdAt;
 
@@ -28,6 +28,7 @@ public class UserResponse {
                 .avatar(user.getAvatar())
                 .fullName(user.getFullName())
                 .createdAt(user.getCreatedAt())
+                .enabled(user.isEnabled())
                 .build();
     }
 

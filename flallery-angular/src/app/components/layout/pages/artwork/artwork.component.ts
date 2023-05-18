@@ -40,7 +40,6 @@ export class ArtworkComponent {
 
   ngOnInit(): void {
     this.loadArtworks();
-    console.log(this.artworks)
     this.filteredArtworks = this.artworks;
   }
 
@@ -87,7 +86,10 @@ export class ArtworkComponent {
   openEditDialog(artwork: ArtworkResponse): void {
     this.dialog.open(ArtworkEditDialogComponent, {
       width: '500px',
+      disableClose: true,
       data: artwork
+    }).afterClosed().subscribe(res => {
+      if (res == "true") this.loadArtworks();
     });
   }
 
@@ -102,11 +104,8 @@ export class ArtworkComponent {
       if (result) {
         const newArtwork = result.artwork;
         const selectedFile = result.file;
-        console.log(result)
         this.artworkService.createArtwork(newArtwork, selectedFile).subscribe(
           response => {
-            // Handle success response
-            console.log('Artwork created successfully!', response);
             this._utilService.mostrarAlerta("El artwork fue registrado", "Éxito")
             this.loadArtworks()
           }

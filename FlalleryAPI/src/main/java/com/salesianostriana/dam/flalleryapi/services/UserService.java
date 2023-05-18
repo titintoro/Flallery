@@ -26,6 +26,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final RefreshTokenService refreshTokenService;
 
+
+    public Optional<User> changeEnabledStatus(UUID id){
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isPresent()){
+            user.get().setEnabled(!user.get().isEnabled());
+            userRepository.save(user.get());
+        }
+        return user;
+    }
+
     public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
         User user =  User.builder()
                 .username(createUserRequest.getUsername())

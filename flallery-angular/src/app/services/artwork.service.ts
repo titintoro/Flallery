@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ArtworkCreateRequest } from '../models/request-dtos/artwork-create-request.interface';
+import { ArtworkResponse } from '../models/response-dtos/artwork-response-list.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +28,10 @@ export class ArtworkService {
     return this.http.post(this.artworkUrl, formData);
   }
 
+  getUserArtworks(): Observable<ArtworkResponse[]> {
+
+    return this.http.get<ArtworkResponse[]>('http://localhost:8080/user/artwork/');
+  }
 }
+
+

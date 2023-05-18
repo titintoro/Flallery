@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { User } from 'src/app/models/response-dtos/user-list-response.interface';
 import { UserService } from 'src/app/services/user.service';
 import { UtilService } from 'src/app/reutilizable/util.service';
 import { CreateUserRequest } from 'src/app/models/request-dtos/create-user-request.interface';
@@ -64,7 +63,6 @@ export class ModalUsuarioComponent {
       fullName: this.createUserForm.value.fullName
     };
 
-    console.log(_usuario);
 
     if (this.datosUsuario == null) {
 

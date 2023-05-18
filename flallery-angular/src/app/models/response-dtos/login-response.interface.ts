@@ -6,4 +6,5 @@ export interface JwtUserResponse {
   createdAt: string
   token: string
   refreshToken: string
+  enabled: boolean
 }

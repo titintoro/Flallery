@@ -8,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 import { UtilService } from 'src/app/reutilizable/util.service';
 import Swal from 'sweetalert2';
 import { UserResponse } from 'src/app/models/response-dtos/create-user-response.interface';
+import { JwtUserResponse } from 'src/app/models/response-dtos/login-response.interface';
 
 @Component({
   selector: 'app-user',
@@ -18,6 +19,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
 
   columnasTable: string[] = ['id', 'username', 'fullName', 'createdAt', 'acciones'];
 
+  user: JwtUserResponse | null = null;
   dataInicio: UserResponse[] = [];
   dataListaUsuarios = new MatTableDataSource(this.dataInicio);
   @ViewChild(MatPaginator) paginacionTabla!: MatPaginator;
@@ -33,7 +35,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
     this._usuarioService.lista().subscribe({
       next: (data) => {
         if (data)
-          this.dataListaUsuarios.data = data;
+          this.dataListaUsuarios.data = data.filter(data => data.username != this.user?.username);
         else
           this._utilService.mostrarAlerta("No se encontraron datos", "Oops!")
       },
@@ -43,6 +45,14 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
 
 
   ngOnInit(): void {
+
+    const userJson = localStorage.getItem('user');
+
+
+    if (userJson) {
+      this.user = JSON.parse(userJson);
+    }
+
     this.obtenerUsuarios();
   }
 
@@ -76,7 +86,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
     });
   }
 
-  
+
   eliminarUsuario(userResponse: UserResponse) {
     Swal.fire({
       title: '¿Desea eliminar el usuario?',
@@ -93,6 +103,55 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
         this._usuarioService.eliminar(userResponse.id).subscribe({
           next: (data) => {
             this._utilService.mostrarAlerta("El usuario fué eliminado", "Listo!");
+            this.obtenerUsuarios();
+          },
+        })
+
+      }
+    })
+  }
+
+  banearUsuario(userResponse: UserResponse) {
+    Swal.fire({
+      title: '¿Desea banear el usuario?',
+      text: userResponse.fullName,
+      icon: "warning",
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: "Si, banear",
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No, volver'
+    }).then((res) => {
+      if (res.isConfirmed) {
+
+        this._usuarioService.cambiarEstadoBaneoUsuario(userResponse.id).subscribe({
+          next: (data) => {
+            this._utilService.mostrarAlerta("El usuario fué baneado", "Listo!");
+            this.obtenerUsuarios();
+          },
+        })
+
+      }
+    })
+  }
+
+
+  desBanearUsuario(userResponse: UserResponse) {
+    Swal.fire({
+      title: '¿Desea desbanear el usuario?',
+      text: userResponse.fullName,
+      icon: "warning",
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: "Si, desbanear",
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No, volver'
+    }).then((res) => {
+      if (res.isConfirmed) {
+
+        this._usuarioService.cambiarEstadoBaneoUsuario(userResponse.id).subscribe({
+          next: (data) => {
+            this._utilService.mostrarAlerta("El usuario fué desbaneado", "Listo!");
             this.obtenerUsuarios();
           },
         })

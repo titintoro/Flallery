@@ -1,10 +1,11 @@
 <mat-toolbar color="primary">
 
-  <mat-toolbar-row>
+  <mat-toolbar-row color="primary" class="gradient-toolbar">
     <button mat-icon-button (click)="sidenav.toggle();">
       <mat-icon >menu</mat-icon>
     </button>
     <h1 style="margin: auto;">Flallery</h1>
+    <img style="height: 80%; border-radius: 10%;" src="../../../assets/8266afd59e5dbcd0f732de33b3235c71.jpg" alt="">
   </mat-toolbar-row>
 
 </mat-toolbar>
@@ -43,6 +44,10 @@
         <a mat-line>Reportes</a>
       </mat-list-item>
 
+      <mat-list-item routerLink="/login">
+        <mat-icon matListItemIcon >logout</mat-icon>
+        <a mat-line>Log out</a>
+      </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
 

@@ -8,10 +8,15 @@ export interface ArtworkResponseList {
 export interface ArtworkResponse {
   name: string
   uuid: string
-  comments: any[]
+  comments: Comment[]
   imgUrl: string
   disponibleParaComprar: boolean
   owner: string
   categoryName: string
   description: string
+}
+
+export interface Comment {
+  text: string
+  writer: string
 }

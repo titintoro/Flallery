@@ -3,7 +3,6 @@ package com.salesianostriana.dam.flalleryapi.controllers;
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.UserRole;
-import com.salesianostriana.dam.flalleryapi.models.dtos.PageDto;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.comment.CommentResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.user.*;
@@ -23,9 +22,6 @@ import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshTokenReq
 import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshTokenService;
 import com.salesianostriana.dam.flalleryapi.models.User;
 import com.salesianostriana.dam.flalleryapi.services.UserService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -344,6 +340,25 @@ public class UserController {
         return ResponseEntity.ok(response);
 
     }
+
+    @PutMapping("/user/{id}/changeStatus")
+    public ResponseEntity<UserResponse> changeEnabledStatus(@PathVariable UUID id, @AuthenticationPrincipal User userLogged){
+
+        if (userLogged.getRoles().contains(UserRole.ADMIN)){
+
+            Optional<User> user = userService.changeEnabledStatus(id);
+
+            if (user.isEmpty()){
+                return ResponseEntity.notFound().build();
+            }
+
+            UserResponse userResponse = UserResponse.fromUser(user.get());
+
+            return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
 
     @Operation(summary = "Get a list of all Comments wrote by a User")
     @ApiResponses(value = {
