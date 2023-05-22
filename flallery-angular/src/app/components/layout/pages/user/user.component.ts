@@ -17,7 +17,7 @@ import { JwtUserResponse } from 'src/app/models/response-dtos/login-response.int
 })
 export class UserComponent implements OnInit/*, AfterViewInit*/ {
 
-  columnasTable: string[] = ['id', 'username', 'fullName', 'createdAt', 'acciones'];
+  columnasTable: string[] = ['id', 'username','role', 'fullName', 'createdAt','ediciones', 'acciones'];
 
   user: JwtUserResponse | null = null;
   dataInicio: UserResponse[] = [];
@@ -110,6 +110,32 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
       }
     })
   }
+
+
+  cambiarRolUsuario(userResponse: UserResponse) {
+    Swal.fire({
+      title: `Desea hacer ${userResponse.role=='Admin'?'Usuario':'Administrador'} a ${userResponse.fullName}?`,
+      text: userResponse.fullName,
+      icon: "warning",
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: "Si, cambiar rol",
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No, volver'
+    }).then((res) => {
+      if (res.isConfirmed) {
+
+        this._usuarioService.cambiarRol(userResponse.id).subscribe({
+          next: (data) => {
+            this._utilService.mostrarAlerta("se cambió el rol correctamente", "Listo!");
+            this.obtenerUsuarios();
+          },
+        })
+
+      }
+    })
+  }
+
 
   banearUsuario(userResponse: UserResponse) {
     Swal.fire({

@@ -86,7 +86,21 @@ public class UserService {
 
     public void deleteCommentsOfAUSer(String owner) { userRepository.deleteCommentsOfAUSer(owner);}
 
-
+    public Optional<User> swapUserRole(UUID id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+           if (user.get().getRoles().contains(UserRole.ADMIN)){
+               user.get().getRoles().remove(UserRole.ADMIN);
+               user.get().getRoles().add(UserRole.USER);
+           } else {
+               user.get().getRoles().remove(UserRole.USER);
+               user.get().getRoles().add(UserRole.ADMIN);
+           }
+            userRepository.save(user.get());
+            return user;
+        }
+        return user;
+    }
     public Optional<User> edit(UserEditRequest user) {
 
         // El username no se puede editar

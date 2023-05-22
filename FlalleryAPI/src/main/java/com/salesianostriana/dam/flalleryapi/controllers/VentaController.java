@@ -160,7 +160,7 @@ public class VentaController {
                     description = "Bad Venta Creation Request",
                     content = @Content),
     })
-    @PostMapping("/venta/{id}")
+    @PostMapping("artwork/{id}/venta/")
     public ResponseEntity<VentaResponse>createVenta(
             @RequestBody VentaCreateRequest ventaCreateRequest,
             @PathVariable UUID id,

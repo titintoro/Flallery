@@ -167,6 +167,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.fromUser(user));
     }
 
+
+    @PutMapping("/user/{id}/role/")
+    public ResponseEntity<UserResponse> swapUserRole(@PathVariable UUID id, @AuthenticationPrincipal User user){
+        if (user.getRoles().contains(UserRole.ADMIN)){
+            return ResponseEntity.ok(UserResponse.fromUser(userService.swapUserRole(id).get()));
+        } else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+
     @Operation(summary = "Log in with a registered user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",

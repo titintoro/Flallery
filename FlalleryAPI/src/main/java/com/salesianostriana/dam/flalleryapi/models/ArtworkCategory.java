@@ -15,13 +15,15 @@ import java.util.List;
 @NamedEntityGraph(name = "ArtworkCategory.artwork", attributeNodes = {
         @NamedAttributeNode("artworkList")
 })
+@SequenceGenerator(name = "category_sequence", sequenceName = "category_sequence", initialValue = 3) // Change the initialValue as per your requirement
 public class ArtworkCategory {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
     @Id
     private Long idCategory;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Artwork> artworkList;
 
     private String name;
@@ -30,7 +32,7 @@ public class ArtworkCategory {
     private void setCategorySinCategoria(){
 
         ArtworkCategory ac = ArtworkCategory.builder()
-                .idCategory(1L)
+                .idCategory(0L)
                 .name("Sin categoria")
                 .build();
 

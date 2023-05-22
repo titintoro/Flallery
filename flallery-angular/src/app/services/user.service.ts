@@ -44,5 +44,9 @@ export class UserService {
   cambiarEstadoBaneoUsuario(id: string): Observable<UserResponse>{
     return this.http.put<UserResponse>(`http://localhost:8080/user/${id}/changeStatus`, null);
   }
+
+  cambiarRol(id:string): Observable<UserResponse>{
+    return this.http.put<UserResponse>(`http://localhost:8080/user/${id}/role/`, null);
+  }
 }
 

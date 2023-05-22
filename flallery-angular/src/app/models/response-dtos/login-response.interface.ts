@@ -7,4 +7,5 @@ export interface JwtUserResponse {
   token: string
   refreshToken: string
   enabled: boolean
+  role: string
 }

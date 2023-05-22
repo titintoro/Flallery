@@ -9,6 +9,7 @@ import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkCreateReq
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artworkcategory.ArtworkCategoryCreateRequest;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artworkcategory.ArtworkCategoryResponse;
+import com.salesianostriana.dam.flalleryapi.models.dtos.user.UserResponse;
 import com.salesianostriana.dam.flalleryapi.services.ArtworkCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -68,7 +69,7 @@ public class ArtworkCategoryController {
                     description = "No Categories Found",
                     content = @Content),
     })
-    @GetMapping("/category")
+    @GetMapping("/category/")
     public ResponseEntity<List<ArtworkCategoryResponse>> findAll() {
 
         List<ArtworkCategory> artworkCategoryList = artworkCategoryService.findAll();
@@ -106,13 +107,26 @@ public class ArtworkCategoryController {
                     content = @Content),
     })
     @GetMapping("/category/{id}")
-    public ResponseEntity<ArtworkCategoryResponse> getArtwork(@PathVariable Long id){
+    public ResponseEntity<ArtworkCategoryResponse> getArtworkCategory(@PathVariable Long id){
 
         Optional<ArtworkCategory> artworkCategory = artworkCategoryService.findById(id);
 
         return artworkCategory.map(category -> ResponseEntity.of(Optional.of(ArtworkCategoryResponse.artworkCategoryToArtworkCategoryResponse(category))))
                 .orElseGet(() -> ResponseEntity.notFound().build());
 
+    }
+
+
+    @PutMapping("/category/{name}")
+    public ResponseEntity<ArtworkCategoryResponse> editArtworkCategory(
+            @RequestBody ArtworkCategoryCreateRequest artworkCategoryCreateRequest,
+            @PathVariable String name){
+        Optional<ArtworkCategory> artworkCategoryResponse = artworkCategoryService.edit(name, artworkCategoryCreateRequest);
+
+        return artworkCategoryResponse
+                .map(cat -> ResponseEntity.status(HttpStatus.OK)
+                .body(ArtworkCategoryResponse.artworkCategoryToArtworkCategoryResponse(cat)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
@@ -141,7 +155,7 @@ public class ArtworkCategoryController {
                     content = @Content),
     })
     @PostMapping("/category/")
-    public ResponseEntity<ArtworkCategoryResponse>createArtwork(
+    public ResponseEntity<ArtworkCategoryResponse>createArtworkCategory(
             @RequestBody ArtworkCategoryCreateRequest artworkCategoryCreateRequest,
             @AuthenticationPrincipal User user){
 
@@ -174,20 +188,22 @@ public class ArtworkCategoryController {
                     description = "No Artwork found",
                     content = @Content),
     })
-    @DeleteMapping("/category/{id}")
-    public ResponseEntity<?> delete(
-            @PathVariable Long id,
+    @DeleteMapping("/category/{name}")
+    public ResponseEntity<?> deleteArtworkCategory(
+            @PathVariable String name,
             @AuthenticationPrincipal User user) {
 
-
-        Optional<ArtworkCategory> artworkCategory = artworkCategoryService.findById(id);
+        if (user.getRoles().contains(UserRole.ADMIN)) {
+        Optional<ArtworkCategory> artworkCategory = artworkCategoryService.findByName(name);
         if (artworkCategory.isPresent()){
             artworkCategoryService.delete(artworkCategory.get());
             return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.notFound().build();
+        }
 
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
 }

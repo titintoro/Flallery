@@ -12,6 +12,7 @@ import { ArtworkCategoryService } from 'src/app/services/artwork-category.servic
 import { ArtworkResponse } from 'src/app/models/response-dtos/artwork-response-list.interface';
 import { ArtworkDetailsDialogComponent } from '../../modals/artwork-details-dialog/artwork-details-dialog.component';
 import { ArtworkEditDialogComponent } from '../../modals/artwork-edit-dialog/artwork-edit-dialog.component';
+import { CommentRequest } from 'src/app/models/request-dtos/comment-create-request.interface';
 
 
 
@@ -26,8 +27,6 @@ export class ArtworkComponent {
   artworks: ArtworkResponse[] = [];
   filteredArtworks: ArtworkResponse[] = [];
 
-  dataInicio: UserResponse[] = [];
-  dataListaUsuarios = new MatTableDataSource(this.dataInicio);
   dataListaArtworks = new MatTableDataSource(this.artworks);
   @ViewChild(MatPaginator) paginacionTabla!: MatPaginator;
 
@@ -63,7 +62,10 @@ export class ArtworkComponent {
     this.artworks = [];
     this.artworkCategoryService.getAllCategories().subscribe(
       response => {
-        response.forEach(c => c.artworkResponseList.forEach(a => this.artworks.push(a)));
+        response.forEach(c => {
+          if (c.artworkResponseList!=null){
+            c.artworkResponseList.forEach(a => this.artworks.push(a))
+      }});
       },
     );
   }
@@ -109,13 +111,66 @@ export class ArtworkComponent {
         this.artworkService.deleteArtwork(artwork.uuid).subscribe({
           next: (data) => {
             this._utilService.mostrarAlerta("El artwork fué eliminado", "Listo!");
-            this.loadArtworks();
-            console.log(this.artworks)
+            this.artworks = this.artworks.filter(a => a.uuid !== artwork.uuid); // Remove the deleted artwork from the artworks array
+           this.filteredArtworks = this.filteredArtworks.filter(a => a.uuid !== artwork.uuid); // Remove the deleted artwork from the filteredArtworks array
+
           },
         })
 
       }
     })
+  }
+
+
+  commentArtwork(artwork: ArtworkResponse): void {
+    Swal.fire({
+      title: "Add Comment",
+      text: "Enter your comment",
+      input: 'text',
+      showCancelButton: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const comment: CommentRequest = {
+        text: result.value
+      };
+      if (result.value.trim()!=''){
+        this.artworkService.addComment(artwork.uuid,comment).subscribe(
+          () => {
+            Swal.fire('Comment added!', 'Your comment has been submitted successfully.', 'success');
+          },
+        );
+      } else{
+        Swal.fire('Error', 'You can not submit a empty comment. Please try again.', 'error');
+      }
+    }
+  });
+  /*    Swal.({
+      title: 'Add Comment',
+      input: 'text',
+      inputPlaceholder: 'Enter your comment',
+      showCancelButton: true,
+      confirmButtonText: 'Submit',
+      cancelButtonText: 'Cancel',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Please enter a comment';
+        }
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const comment: CommentRequest = {
+          text: result.value
+        };
+        this.artworkService.addComment(artwork.uuid,comment).subscribe(
+          () => {
+            Swal.fire('Comment added!', 'Your comment has been submitted successfully.', 'success');
+          },
+          (error) => {
+            Swal.fire('Error', 'Failed to submit comment. Please try again.', 'error');
+          }
+        );
+      }
+    });*/
   }
 
 

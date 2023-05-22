@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ArtworkCreateRequest } from '../models/request-dtos/artwork-create-request.interface';
 import { ArtworkResponse } from '../models/response-dtos/artwork-response-list.interface';
+import { CommentRequest } from '../models/request-dtos/comment-create-request.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,12 @@ export class ArtworkService {
 
     return this.http.delete<any>(`http://localhost:8080/artwork/${id}`);
   }
+
+  addComment(artworkId: string, comment: CommentRequest): Observable<any> {
+    const url = `http://localhost:8080/artwork/${artworkId}/comment`;
+    return this.http.post(url, comment);
+  }
 }
+
 
 

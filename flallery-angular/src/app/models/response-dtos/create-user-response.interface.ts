@@ -7,4 +7,5 @@ export interface UserResponse {
   fullName: string
   createdAt: string
   enabled: boolean
+  role: string
 }

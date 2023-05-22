@@ -1,9 +1,11 @@
 package com.salesianostriana.dam.flalleryapi.models.dtos.artworkcategory;
 
+import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.ArtworkCategory;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 
 @Builder
 @Getter
@@ -16,9 +18,9 @@ public class ArtworkCategoryCreateRequest {
     private String name;
 
     public ArtworkCategory artworkCategoryCreateRequestToArtworkCategory () {
-        return ArtworkCategory
-                .builder()
-                .name(this.name)
-                .build();
+        ArtworkCategory artworkCategory = new ArtworkCategory();
+        artworkCategory.setName(this.name);
+        artworkCategory.setArtworkList(new ArrayList<Artwork>());
+        return artworkCategory;
     }
 }
