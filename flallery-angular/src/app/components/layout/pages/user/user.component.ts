@@ -111,7 +111,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
     })
   }
 
-
+  
   cambiarRolUsuario(userResponse: UserResponse) {
     Swal.fire({
       title: `Desea hacer ${userResponse.role=='Admin'?'Usuario':'Administrador'} a ${userResponse.fullName}?`,

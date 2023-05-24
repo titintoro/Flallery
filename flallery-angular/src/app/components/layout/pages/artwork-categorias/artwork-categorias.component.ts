@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class ArtworkCategoriasComponent implements OnInit {
   dataListaCategorias: ArtworkCategory[] = [];
-  columnasTable: string[] = ['name', 'artworkCount', 'acciones'];
+  columnasTable: string[] = ['name', 'artworkCount', 'actions'];
 
   constructor(private artworkCategoryService: ArtworkCategoryService, private dialog: MatDialog) { }
 

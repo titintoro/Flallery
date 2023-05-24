@@ -29,7 +29,9 @@ export class ModalUsuarioComponent {
     this.createUserForm = this.fb.group({
       username: ["", Validators.required],
       avatar: ["", Validators.required],
-      fullName: ["", Validators.required]
+      fullName: ["", Validators.required],
+      password:[""],
+      verifyPassword:[""]
     });
 
     if (this.datosUsuario != null) {
