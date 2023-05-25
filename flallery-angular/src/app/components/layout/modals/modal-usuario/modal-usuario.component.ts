@@ -30,19 +30,24 @@ export class ModalUsuarioComponent {
       username: ["", Validators.required],
       avatar: ["", Validators.required],
       fullName: ["", Validators.required],
+      /* Problema con disabled
       password:[""],
       verifyPassword:[""]
+      */
     });
 
-    if (this.datosUsuario != null) {
-      this.tituloAccion = "Editar";
-      this.botonAccion = "Actualizar";
-    }
+
 
 
   }
 
   ngOnInit(): void {
+    if (this.datosUsuario != null) {
+      this.tituloAccion = "Editar";
+      this.botonAccion = "Actualizar";
+    }
+    console.log(this.datosUsuario)
+    console.log(this.tituloAccion)
     if (this.datosUsuario != null) {
 
       this.createUserForm.patchValue({
@@ -65,7 +70,7 @@ export class ModalUsuarioComponent {
       fullName: this.createUserForm.value.fullName
     };
 
-
+    console.log(this.datosUsuario)
     if (this.datosUsuario == null) {
 
       this._userService.registrarUsuario(_usuario).subscribe({
@@ -100,6 +105,7 @@ export class ModalUsuarioComponent {
       });
     }
   }
+
 }
 
 

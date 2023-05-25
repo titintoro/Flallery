@@ -15,7 +15,7 @@
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-          <input matInput [disabled]="tituloAccion !== 'Agregar'" [type]="ocultarPassword ? 'password': 'text'" formControlName="password">
+          <input matInput [disabled]="(tituloAccion == 'Editar')" [type]="ocultarPassword ? 'password': 'text'" formControlName="password">
           <button mat-icon-button matSuffix (click)="ocultarPassword = !ocultarPassword" type="button">
             <mat-icon matSuffix>{{ocultarPassword ? 'visibility_off':'visibility'}}</mat-icon>
           </button>
