@@ -458,7 +458,7 @@ public class UserController {
                 User userResponse = userUtil.get();
 
                 if (userResponse.getPassword().equals(user.getPassword()))
-                    userService.deleteById(user.getId(), user.getUsername());
+                    userService.deleteById(user.getId());
         }
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -503,7 +503,7 @@ public class UserController {
     @DeleteMapping("auth/user/{id}")
     public ResponseEntity<?> deleteOtherUser(@AuthenticationPrincipal User user, @PathVariable UUID id){
         if (user.getRoles().contains(UserRole.ADMIN)){
-            userService.deleteById(id, user.getUsername());
+            userService.deleteById(id);
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

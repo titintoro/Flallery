@@ -136,12 +136,14 @@ public class UserService {
     }}
 
 
-    public void deleteById(UUID id, String name) {
-        // Prevenimos errores al intentar borrar algo que no existe
-        if (userRepository.existsById(id)) {
+    public void deleteById(UUID id) {
+
+        Optional<User> userdelete = userRepository.findById(id);
+
+        if (userdelete.isPresent()) {
             refreshTokenService.deleteByUser(userRepository.findById(id).get());
-            userRepository.deleteCommentsOfAUSer(name);
-            userRepository.deleteArtworksOfAUSer(name);
+            userRepository.deleteCommentsOfAUSer(userdelete.get().getUsername());
+            userRepository.deleteArtworksOfAUSer(userdelete.get().getUsername());
             userRepository.deleteById(id);
         }
     }
