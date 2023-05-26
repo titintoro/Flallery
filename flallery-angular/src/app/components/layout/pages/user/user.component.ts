@@ -102,7 +102,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
 
         this._usuarioService.eliminar(userResponse.id).subscribe({
           next: (data) => {
-            this._utilService.mostrarAlerta("El usuario fué eliminado", "Listo!");
+            this._utilService.mostrarAlerta("El usuario fue eliminado", "Listo!");
             this.obtenerUsuarios();
           },
         })
@@ -111,7 +111,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
     })
   }
 
-  
+
   cambiarRolUsuario(userResponse: UserResponse) {
     Swal.fire({
       title: `Desea hacer ${userResponse.role=='Admin'?'Usuario':'Administrador'} a ${userResponse.fullName}?`,
@@ -152,7 +152,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
 
         this._usuarioService.cambiarEstadoBaneoUsuario(userResponse.id).subscribe({
           next: (data) => {
-            this._utilService.mostrarAlerta("El usuario fué baneado", "Listo!");
+            this._utilService.mostrarAlerta("El usuario fue baneado", "Listo!");
             this.obtenerUsuarios();
           },
         })
@@ -177,7 +177,7 @@ export class UserComponent implements OnInit/*, AfterViewInit*/ {
 
         this._usuarioService.cambiarEstadoBaneoUsuario(userResponse.id).subscribe({
           next: (data) => {
-            this._utilService.mostrarAlerta("El usuario fué desbaneado", "Listo!");
+            this._utilService.mostrarAlerta("El usuario fue desbaneado", "Listo!");
             this.obtenerUsuarios();
           },
         })

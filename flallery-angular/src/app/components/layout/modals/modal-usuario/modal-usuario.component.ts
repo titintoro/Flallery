@@ -30,10 +30,9 @@ export class ModalUsuarioComponent {
       username: ["", Validators.required],
       avatar: ["", Validators.required],
       fullName: ["", Validators.required],
-      /* Problema con disabled
       password:[""],
       verifyPassword:[""]
-      */
+
     });
 
 

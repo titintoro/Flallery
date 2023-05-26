@@ -110,7 +110,7 @@ export class ArtworkComponent {
 
         this.artworkService.deleteArtwork(artwork.uuid).subscribe({
           next: (data) => {
-            this._utilService.mostrarAlerta("El artwork fué eliminado", "Listo!");
+            this._utilService.mostrarAlerta("El artwork fue eliminado", "Listo!");
             this.artworks = this.artworks.filter(a => a.uuid !== artwork.uuid); // Remove the deleted artwork from the artworks array
            this.filteredArtworks = this.filteredArtworks.filter(a => a.uuid !== artwork.uuid); // Remove the deleted artwork from the filteredArtworks array
 
