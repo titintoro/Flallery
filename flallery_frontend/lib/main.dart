@@ -5,36 +5,28 @@ import 'package:flallery_frontend/blocs/blocs.dart';
 import 'package:flallery_frontend/services/services.dart';
 import 'package:flallery_frontend/pages/pages.dart';
 
-
-
 void main() {
   //WidgetsFlutterBinding.ensureInitialized();
   //await SharedPreferences.getInstance();
   setupAsyncDependencies();
   configureDependencies();
   //await getIt.allReady();
-  
-    
-    runApp(BlocProvider<AuthenticationBloc>(
-        create: (context) {
-          //GlobalContext.ctx = context;
-          final authService = getIt<JwtAuthenticationService>();
-          return AuthenticationBloc(authService)..add(AppLoaded());
-        },
-        child: MyApp(),
-      ));
 
+  runApp(BlocProvider<AuthenticationBloc>(
+    create: (context) {
+      //GlobalContext.ctx = context;
+      final authService = getIt<JwtAuthenticationService>();
+      return AuthenticationBloc(authService)..add(AppLoaded());
+    },
+    child: MyApp(),
+  ));
 }
 
 class GlobalContext {
-  
   static late BuildContext ctx;
-
 }
 
-
 class MyApp extends StatelessWidget {
-
   //static late  AuthenticationBloc _authBloc;
 
   static late MyApp _instance;
@@ -73,6 +65,7 @@ class MyApp extends StatelessWidget {
           GlobalContext.ctx = context;
           if (state is AuthenticationAuthenticated) {
             // show home page
+            print("Vamos al home page");
             return HomePage(
               user: state.user,
             );
