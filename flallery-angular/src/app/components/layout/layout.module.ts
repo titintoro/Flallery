@@ -6,7 +6,6 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UserComponent } from './pages/user/user.component';
 import { ArtworkComponent } from './pages/artwork/artwork.component';
 import { HistorialVentaComponent } from './pages/historial-venta/historial-venta.component';
-import { ReporteComponent } from './pages/reporte/reporte.component';
 import { SharedModule } from 'src/app/reutilizable/shared/shared.module';
 import { ModalUsuarioComponent } from './modals/modal-usuario/modal-usuario.component';
 import { ModalArtworkComponent } from './modals/modal-artwork/modal-artwork.component';
@@ -21,7 +20,6 @@ import { ArtworkCategoriasComponent } from './pages/artwork-categorias/artwork-c
     UserComponent,
     ArtworkComponent,
     HistorialVentaComponent,
-    ReporteComponent,
     ModalUsuarioComponent,
     ModalArtworkComponent,
     ArtworkDetailsDialogComponent,
