@@ -16,3 +16,4 @@ insert into artwork (id_artwork, description, img_url, name, owner, category, di
 insert into artwork (id_artwork, description, img_url, name, owner, category, disponible_para_comprar) values ('e641d9ec-ca50-4002-b87b-464b6c7686a6', 'Documentary', 'p05cjdsl.jpg', 'Dreamworlds II: Desire, Sex, Power in Music Video', 'mcampos', '2', 'True');
 insert into artwork (id_artwork, description, img_url, name, owner, category, disponible_para_comprar) values ('e641d9ec-ca50-4002-b87b-464b6c7686a7', 'Documentary', 'p05cjdsl.jpg', 'Order of Myths, The', 'mcampos', '2', 'True');
 insert into artwork (id_artwork, description, img_url, name, owner, category, disponible_para_comprar) values ('e641d9ec-ca50-4002-b87b-464b6c7686a8', 'Comedy|Drama|Romance', 'p05cjdsl.jpg', 'Last Kiss, The (Ultimo bacio, L'')', 'mcampos', '2', 'True');
+

@@ -4,6 +4,8 @@ import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Venta;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -15,7 +17,7 @@ public class VentaCreateRequest {
 
     private String artworkName;
     private double precio;
-    private Date fechaVenta;
+    private LocalDate fechaVenta;
     private String usernameComprador;
     private String usernameVendedor;
 

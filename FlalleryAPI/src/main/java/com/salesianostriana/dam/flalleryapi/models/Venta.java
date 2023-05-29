@@ -2,6 +2,8 @@ package com.salesianostriana.dam.flalleryapi.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +24,9 @@ public class Venta {
     private Artwork artwork;
 
     private double precio;
-    private Date fechaVenta;
+
+    @Builder.Default
+    private LocalDate fechaVenta = LocalDate.now();
 
     private String usernameComprador;
 

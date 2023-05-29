@@ -64,8 +64,8 @@ public class ArtworkService {
     public void delete(Artwork artwork, User user) {
 
         if (artwork.getOwner().equals(user.getUsername()) || user.getRoles().contains(UserRole.ADMIN)){
-            repo.deleteLovesOfAnArtwork(artwork.getName());
-            repo.deleteCommentsOfAnArtwork(artwork.getName());
+          //  repo.deleteLovesOfAnArtwork(artwork.getName());
+        //    repo.deleteCommentsOfAnArtwork(artwork.getName());
             repo.delete(artwork);
         }
 

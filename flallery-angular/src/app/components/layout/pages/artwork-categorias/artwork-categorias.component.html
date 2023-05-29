@@ -10,13 +10,8 @@
   <mat-divider></mat-divider>
 
   <mat-card-content class="dashboard-card-content">
-      <!--
-    <mat-form-field appearance="outline">
-      <mat-label>Search</mat-label>
-      <input type="text" matInput (keyup)="applyFilterTable($event)" />
-    </mat-form-field>
-  -->
     <div class="mat-elevation-z2">
+      
       <table mat-table [dataSource]="dataListaCategorias">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
