@@ -1,9 +1,8 @@
 package com.salesianostriana.dam.flalleryapi.services;
 
-import com.salesianostriana.dam.flalleryapi.models.Artwork;
-import com.salesianostriana.dam.flalleryapi.models.Comment;
-import com.salesianostriana.dam.flalleryapi.models.Loved;
+import com.salesianostriana.dam.flalleryapi.models.*;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkCreateRequest;
+import com.salesianostriana.dam.flalleryapi.repositories.ArtworkCategoryRepository;
 import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
 import com.salesianostriana.dam.flalleryapi.search.spec.ArtworkSpecificationBuilder;
 import com.salesianostriana.dam.flalleryapi.search.util.SearchCriteria;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,17 +24,25 @@ import java.util.UUID;
 public class ArtworkService {
 
     private final ArtworkRepository repo;
+
+    private final ArtworkCategoryRepository categoryRepo;
     private final FileSystemStorageService storageService;
 
 
     @Transactional
-    public Artwork save(ArtworkCreateRequest artworkCreateRequest, MultipartFile file, String owner) {
+    public Artwork save( ArtworkCreateRequest artworkCreateRequest, MultipartFile file, String owner) {
         String filename = storageService.store(file);
 
-        Artwork artwork = repo.save(
-                artworkCreateRequest.ArtworkCreateRequestToArtwork(owner, filename));
+        Optional<ArtworkCategory> category = categoryRepo.findFirstByName(artworkCreateRequest.getCategoryName());
 
-        return artwork;
+        if (category.isPresent()){
+            Artwork artwork = repo.save(
+                    artworkCreateRequest.ArtworkCreateRequestToArtwork(category.get(), owner, filename));
+            return artwork;
+        }
+
+        return null;
+
     }
 
 
@@ -54,12 +62,15 @@ public class ArtworkService {
         return repo.save(artwork);
     }
 
-    public void delete(Artwork artwork, String username) {
+    public void delete(Artwork artwork, User user) {
 
-        if (artwork.getOwner().equals(username))
+        if (artwork.getOwner().equals(user.getUsername()) || user.getRoles().contains(UserRole.ADMIN)){
             repo.deleteLovesOfAnArtwork(artwork.getName());
             repo.deleteCommentsOfAnArtwork(artwork.getName());
+            repo.save(artwork);
             repo.delete(artwork);
+        }
+
     }
 
 

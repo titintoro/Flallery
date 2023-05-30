@@ -3,10 +3,7 @@ package com.salesianostriana.dam.flalleryapi.repositories;
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +15,9 @@ public interface ArtworkRepository extends JpaRepository<Artwork, UUID>, JpaSpec
 
     Optional<Artwork> findFirstByName(String name);
 
+    @EntityGraph(value = "Artwork.commentsAndLoved", type = EntityGraph.EntityGraphType.LOAD)
+    Optional<Artwork> findByIdArtwork(Long id);
+
     @Query("""
             SELECT u FROM User u JOIN Loved l on u.username=l.lover WHERE l.lovedArtwork.name = :artworkName
             """)
@@ -25,13 +25,17 @@ public interface ArtworkRepository extends JpaRepository<Artwork, UUID>, JpaSpec
 
 
     @Modifying
-    @Query("delete from Comment c where c.artwork.name=:artworkName")
+    @Query("DELETE FROM Comment c WHERE c.id IN (SELECT co.id FROM Comment co WHERE co.artwork.name = :artworkName)")
     void deleteCommentsOfAnArtwork(String artworkName);
 
 
+
     @Modifying
-    @Query("delete from Loved l where l.lovedArtwork.name=:artworkName")
+    @Query("DELETE FROM Loved l WHERE l.id IN (SELECT lo.id FROM Loved lo WHERE lo.lovedArtwork.name = :artworkName)")
     void deleteLovesOfAnArtwork(String artworkName);
+
+
+
 
 
 

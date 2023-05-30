@@ -171,8 +171,7 @@ class RegisterForm extends StatelessWidget {
                       ),
                       Text(''),
                       ElevatedButton.icon(
-                        onPressed: () => Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (_) => LoginPage())),
+                        onPressed: () => Navigator.of(context).pop(),
                         icon: const Icon(Icons.replay),
                         label: const Text('Volver'),
                       ),
@@ -279,4 +278,3 @@ class ErrorScreen extends StatelessWidget {
     );
   }
 }
-

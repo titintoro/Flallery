@@ -23,8 +23,7 @@ public class Comment {
     private String text;
 
     @ManyToOne
-    @JoinColumn(name = "artwork",
-            foreignKey = @ForeignKey(name="ARTWORK_ID_FK"))
+    @JoinColumn(name = "artwork", foreignKey = @ForeignKey(name="ARTWORK_ID_FK"))
     private Artwork artwork;
 
     private String writer;

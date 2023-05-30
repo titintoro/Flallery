@@ -19,14 +19,18 @@ public class ArtworkResponse {
     private UUID uuid;
     private List<CommentResponse> comments;
     private String imgUrl;
-    private String owner;
 
+    private boolean disponibleParaComprar;
+    private String owner;
+    private String categoryName;
     private String description;
     public static ArtworkResponse artworkToArtworkResponse(Artwork artwork){
 
         return ArtworkResponse.builder()
                 .name(artwork.getName())
+                .categoryName(artwork.getCategory().getName())
                 .uuid(artwork.getIdArtwork())
+                .disponibleParaComprar(artwork.isDisponibleParaComprar())
                 .imgUrl(artwork.getImgUrl())
                 .owner(artwork.getOwner())
                 .description(artwork.getDescription())

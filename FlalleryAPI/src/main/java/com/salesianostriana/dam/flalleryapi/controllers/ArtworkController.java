@@ -25,12 +25,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -122,12 +124,7 @@ public class ArtworkController {
     public ResponseEntity<ArtworkResponse> getArtwork(@PathVariable UUID id){
 
         Optional<Artwork> artwork = artworkService.findById(id);
-        if (artwork.isPresent()){
-            ArtworkResponse response = new ArtworkResponse();
-            return ResponseEntity.of(Optional.of(response.artworkToArtworkResponse(artwork.get())));
-        }
-
-        return ResponseEntity.notFound().build();
+        return artwork.map(value -> ResponseEntity.of(Optional.of(ArtworkResponse.artworkToArtworkResponse(value)))).orElseGet(() -> ResponseEntity.notFound().build());
 
     }
 
@@ -156,7 +153,7 @@ public class ArtworkController {
                     description = "Bad Artwork Creation Request",
                     content = @Content),
     })
-    @PostMapping("/artwork")
+    @PostMapping(value = "/artwork", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ArtworkResponse>createArtwork(
             @RequestPart("artwork") ArtworkCreateRequest artworkCreateRequest,
             @AuthenticationPrincipal User user,
@@ -172,7 +169,7 @@ public class ArtworkController {
 
         return ResponseEntity
                 .created(createdURI)
-                .body(new ArtworkResponse().artworkToArtworkResponse(artwork));
+                .body(ArtworkResponse.artworkToArtworkResponse(artwork));
     }
 
 
@@ -187,15 +184,18 @@ public class ArtworkController {
                     description = "No Artwork found",
                     content = @Content),
     })
-    @DeleteMapping("/artwork")
+
+    @Transactional
+    @DeleteMapping("/artwork/{id}")
     public ResponseEntity<?> delete(
             @PathVariable UUID id,
             @AuthenticationPrincipal User user) {
 
 
         Optional<Artwork> artwork = artworkService.findById(id);
+
         if (artwork.isPresent()){
-            artworkService.delete(artwork.get() , user.getUsername());
+            artworkService.delete(artwork.get() , user);
             return ResponseEntity.noContent().build();
         }
 
@@ -243,7 +243,7 @@ public class ArtworkController {
 
         return ResponseEntity
                 .created(createdURI)
-                .body(new ArtworkResponse().artworkToArtworkResponse(artwork));
+                .body(ArtworkResponse.artworkToArtworkResponse(artwork));
 
     }
 
@@ -263,7 +263,7 @@ public class ArtworkController {
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
-                .body(new ArtworkResponse()
+                .body(ArtworkResponse
                         .artworkToArtworkResponse(artworkService.unlike(idArtwork,user.getUsername())));
 
     }
@@ -323,7 +323,7 @@ public class ArtworkController {
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
-                .body(new ArtworkResponse()
+                .body(ArtworkResponse
                         .artworkToArtworkResponse(artworkService.deleteComment(idComment,id,user.getUsername())));
 
     }

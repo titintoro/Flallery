@@ -3,6 +3,7 @@ package com.salesianostriana.dam.flalleryapi.services;
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.dtos.user.CreateUserRequest;
+import com.salesianostriana.dam.flalleryapi.models.dtos.user.UserEditRequest;
 import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import com.salesianostriana.dam.flalleryapi.models.User;
@@ -24,6 +25,17 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RefreshTokenService refreshTokenService;
+
+
+    public Optional<User> changeEnabledStatus(UUID id){
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isPresent()){
+            user.get().setEnabled(!user.get().isEnabled());
+            userRepository.save(user.get());
+        }
+        return user;
+    }
 
     public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
         User user =  User.builder()
@@ -74,8 +86,22 @@ public class UserService {
 
     public void deleteCommentsOfAUSer(String owner) { userRepository.deleteCommentsOfAUSer(owner);}
 
-
-    public Optional<User> edit(User user) {
+    public Optional<User> swapUserRole(UUID id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+           if (user.get().getRoles().contains(UserRole.ADMIN)){
+               user.get().getRoles().remove(UserRole.ADMIN);
+               user.get().getRoles().add(UserRole.USER);
+           } else {
+               user.get().getRoles().remove(UserRole.USER);
+               user.get().getRoles().add(UserRole.ADMIN);
+           }
+            userRepository.save(user.get());
+            return user;
+        }
+        return user;
+    }
+    public Optional<User> edit(UserEditRequest user) {
 
         // El username no se puede editar
         // La contraseña se edita en otro método
@@ -110,12 +136,14 @@ public class UserService {
     }}
 
 
-    public void deleteById(UUID id, String name) {
-        // Prevenimos errores al intentar borrar algo que no existe
-        if (userRepository.existsById(id)) {
+    public void deleteById(UUID id) {
+
+        Optional<User> userdelete = userRepository.findById(id);
+
+        if (userdelete.isPresent()) {
             refreshTokenService.deleteByUser(userRepository.findById(id).get());
-            userRepository.deleteCommentsOfAUSer(name);
-            userRepository.deleteArtworksOfAUSer(name);
+            userRepository.deleteCommentsOfAUSer(userdelete.get().getUsername());
+            userRepository.deleteArtworksOfAUSer(userdelete.get().getUsername());
             userRepository.deleteById(id);
         }
     }

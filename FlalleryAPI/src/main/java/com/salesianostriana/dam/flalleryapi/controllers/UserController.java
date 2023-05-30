@@ -3,7 +3,6 @@ package com.salesianostriana.dam.flalleryapi.controllers;
 import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.UserRole;
-import com.salesianostriana.dam.flalleryapi.models.dtos.PageDto;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.comment.CommentResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.user.*;
@@ -23,9 +22,6 @@ import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshTokenReq
 import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshTokenService;
 import com.salesianostriana.dam.flalleryapi.models.User;
 import com.salesianostriana.dam.flalleryapi.services.UserService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -80,6 +76,13 @@ public class UserController {
         User user = userService.createUserWithUserRole(createUserRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.fromUser(user));
+    }
+
+    @PutMapping("/auth/editUser")
+    public ResponseEntity<UserResponse> editMyUser(@Valid @RequestBody UserEditRequest userEditRequest) {
+        Optional<User> userResponse= userService.edit(userEditRequest);
+
+        return userResponse.map(user -> ResponseEntity.status(HttpStatus.OK).body(UserResponse.fromUser(user))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
@@ -164,6 +167,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.fromUser(user));
     }
 
+
+    @PutMapping("/user/{id}/role/")
+    public ResponseEntity<UserResponse> swapUserRole(@PathVariable UUID id, @AuthenticationPrincipal User user){
+        if (user.getRoles().contains(UserRole.ADMIN)){
+            return ResponseEntity.ok(UserResponse.fromUser(userService.swapUserRole(id).get()));
+        } else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+
     @Operation(summary = "Log in with a registered user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
@@ -188,6 +200,7 @@ public class UserController {
                     description = "Unauthorized",
                     content = @Content),
     })
+
     @PostMapping("/auth/login")
     public ResponseEntity<JwtUserResponse> login(@RequestBody LoginRequest loginRequest) {
 
@@ -337,6 +350,25 @@ public class UserController {
 
     }
 
+    @PutMapping("/user/{id}/changeStatus")
+    public ResponseEntity<UserResponse> changeEnabledStatus(@PathVariable UUID id, @AuthenticationPrincipal User userLogged){
+
+        if (userLogged.getRoles().contains(UserRole.ADMIN)){
+
+            Optional<User> user = userService.changeEnabledStatus(id);
+
+            if (user.isEmpty()){
+                return ResponseEntity.notFound().build();
+            }
+
+            UserResponse userResponse = UserResponse.fromUser(user.get());
+
+            return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+
     @Operation(summary = "Get a list of all Comments wrote by a User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
@@ -382,6 +414,7 @@ public class UserController {
     }
 
 
+
     @PutMapping("/user/changePassword")
     public ResponseEntity<UserResponse> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest,
                                                        @AuthenticationPrincipal User loggedUser) {
@@ -425,7 +458,7 @@ public class UserController {
                 User userResponse = userUtil.get();
 
                 if (userResponse.getPassword().equals(user.getPassword()))
-                    userService.deleteById(user.getId(), user.getUsername());
+                    userService.deleteById(user.getId());
         }
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -470,7 +503,7 @@ public class UserController {
     @DeleteMapping("auth/user/{id}")
     public ResponseEntity<?> deleteOtherUser(@AuthenticationPrincipal User user, @PathVariable UUID id){
         if (user.getRoles().contains(UserRole.ADMIN)){
-            userService.deleteById(id, user.getUsername());
+            userService.deleteById(id);
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

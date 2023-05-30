@@ -1,8 +1,5 @@
-import 'package:flallery_frontend/blocs/register/register_form_bloc.dart';
-import 'package:flallery_frontend/models/artwork_list_response.dart';
 import 'package:flallery_frontend/services/artwork_service.dart';
 import 'package:flallery_frontend/view/artwork_list.dart';
-import 'package:flallery_frontend/view/artwork_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flallery_frontend/blocs/authentication/authentication.dart';
@@ -35,8 +32,8 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.amber,
 
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Perfil'),
           BottomNavigationBarItem(icon: Icon(Icons.photo_filter), label: 'Galería'),
+          BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Perfil'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Gestión'),
           BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Crear'), // new button
         ],
@@ -51,7 +48,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _body(int index) {
     switch (index) {
-      case 0:
+      case 1:
         return SafeArea(
           minimum: const EdgeInsets.all(16),
           child: Center(
@@ -91,7 +88,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         );
-      case 1:
+      case 0:
         return BlocProvider(
           create: (_) =>
               ArtworkBloc(this.artworkService)..add(ArtworkFetched()),
