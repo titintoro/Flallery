@@ -44,7 +44,7 @@ export class LoginComponent {
       next: (data) => {
         if (data) {
           this._utilService.guardarSesionUsuario(data)
-          this.router.navigate(["pages"])
+          this.router.navigate(["pages/dashboard"])
           localStorage.setItem("auth_token", data.token)
         } else {
           this._utilService.mostrarAlerta("No se encontraron coincidencias", "Oops")
