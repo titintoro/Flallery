@@ -138,9 +138,10 @@ export class ArtworkComponent {
           () => {
             Swal.fire('Comment added!', 'Your comment has been submitted successfully.', 'success');
           },
-        );
+        ); this.dataListaArtworks.filter = ''.trim().toLocaleLowerCase();
       } else{
         Swal.fire('Error', 'You can not submit a empty comment. Please try again.', 'error');
+        this.dataListaArtworks.filter = ''.trim().toLocaleLowerCase();
       }
     }
   });

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -64,8 +65,9 @@ public class ArtworkService {
     public void delete(Artwork artwork, User user) {
 
         if (artwork.getOwner().equals(user.getUsername()) || user.getRoles().contains(UserRole.ADMIN)){
-          //  repo.deleteLovesOfAnArtwork(artwork.getName());
-        //    repo.deleteCommentsOfAnArtwork(artwork.getName());
+            repo.deleteLovesOfAnArtwork(artwork.getName());
+            repo.deleteCommentsOfAnArtwork(artwork.getName());
+            repo.save(artwork);
             repo.delete(artwork);
         }
 

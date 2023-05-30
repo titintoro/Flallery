@@ -35,7 +35,7 @@ public class TestModel {
 
         Artwork artwork1 = Artwork.builder()
                 .description("Drama|Mystery")
-                .imgUrl("p05cjdsl.jpg")
+                .imgUrl("Jacqueline-con-sombrero-ok-495x600-mqh4hwg1zvsxomp9zx0gsxvu1t88tjxyhy9iz2gnpw.jpg")
                 .name("Lost Memories")
                 .owner("mcampos")
                 .category(graffiti)
@@ -44,7 +44,7 @@ public class TestModel {
 
         Artwork artwork2 = Artwork.builder()
                 .description("Action|Thriller")
-                .imgUrl("p05cjdsl.jpg")
+                .imgUrl("paisajes-coloridos-arte-moderno_1.jpg")
                 .name("The Last Stand")
                 .owner("mcampos")
                 .category(graffiti)
@@ -53,7 +53,7 @@ public class TestModel {
 
         Artwork artwork3 = Artwork.builder()
                 .description("Adventure|Fantasy")
-                .imgUrl("p05cjdsl.jpg")
+                .imgUrl("PICASSO-Desnudo-acostado-800x600-m6fc19o6xm3jooeva220xmjyur1fpgh2cp2afnm2ok.jpg")
                 .name("Realm of Legends")
                 .owner("mcampos")
                 .category(oleos)
@@ -62,7 +62,7 @@ public class TestModel {
 
         Artwork artwork4 = Artwork.builder()
                 .description("Romance|Drama")
-                .imgUrl("p05cjdsl.jpg")
+                .imgUrl("pintura2-1-e1538148276170.jpg")
                 .name("Whispered Promises")
                 .owner("mcampos")
                 .category(graffiti)
@@ -71,7 +71,7 @@ public class TestModel {
 
         Artwork artwork5 = Artwork.builder()
                 .description("Comedy")
-                .imgUrl("p05cjdsl.jpg")
+                .imgUrl("R5DKCO5IV5A7PANZKPAZNRVNJU.jpg")
                 .name("Laugh Out Loud")
                 .owner("mcampos")
                 .category(oleos)
@@ -80,7 +80,7 @@ public class TestModel {
 
         Artwork artwork6 = Artwork.builder()
                 .description("Documentary|Biography")
-                .imgUrl("p05cjdsl.jpg")
+                .imgUrl("origen-del-arte-abstracto-e1635552766306.jpg")
                 .name("Untold Legacies")
                 .owner("mcampos")
                 .category(graffiti)
@@ -89,7 +89,7 @@ public class TestModel {
 
         Artwork artwork7 = Artwork.builder()
                 .description("Animation|Family")
-                .imgUrl("p05cjdsl.jpg")
+                .imgUrl("14067131_img-20210110-144801-ed.jpg")
                 .name("The Magical Adventure")
                 .owner("mcampos")
                 .category(oleos)
@@ -98,7 +98,7 @@ public class TestModel {
 
         Artwork artwork8 = Artwork.builder()
                 .description("Sci-Fi|Thriller")
-                .imgUrl("p05cjdsl.jpg")
+                .imgUrl("770x420-amantes.jpg")
                 .name("Beyond the Unknown")
                 .owner("mcampos")
                 .category(graffiti)
@@ -107,7 +107,7 @@ public class TestModel {
 
         Artwork artwork9 = Artwork.builder()
                 .description("Action|Adventure")
-                .imgUrl("p05cjdsl.jpg")
+                .imgUrl("el_nacimiento_de_venus_por_sandro_botticelli-1024x639.jpg")
                 .name("The Lost Treasure")
                 .owner("mcampos")
                 .category(oleos)
@@ -116,7 +116,7 @@ public class TestModel {
 
         Artwork artwork10 = Artwork.builder()
                 .description("Drama|Romance")
-                .imgUrl("p05cjdsl.jpg")
+                .imgUrl("mujer-escondida-actual.jpg")
                 .name("Fleeting Moments")
                 .owner("mcampos")
                 .category(graffiti)
