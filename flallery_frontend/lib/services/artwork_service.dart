@@ -24,4 +24,10 @@ class ArtworkService {
     return artworks;
   }
 
+    Future<List<Artwork>> getUserArtworks() async {
+    String? token = _localStorageService.getFromDisk("user_token");
+    List<Artwork> artworks= await _artworkRepository.fetchUserArtworks();
+    return artworks;
+  }
+
 }

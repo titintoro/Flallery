@@ -40,17 +40,24 @@ class ArtworkListItem extends StatelessWidget {
             ),
           );
         },
-        child: ListTile(
-          leading:
-              Image.network("http://localhost:8080/download/${artwork.imgUrl}"),
-          title: Text(
-            artwork.name!,
-            style: textTheme.bodyLarge,
+        child: GridTile(
+          child: Image.network(
+            "http://localhost:8080/download/${artwork.imgUrl}",
+            fit: BoxFit.contain,
           ),
-          isThreeLine: true,
-          subtitle: Text(artwork.owner!),
-          dense: true,
-          trailing: Icon(Icons.arrow_forward),
+          footer: GridTileBar(
+            backgroundColor: Color.fromARGB(115, 110, 109, 109),
+            title: Text(
+              artwork.name!,
+              style: textTheme.bodyLarge,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text(
+              artwork.owner!,
+              style: textTheme.bodySmall,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ),
       ),
     );

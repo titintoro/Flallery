@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ArtworksList extends StatefulWidget {
-  const ArtworksList({super.key});
+  const ArtworksList({Key? key}) : super(key: key);
 
   @override
   State<ArtworksList> createState() => _ArtworksListState();
@@ -26,28 +26,14 @@ class _ArtworksListState extends State<ArtworksList> {
       builder: (context, state) {
         switch (state.status) {
           case ArtworkStatus.failure:
-            return const Center(child: Text('failed to fetch artworks'));
+            return const Center(child: Text('Failed to fetch artworks'));
           case ArtworkStatus.success:
             if (state.artworkList.isEmpty) {
-              return const Center(child: Text('no artworks'));
+              return const Center(child: Text('No artworks'));
             }
-            return ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return index >= state.artworkList.length
-                    ? const BottomLoader()
-                    : ArtworkListItem(artwork: state.artworkList[index]);
-              },
-              itemCount: state.hasReachedMax
-                  ? state.artworkList.length
-                  : state.artworkList.length + 1,
-              controller: _scrollController,
-            );
-            /*
             return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, // number of columns in the grid
-                crossAxisSpacing: 1.0, // horizontal space between items
-                mainAxisSpacing: 1.0, // vertical space between items
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1, // Number of items per row
               ),
               itemBuilder: (BuildContext context, int index) {
                 return index >= state.artworkList.length
@@ -58,7 +44,7 @@ class _ArtworksListState extends State<ArtworksList> {
                   ? state.artworkList.length
                   : state.artworkList.length + 1,
               controller: _scrollController,
-            ); */
+            );
           case ArtworkStatus.initial:
             return const Center(child: CircularProgressIndicator());
         }

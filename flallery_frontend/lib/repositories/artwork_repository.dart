@@ -23,4 +23,14 @@ class ArtworkRepository {
     var jsonResponse = await _client.get(url);
     return ArtworkResponse.fromJson(jsonDecode(jsonResponse));
   }
+
+  Future<List<Artwork>> fetchUserArtworks() async {
+    String url = "/user/artwork";
+
+    var jsonResponse = await _client.get(url);
+    var list = (jsonDecode(jsonResponse) as List)
+        .map((e) => Artwork.fromJson(e))
+        .toList();
+    return list;
+  }
 }

@@ -4,6 +4,7 @@ import com.salesianostriana.dam.flalleryapi.models.Artwork;
 import com.salesianostriana.dam.flalleryapi.models.Comment;
 import com.salesianostriana.dam.flalleryapi.models.dtos.user.CreateUserRequest;
 import com.salesianostriana.dam.flalleryapi.models.dtos.user.UserEditRequest;
+import com.salesianostriana.dam.flalleryapi.repositories.ArtworkRepository;
 import com.salesianostriana.dam.flalleryapi.security.jwt.refresh.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import com.salesianostriana.dam.flalleryapi.models.User;
@@ -25,6 +26,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RefreshTokenService refreshTokenService;
+    private final ArtworkRepository artworkRepository;
 
 
     public Optional<User> changeEnabledStatus(UUID id){
@@ -132,6 +134,7 @@ public class UserService {
             refreshTokenService.deleteByUser(userRepository.findById(user.getId()).get());
             userRepository.deleteCommentsOfAUSer(user.getUsername());
             userRepository.deleteArtworksOfAUSer(user.getUsername());
+            userRepository.save(user);
             userRepository.deleteById(user.getId());
     }}
 
