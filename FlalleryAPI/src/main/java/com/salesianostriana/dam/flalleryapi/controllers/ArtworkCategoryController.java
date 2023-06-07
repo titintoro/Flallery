@@ -8,6 +8,7 @@ import com.salesianostriana.dam.flalleryapi.models.UserRole;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkCreateRequest;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artwork.ArtworkResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artworkcategory.ArtworkCategoryCreateRequest;
+import com.salesianostriana.dam.flalleryapi.models.dtos.artworkcategory.ArtworkCategoryNameResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.artworkcategory.ArtworkCategoryResponse;
 import com.salesianostriana.dam.flalleryapi.models.dtos.user.UserResponse;
 import com.salesianostriana.dam.flalleryapi.services.ArtworkCategoryService;
@@ -78,6 +79,17 @@ public class ArtworkCategoryController {
             return ResponseEntity.notFound().build();
 
         List<ArtworkCategoryResponse> responseList = artworkCategoryList.stream().map(ArtworkCategoryResponse::artworkCategoryToArtworkCategoryResponse).toList();
+        return ResponseEntity.ok(responseList);
+    }
+
+    @GetMapping("/categoryNames/")
+    public ResponseEntity<List<ArtworkCategoryNameResponse>> findAllCategoryNamesand(){
+        List<ArtworkCategory> artworkCategoryList = artworkCategoryService.findAll();
+
+        if (artworkCategoryList.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        List<ArtworkCategoryNameResponse> responseList = artworkCategoryList.stream().map(ArtworkCategoryNameResponse::artworkCategoryToArtworkCategoryNameResponse).toList();
         return ResponseEntity.ok(responseList);
     }
 

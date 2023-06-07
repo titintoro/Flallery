@@ -1,5 +1,7 @@
+import 'package:flallery_frontend/pages/artwork_create_page.dart';
 import 'package:flallery_frontend/services/artwork_service.dart';
 import 'package:flallery_frontend/view/artwork_list.dart';
+import 'package:flallery_frontend/view/artwork_user_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flallery_frontend/blocs/authentication/authentication.dart';
@@ -30,12 +32,13 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.amber,
-
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.photo_filter), label: 'Galería'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.photo_filter), label: 'Galería'),
           BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Perfil'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Gestión'),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Crear'), // new button
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add), label: 'Crear'), // new button
         ],
         onTap: (value) => setState(() {
           _index = value;
@@ -59,7 +62,14 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: 24),
                 ),
                 Text(''),
-                Image.network('${widget.user.avatar}', width: 100, errorBuilder: (context, error, stackTrace) => Image.network('https://www.scottishartpaintings.co.uk/library/inventory/Simon-Laurie-20990-Porter-Head-on-Yellow.jpg',width: 200,),),
+                Image.network(
+                  '${widget.user.avatar}',
+                  width: 100,
+                  errorBuilder: (context, error, stackTrace) => Image.network(
+                    'https://www.scottishartpaintings.co.uk/library/inventory/Simon-Laurie-20990-Porter-Head-on-Yellow.jpg',
+                    width: 200,
+                  ),
+                ),
                 Text(''),
                 const SizedBox(
                   height: 12,
@@ -78,12 +88,13 @@ class _HomePageState extends State<HomePage> {
                 Text(''),
                 ElevatedButton(
                     onPressed: () async {
-                      print("Check");
-                      JwtAuthenticationService service =
-                          getIt<JwtAuthenticationService>();
-                      await service.getCurrentUser();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ArtworkUserListPage()));
                     },
-                    child: Text('Check'))
+                    child: Text('Tus Artworks'))
               ],
             ),
           ),
@@ -97,9 +108,9 @@ class _HomePageState extends State<HomePage> {
 
       case 2:
         return Center(child: Text('Admin Page'));
-      
+
       case 3:
-        return Center(child: Text('Artwork Page'));
+        return ArtworkCreatePage();
 
       default:
         throw Exception("Fallo");

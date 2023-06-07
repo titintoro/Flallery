@@ -33,10 +33,6 @@ class ArtworkBloc extends Bloc<ArtworkEvent, ArtworkState> {
       _onArtworkFetched,
       transformer: throttleDroppable(throttleDuration),
     );
-    on<ArtworkUserFetched>(
-      _onArtworkUserFetched,
-      transformer: throttleDroppable(throttleDuration),
-    );
   }
 
   Future<void> _onArtworkFetched(
@@ -70,22 +66,4 @@ class ArtworkBloc extends Bloc<ArtworkEvent, ArtworkState> {
       emit(state.copyWith(status: ArtworkStatus.failure));
     }
   }
-
-  Future<void> _onArtworkUserFetched(
-    ArtworkUserFetched event,
-    Emitter<ArtworkState> emit,
-  ) async {
-    try {
-      List<Artwork> artworkList = await _artworkService.getUserArtworks();
-      emit(
-        state.copyWith(status: ArtworkStatus.success, artworkList: artworkList),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(status: ArtworkStatus.failure),
-      );
-    }
-  }
 }
-
-

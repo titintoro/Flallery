@@ -1,4 +1,7 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flallery_frontend/config/locator.dart';
+import 'package:flallery_frontend/models/artwork_category_Response.dart';
+import 'package:flallery_frontend/models/artwork_create_request.dart';
 import 'package:flallery_frontend/models/artwork_list_response.dart';
 import 'package:flallery_frontend/rest/rest.dart';
 import 'package:http/http.dart' as http;
@@ -30,6 +33,30 @@ class ArtworkRepository {
     var jsonResponse = await _client.get(url);
     var list = (jsonDecode(jsonResponse) as List)
         .map((e) => Artwork.fromJson(e))
+        .toList();
+    return list;
+  }
+
+  Future<Artwork> createArtwork(
+      ArtworkCreateRequest artwork, PlatformFile file, String token) async {
+    String url = "/artwork";
+
+    var jsonResponse = await _client.postMultipart(url, artwork, file, token);
+    return Artwork.fromJson(jsonDecode(jsonResponse));
+  }
+
+  Future<void> deleteArtwork(String id) async {
+    String url = "/artwork/${id}";
+
+    await _client.delete(url);
+  }
+
+  Future<List<ArtworkCategoryNameResponse>> fetchCategories() async {
+    String url = "/categoryNames/";
+
+    var jsonResponse = await _client.get(url);
+    var list = (jsonDecode(jsonResponse) as List)
+        .map((e) => ArtworkCategoryNameResponse.fromJson(e))
         .toList();
     return list;
   }

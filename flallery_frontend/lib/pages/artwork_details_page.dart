@@ -125,8 +125,8 @@ class _ArtworkDetailsPageState extends State<ArtworkDetailsPage> {
                     ),
                     FloatingActionButton(
                       onPressed: () {},
-                      tooltip: 'Comment',
-                      child: Icon(Icons.comment),
+                      tooltip: 'Delete',
+                      child: Icon(Icons.dangerous),
                     ),
                   ],
                 ),

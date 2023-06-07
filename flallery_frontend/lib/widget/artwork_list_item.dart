@@ -40,22 +40,25 @@ class ArtworkListItem extends StatelessWidget {
             ),
           );
         },
-        child: GridTile(
-          child: Image.network(
-            "http://localhost:8080/download/${artwork.imgUrl}",
-            fit: BoxFit.contain,
-          ),
-          footer: GridTileBar(
-            backgroundColor: Color.fromARGB(115, 110, 109, 109),
-            title: Text(
-              artwork.name!,
-              style: textTheme.bodyLarge,
-              overflow: TextOverflow.ellipsis,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: GridTile(
+            child: Image.network(
+              "http://localhost:8080/download/${artwork.imgUrl}",
+              fit: BoxFit.fitHeight,
             ),
-            subtitle: Text(
-              artwork.owner!,
-              style: textTheme.bodySmall,
-              overflow: TextOverflow.ellipsis,
+            footer: GridTileBar(
+              backgroundColor: Color.fromARGB(220, 80, 79, 79),
+              title: Text(
+                artwork.name!,
+                style: TextStyle(fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Text(
+                artwork.owner!,
+                style: TextStyle(),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
         ),

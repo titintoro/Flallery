@@ -5,5 +5,3 @@ abstract class ArtworkEvent extends Equatable {
 }
 
 class ArtworkFetched extends ArtworkEvent {}
-
-class ArtworkUserFetched extends ArtworkEvent {}
