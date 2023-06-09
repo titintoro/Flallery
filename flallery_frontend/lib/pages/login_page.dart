@@ -110,7 +110,7 @@ class __SignInFormState extends State<_SignInForm> {
             children: <Widget>[
               SizedBox(height: 16),
               Image.network(
-                'https://cdn-icons-png.flaticon.com/512/3600/3600917.png',
+                'https://i.pinimg.com/originals/82/66/af/8266afd59e5dbcd0f732de33b3235c71.jpg',
                 width: 200,
                 height: 200,
               ),

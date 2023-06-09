@@ -23,7 +23,7 @@ class _ArtworkUserListPageState extends State<ArtworkUserListPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Tus Artworks'),
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.blueGrey,
         ),
         body: BlocProvider(
           create: (context) =>
@@ -99,7 +99,7 @@ class _ArtworkUserListState extends State<ArtworkUserList> {
           padding: const EdgeInsets.only(bottom: 30),
           child: GridTile(
             child: Image.network(
-              "http://localhost:8080/download/${widget.artwork.imgUrl}",
+              "http://10.0.2.2:8080/download/${widget.artwork.imgUrl}",
               fit: BoxFit.fitHeight,
             ),
             footer: GridTileBar(

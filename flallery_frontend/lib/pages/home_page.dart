@@ -26,12 +26,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('FLALLERY'),
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.blueGrey,
       ),
       body: _body(_index),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.amber,
+        selectedItemColor: Colors.blueGrey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               icon: Icon(Icons.photo_filter), label: 'Galería'),

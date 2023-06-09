@@ -44,7 +44,7 @@ class ArtworkListItem extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 30),
           child: GridTile(
             child: Image.network(
-              "http://localhost:8080/download/${artwork.imgUrl}",
+              "http://10.0.2.2:8080/download/${artwork.imgUrl}",
               fit: BoxFit.fitHeight,
             ),
             footer: GridTileBar(

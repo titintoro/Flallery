@@ -94,7 +94,7 @@ class _ArtworkDetailsPageState extends State<ArtworkDetailsPage> {
               children: [
                 Center(
                     child: Image.network(
-                        "http://localhost:8080/download/${widget.artwork.imgUrl}")),
+                        "http://10.0.2.2:8080/download/${widget.artwork.imgUrl}")),
                 Text(
                   widget.artwork.name!,
                   style: textTheme.titleLarge,

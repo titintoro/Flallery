@@ -151,7 +151,7 @@ class _ArtworkCreatePageState extends State<ArtworkCreatePage> {
                           onPressed: createArtworkBloc.submit,
                           style: const ButtonStyle(
                               backgroundColor:
-                                  MaterialStatePropertyAll(Colors.amber)),
+                                  MaterialStatePropertyAll(Colors.blueGrey)),
                           child: const Text("CREAR ARTWORK"),
                         )
                       ],
