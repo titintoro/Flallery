@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../pages/artwork_details_page.dart';
+import '../rest/rest_client.dart';
 
 class ArtworkUserListPage extends StatefulWidget {
   const ArtworkUserListPage({super.key});
@@ -99,7 +100,7 @@ class _ArtworkUserListState extends State<ArtworkUserList> {
           padding: const EdgeInsets.only(bottom: 30),
           child: GridTile(
             child: Image.network(
-              "http://10.0.2.2:8080/download/${widget.artwork.imgUrl}",
+              "${ApiConstants.baseUrl}/download/${widget.artwork.imgUrl}",
               fit: BoxFit.fitHeight,
             ),
             footer: GridTileBar(

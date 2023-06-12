@@ -1,4 +1,5 @@
 import 'package:flallery_frontend/models/artwork_list_response.dart';
+import 'package:flallery_frontend/rest/rest.dart';
 import 'package:flutter/material.dart';
 /*
 class ArtworkDetailsPage extends StatelessWidget {
@@ -94,7 +95,7 @@ class _ArtworkDetailsPageState extends State<ArtworkDetailsPage> {
               children: [
                 Center(
                     child: Image.network(
-                        "http://10.0.2.2:8080/download/${widget.artwork.imgUrl}")),
+                        "${ApiConstants.baseUrl}${widget.artwork.imgUrl}")),
                 Text(
                   widget.artwork.name!,
                   style: textTheme.titleLarge,

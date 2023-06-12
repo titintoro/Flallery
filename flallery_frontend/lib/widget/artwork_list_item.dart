@@ -1,6 +1,8 @@
 import 'package:flallery_frontend/models/artwork_list_response.dart';
 import 'package:flallery_frontend/pages/artwork_details_page.dart';
 import 'package:flutter/material.dart';
+
+import '../rest/rest_client.dart';
 /*
 class ArtworkListItem extends StatelessWidget {
   const ArtworkListItem({super.key, required this.artwork});
@@ -44,7 +46,7 @@ class ArtworkListItem extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 30),
           child: GridTile(
             child: Image.network(
-              "http://10.0.2.2:8080/download/${artwork.imgUrl}",
+              "${ApiConstants.baseUrl}/download/${artwork.imgUrl}",
               fit: BoxFit.fitHeight,
             ),
             footer: GridTileBar(
