@@ -3,6 +3,8 @@ import 'package:flallery_frontend/config/locator.dart';
 import 'package:flallery_frontend/models/artwork_category_Response.dart';
 import 'package:flallery_frontend/models/artwork_create_request.dart';
 import 'package:flallery_frontend/models/artwork_list_response.dart';
+import 'package:flallery_frontend/models/comment_create_request.dart';
+import 'package:flallery_frontend/models/comment_response.dart';
 import 'package:flallery_frontend/rest/rest.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -44,6 +46,16 @@ class ArtworkRepository {
     var jsonResponse = await _client.postMultipart(url, artwork, file, token);
     return Artwork.fromJson(jsonDecode(jsonResponse));
   }
+
+
+    Future<CommentResponse> createComment(
+      CommentCreateRequest comment, String idArtwork) async {
+    String url = "/artwork/${idArtwork}/comment";
+
+    var jsonResponse = await _client.post(url, comment);
+    return CommentResponse.fromJson(jsonDecode(jsonResponse));
+  }
+
 
   Future<void> deleteArtwork(String id) async {
     String url = "/artwork/${id}";
