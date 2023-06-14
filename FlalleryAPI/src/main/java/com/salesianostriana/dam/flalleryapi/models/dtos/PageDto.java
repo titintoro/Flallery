@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -19,7 +21,8 @@ public class PageDto<T> {
     public PageDto(Page<T> page) {
         this.totalElements = page.getTotalElements();
         this.totalPages = page.getTotalPages();
-        this.content = page.getContent();
+        this.content = new ArrayList<>(page.getContent());
+        Collections.reverse(this.content);
         this.pageSize = page.getNumberOfElements();
     }
 }

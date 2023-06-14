@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flallery_frontend/main.dart';
 import 'package:flallery_frontend/services/localstorage_service.dart';
@@ -8,10 +9,11 @@ import 'package:get_it/get_it.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:injectable/injectable.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 class ApiConstants {
-  static String baseUrl = "http://localhost:8080";
-  //static String baseUrl = "http://10.0.2.2:8080";
+   static String baseUrl = "http://localhost:8080";
+  // static String baseUrl = "http://10.0.2.2:8080";
 }
 
 class HeadersApiInterceptor implements InterceptorContract {
@@ -79,7 +81,47 @@ class RestClient {
     }
   }
 
-  
+  Future<dynamic> postMultipart(
+      String url, dynamic body, PlatformFile file, String accessToken) async {
+    try {
+      Uri uri = Uri.parse(ApiConstants.baseUrl + url);
+      Map<String, String> headers = Map();
+      headers.addAll({
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer $accessToken',
+      });
+      var bodyPart;
+      var request = new http.MultipartRequest('POST', uri);
+      final httpImage = http.MultipartFile.fromBytes('file', file.bytes!,
+          contentType: MediaType('image', file.extension!),
+          filename: file.name);
+      request.files.add(httpImage);
+      request.headers.addAll(headers);
+      if (body != null) {
+        bodyPart = http.MultipartFile.fromString('artwork', jsonEncode(body),
+            contentType: MediaType('application', 'json'));
+        request.files.add(bodyPart);
+      }
+
+      final response = await _httpClient!.send(request);
+      var responseJson = response.stream.bytesToString();
+      return responseJson;
+    } on SocketException catch (e) {
+      throw Exception("No internet connection: ${e.message}");
+    }
+  }
+
+  Future<dynamic> delete(String url) async {
+    try {
+      Uri uri = Uri.parse(ApiConstants.baseUrl + url);
+
+      final response = await _httpClient!.delete(uri);
+      var jsonResponse = _response(response);
+      return jsonResponse;
+    } on SocketException catch (e) {
+      throw Exception('No internet connection: ${e.message}');
+    }
+  }
 
   dynamic _response(http.Response response) {
     switch (response.statusCode) {

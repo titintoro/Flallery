@@ -33,6 +33,9 @@ dependencies:
   bloc_concurrency: ^0.2.0
   stream_transform: ^2.1.0
   flutter_form_bloc: ^0.30.1
+  image_picker: ^0.8.6+1
+  image_cropper: ^3.0.1
+  file_picker: ^5.2.5
 
   flutter:
     sdk: flutter

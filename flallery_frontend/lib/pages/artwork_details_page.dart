@@ -1,59 +1,16 @@
+import 'dart:convert';
+
+import 'package:flallery_frontend/blocs/comment_create/comment_create_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:flallery_frontend/models/artwork_list_response.dart';
+import 'package:flallery_frontend/rest/rest.dart';
 import 'package:flutter/material.dart';
-/*
-class ArtworkDetailsPage extends StatelessWidget {
-  final Artwork artwork;
 
-  const ArtworkDetailsPage({required this.artwork});
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Artwork Details'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              artwork.name!,
-              style: textTheme.titleLarge,
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              artwork.description ?? 'No description available',
-              style: textTheme.bodyLarge,
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Owner: ${artwork.owner}',
-              style: textTheme.bodySmall,
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Description: ${artwork.description}',
-              style: textTheme.bodySmall,
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Comments: ${artwork.comments}',
-              style: textTheme.bodySmall,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-} */
+import '../main.dart';
+import 'artwork_create_page.dart';
 
 class ArtworkDetailsPage extends StatefulWidget {
   final Artwork artwork;
@@ -71,6 +28,80 @@ class _ArtworkDetailsPageState extends State<ArtworkDetailsPage> {
     setState(() {
       _likeCount++;
     });
+  }
+
+  void _openCommentModal(String id) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return BlocProvider(
+          create: (context) => CommentCreateBloc(id),
+          child: Builder(
+            builder: (context) {
+              final commentCreateBloc = context.read<CommentCreateBloc>();
+              return Theme(
+                data: Theme.of(context).copyWith(
+                    inputDecorationTheme: InputDecorationTheme(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)))),
+                child: Scaffold(
+                  resizeToAvoidBottomInset: false,
+                  backgroundColor: Colors.white,
+                  body: SafeArea(
+                    child: FormBlocListener<CommentCreateBloc, String, String>(
+                      onSubmitting: (context, state) =>
+                          CreateArtworkDialog.show(context),
+                      onSubmissionFailed: (context, state) =>
+                          CreateArtworkDialog.hide(context),
+                      onSuccess: (context, state) {
+                        CreateArtworkDialog.hide(context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyApp(),
+                          ),
+                        );
+                      },
+                      onFailure: (context, state) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Ha habido un fallo'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        CreateArtworkDialog.hide(context);
+                      },
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Add a Comment',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            TextFieldBlocBuilder(
+                                textFieldBloc: commentCreateBloc.comment),
+                            SizedBox(height: 16.0),
+                            ElevatedButton(
+                              onPressed: () {
+                                commentCreateBloc.submit();
+                              },
+                              child: Text('Submit'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -94,7 +125,7 @@ class _ArtworkDetailsPageState extends State<ArtworkDetailsPage> {
               children: [
                 Center(
                     child: Image.network(
-                        "http://localhost:8080/download/${widget.artwork.imgUrl}")),
+                        "${ApiConstants.baseUrl}/download/${widget.artwork.imgUrl}")),
                 Text(
                   widget.artwork.name!,
                   style: textTheme.titleLarge,
@@ -124,9 +155,11 @@ class _ArtworkDetailsPageState extends State<ArtworkDetailsPage> {
                       child: Icon(Icons.thumb_up),
                     ),
                     FloatingActionButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _openCommentModal(widget.artwork.uuid!);
+                      },
                       tooltip: 'Comment',
-                      child: Icon(Icons.comment),
+                      child: Icon(Icons.comment_rounded),
                     ),
                   ],
                 ),
@@ -163,7 +196,8 @@ class CommentPage extends StatelessWidget {
       itemCount: artwork.comments!.length,
       itemBuilder: (BuildContext context, int index) {
         return Text(
-          '${artwork.comments?[index].writer}: ${artwork.comments?[index].text}' ?? 'No comments',
+          '${artwork.comments?[index].writer}: ${artwork.comments?[index].text}' ??
+              'No comments',
           style: textTheme.bodySmall,
         );
       },

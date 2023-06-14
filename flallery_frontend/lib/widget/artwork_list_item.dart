@@ -1,6 +1,8 @@
 import 'package:flallery_frontend/models/artwork_list_response.dart';
 import 'package:flallery_frontend/pages/artwork_details_page.dart';
 import 'package:flutter/material.dart';
+
+import '../rest/rest_client.dart';
 /*
 class ArtworkListItem extends StatelessWidget {
   const ArtworkListItem({super.key, required this.artwork});
@@ -40,17 +42,27 @@ class ArtworkListItem extends StatelessWidget {
             ),
           );
         },
-        child: ListTile(
-          leading:
-              Image.network("http://localhost:8080/download/${artwork.imgUrl}"),
-          title: Text(
-            artwork.name!,
-            style: textTheme.bodyLarge,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: GridTile(
+            child: Image.network(
+              "${ApiConstants.baseUrl}/download/${artwork.imgUrl}",
+              fit: BoxFit.fitHeight,
+            ),
+            footer: GridTileBar(
+              backgroundColor: Color.fromARGB(220, 80, 79, 79),
+              title: Text(
+                artwork.name!,
+                style: TextStyle(fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Text(
+                artwork.owner!,
+                style: TextStyle(),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
-          isThreeLine: true,
-          subtitle: Text(artwork.owner!),
-          dense: true,
-          trailing: Icon(Icons.arrow_forward),
         ),
       ),
     );

@@ -23,6 +23,8 @@ public class ArtworkResponse {
     private boolean disponibleParaComprar;
     private String owner;
     private String categoryName;
+
+    private int numberOfLikes;
     private String description;
     public static ArtworkResponse artworkToArtworkResponse(Artwork artwork){
 
@@ -33,6 +35,7 @@ public class ArtworkResponse {
                 .disponibleParaComprar(artwork.isDisponibleParaComprar())
                 .imgUrl(artwork.getImgUrl())
                 .owner(artwork.getOwner())
+                .numberOfLikes(artwork.getUsersThatLiked().size())
                 .description(artwork.getDescription())
                 .comments(artwork.getComments().stream().map(CommentResponse::commentToCommentResponse).toList())
                 .build();

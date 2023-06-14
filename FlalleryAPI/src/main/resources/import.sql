@@ -1,8 +1,13 @@
 insert into user_entity (id, username, password, avatar, full_name, account_non_expired, account_non_locked, credentials_non_expired, enabled, created_at, last_password_change_at) values ('751c3611-8882-5751-9f0d-d216dd047ebc', 'mcampos', '{bcrypt}$2a$12$bTj0GnGvMDR2861SZP/zTedzmi5GtQZ07tM/P6ujd1O.OxpyjuNP.', 'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg', 'Miguel', true, true, true, true, '2021-09-26', '2021-09-26');
 insert into user_entity (id, username, password, avatar, full_name, account_non_expired, account_non_locked, credentials_non_expired, enabled, created_at, last_password_change_at) values ('e641d9ec-ca50-4002-b87b-464b6c7686a9', 'lmlopez', '{bcrypt}$2a$12$bTj0GnGvMDR2861SZP/zTedzmi5GtQZ07tM/P6ujd1O.OxpyjuNP.', 'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg', 'Luis Miguel', true, true, true, true, '2021-09-26', '2021-09-26');
+insert into user_entity (id, username, password, avatar, full_name, account_non_expired, account_non_locked, credentials_non_expired, enabled, created_at, last_password_change_at) values ('651c3611-8882-5751-9f0d-d216dd047ebc', 'jcasanova', '{bcrypt}$2a$12$bTj0GnGvMDR2861SZP/zTedzmi5GtQZ07tM/P6ujd1O.OxpyjuNP.', 'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg', 'Jesús Casanova', true, true, true, true, '2021-09-26', '2021-09-26');
+insert into user_entity (id, username, password, avatar, full_name, account_non_expired, account_non_locked, credentials_non_expired, enabled, created_at, last_password_change_at) values ('e541d9ec-ca50-4002-b87b-464b6c7686a9', 'anaranjo', '{bcrypt}$2a$12$bTj0GnGvMDR2861SZP/zTedzmi5GtQZ07tM/P6ujd1O.OxpyjuNP.', 'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg', 'Ángel Naranjo', true, true, true, true, '2021-09-26', '2021-09-26');
+
 
 insert into user_roles(user_id,roles) values ('751c3611-8882-5751-9f0d-d216dd047ebc', '0');
 insert into user_roles(user_id,roles) values ('e641d9ec-ca50-4002-b87b-464b6c7686a9', '1');
+insert into user_roles(user_id,roles) values ('651c3611-8882-5751-9f0d-d216dd047ebc', '0');
+insert into user_roles(user_id,roles) values ('e541d9ec-ca50-4002-b87b-464b6c7686a9', '1');
 
 insert into artwork_category(id_category,name) values (0, 'Sin categoria');
 insert into artwork_category(id_category,name) values (1, 'Esculturas');

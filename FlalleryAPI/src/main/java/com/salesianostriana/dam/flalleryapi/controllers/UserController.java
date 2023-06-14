@@ -34,9 +34,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -341,12 +339,13 @@ public class UserController {
         List<Artwork> result = userService.findArtworksOfAUser(user.getUsername());
 
         List<ArtworkResponse> response = result.stream().map(ArtworkResponse::artworkToArtworkResponse).toList();
-
+        List<ArtworkResponse> responseReversed = new ArrayList<>(response);
+        Collections.reverse(responseReversed);
 
         if (response.isEmpty())
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(responseReversed);
 
     }
 

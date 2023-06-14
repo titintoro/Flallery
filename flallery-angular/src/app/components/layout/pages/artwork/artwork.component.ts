@@ -13,6 +13,7 @@ import { ArtworkResponse } from 'src/app/models/response-dtos/artwork-response-l
 import { ArtworkDetailsDialogComponent } from '../../modals/artwork-details-dialog/artwork-details-dialog.component';
 import { ArtworkEditDialogComponent } from '../../modals/artwork-edit-dialog/artwork-edit-dialog.component';
 import { CommentRequest } from 'src/app/models/request-dtos/comment-create-request.interface';
+import { window } from 'rxjs';
 
 
 
@@ -135,10 +136,20 @@ export class ArtworkComponent {
       };
       if (result.value.trim()!=''){
         this.artworkService.addComment(artwork.uuid,comment).subscribe(
-          () => {
-            Swal.fire('Comment added!', 'Your comment has been submitted successfully.', 'success');
+          (res) => {
+            Swal.fire({title:'Comment added!',
+            text:'Your comment has been submitted successfully.',
+            showCancelButton: false,
+            showConfirmButton: false,
+            icon:'success',
+            showDenyButton: false });
+
           },
         ); this.dataListaArtworks.filter = ''.trim().toLocaleLowerCase();
+        setTimeout(() => {
+          location.reload();
+        }, 1500)
+
       } else{
         Swal.fire('Error', 'You can not submit a empty comment. Please try again.', 'error');
         this.dataListaArtworks.filter = ''.trim().toLocaleLowerCase();

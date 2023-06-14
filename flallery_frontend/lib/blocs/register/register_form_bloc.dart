@@ -236,7 +236,7 @@ class SuccessScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ElevatedButton.icon(
-              onPressed: () => Navigator.of(context).pushReplacement(
+              onPressed: () => Navigator.of(context).pop(
                   MaterialPageRoute(builder: (_) => LoginPage())),
               icon: const Icon(Icons.replay),
               label: const Text('Log in'),

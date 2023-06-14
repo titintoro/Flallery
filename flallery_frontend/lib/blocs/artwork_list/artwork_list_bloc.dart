@@ -9,8 +9,6 @@ import 'package:http/src/client.dart';
 //import 'package:http/http.dart' as http;
 import 'package:stream_transform/stream_transform.dart';
 
-
-
 part 'artwork_list_event.dart';
 part 'artwork_list_state.dart';
 
@@ -60,10 +58,11 @@ class ArtworkBloc extends Bloc<ArtworkEvent, ArtworkState> {
       final artworks = await _artworkService.getAllArtworks(page);
       emit(state.copyWith(
         status: ArtworkStatus.success,
-        artworkList: List.of(state.artworkList)..addAll(artworks.content as Iterable<Artwork>),
+        artworkList: List.of(state.artworkList)
+          ..addAll(artworks.content as Iterable<Artwork>),
         hasReachedMax: artworks.totalPages! - 1 <= page,
       ));
-    } catch(_) {
+    } catch (_) {
       emit(state.copyWith(status: ArtworkStatus.failure));
     }
   }
