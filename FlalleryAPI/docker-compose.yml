@@ -1,5 +1,6 @@
-services:
+version: '3'
 
+services:
   db:
     image: 'postgres:14-alpine'
     container_name: db
@@ -22,3 +23,23 @@ services:
       - db
     ports:
       - "5050:80"
+
+  backend:
+    container_name: backend
+    build: ./ # Path to your Spring backend Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/flallery
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin1234
+
+  frontend:
+    container_name: frontend
+    build: ../flallery-angular  # Path to your Angular frontend Dockerfile
+    restart: always
+    ports:
+      - "4200:4200"
+    environment:
+      - API_BASE_URL=http://localhost:8080
