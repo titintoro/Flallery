@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.photo_filter), label: 'Galería'),
           BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Perfil'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Gestión'),
           BottomNavigationBarItem(
               icon: Icon(Icons.add), label: 'Crear'), // new button
         ],
@@ -107,9 +106,6 @@ class _HomePageState extends State<HomePage> {
         );
 
       case 2:
-        return Center(child: Text('Admin Page'));
-
-      case 3:
         return ArtworkCreatePage();
 
       default:
