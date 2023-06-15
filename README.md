@@ -52,8 +52,10 @@ para mejorar el uso de esta.
 
 
 ### Pruebas
+
 - Swagger / Documentación de endpoints: http://localhost:8080/swagger-ui/index.html#/
 - Colección de Postman agregada.
+- User avatar https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg
 
 
 ## Apuntes
