@@ -17,10 +17,12 @@ FROM openjdk:17-slim
 WORKDIR /app
 
 # Copy the compiled application from the previous stage
-COPY --from=build /app/target/FlalleryAPI-0.0.1-SNAPSHOT.jar .
+COPY --from=build /app/target/FlalleryAPI-0.0.1-SNAPSHOT.jar /app/Flallery.jar
+
+COPY --from=build /app/uploads ./uploads
 
 # Expose the port on which the backend application will run
 EXPOSE 8080
 
 # Set the command to run the backend application
-CMD ["java", "-jar", "your-application.jar"]
+CMD ["java", "-jar", "Flallery.jar"]
