@@ -42,7 +42,7 @@
       >
         Comment
       </button>
-      <button
+      <button *ngIf="artwork.disponibleParaComprar"
         mat-raised-button
         color="accent"
         class="action-button"
@@ -50,6 +50,7 @@
       >
         Delete
       </button>
+      <button mat-raised-button *ngIf="!artwork.disponibleParaComprar" disabled>Vendido</button>
     </div>
   </div>
 </div>
