@@ -1,0 +1,28 @@
+# Use a base image with Java and Maven installed
+FROM maven:3.8-openjdk-17-slim AS build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the backend source code to the container
+COPY . .
+
+# Build the backend application
+RUN mvn clean package -DskipTests
+
+# Create a new image with the compiled application
+FROM openjdk:17-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the compiled application from the previous stage
+COPY --from=build /app/target/FlalleryAPI-0.0.1-SNAPSHOT.jar /app/Flallery.jar
+
+COPY --from=build /app/uploads ./uploads
+
+# Expose the port on which the backend application will run
+EXPOSE 8080
+
+# Set the command to run the backend application
+CMD ["java", "-jar", "Flallery.jar"]
