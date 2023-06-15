@@ -90,7 +90,7 @@ class _ArtworkCreatePageState extends State<ArtworkCreatePage> {
                         DropdownFieldBlocBuilder<String>(
                           selectFieldBloc: createArtworkBloc.categoryName,
                           decoration: InputDecoration(
-                            label: Text('Descripción del Artwork'),
+                            label: Text('Categoría del Artwork'),
                           ),
                           itemBuilder: (context, value) =>
                               FieldItem(child: Text(value)),
