@@ -49,22 +49,69 @@ public class VentaController {
                             array = @ArraySchema(schema = @Schema(implementation = Venta.class)),
                             examples = {@ExampleObject(
                                     value = """
-                                            [
-                                                {
-                                                     "content": [
-                                                         {
-                                                             "name": "Guerra Romana en témperas",
-                                                             "uuid": "c0a8002c-8659-1f7a-8186-5a0082f10001",
-                                                             "comments": [],
-                                                             "owner": "Titin",
-                                                             "description": "Guerra de los años 90 hecha en témperas"
-                                                         }
-                                                     ],
-                                                     "totalPages": 1,
-                                                     "totalElements": 1,
-                                                     "pageSize": 1
-                                                 }
-                                            ]                                          
+                                            {
+                                                 "content": [
+                                                     {
+                                                         "artworkName": "Beyond the Unknown",
+                                                         "precio": 234.0,
+                                                         "fechaVenta": "2023-06-15",
+                                                         "usernameComprador": "lmlopez",
+                                                         "usernameVendedor": "mcampos"
+                                                     },
+                                                     {
+                                                         "artworkName": "The Magical Adventure",
+                                                         "precio": 67.0,
+                                                         "fechaVenta": "2023-06-15",
+                                                         "usernameComprador": "lmlopez",
+                                                         "usernameVendedor": "mcampos"
+                                                     },
+                                                     {
+                                                         "artworkName": "Untold Legacies",
+                                                         "precio": 9355.0,
+                                                         "fechaVenta": "2023-06-15",
+                                                         "usernameComprador": "lmlopez",
+                                                         "usernameVendedor": "mcampos"
+                                                     },
+                                                     {
+                                                         "artworkName": "Laugh Out Loud",
+                                                         "precio": 549.0,
+                                                         "fechaVenta": "2023-06-15",
+                                                         "usernameComprador": "lmlopez",
+                                                         "usernameVendedor": "mcampos"
+                                                     },
+                                                     {
+                                                         "artworkName": "Whispered Promises",
+                                                         "precio": 79.0,
+                                                         "fechaVenta": "2023-06-15",
+                                                         "usernameComprador": "lmlopez",
+                                                         "usernameVendedor": "mcampos"
+                                                     },
+                                                     {
+                                                         "artworkName": "Realm of Legends",
+                                                         "precio": 9.0,
+                                                         "fechaVenta": "2023-06-15",
+                                                         "usernameComprador": "lmlopez",
+                                                         "usernameVendedor": "mcampos"
+                                                     },
+                                                     {
+                                                         "artworkName": "The Last Stand",
+                                                         "precio": 992.0,
+                                                         "fechaVenta": "2023-06-15",
+                                                         "usernameComprador": "lmlopez",
+                                                         "usernameVendedor": "mcampos"
+                                                     },
+                                                     {
+                                                         "artworkName": "Lost Memories",
+                                                         "precio": 99.0,
+                                                         "fechaVenta": "2023-06-15",
+                                                         "usernameComprador": "lmlopez",
+                                                         "usernameVendedor": "mcampos"
+                                                     }
+                                                 ],
+                                                 "totalPages": 1,
+                                                 "totalElements": 8,
+                                                 "pageSize": 8
+                                             }                                          
                                             """
                             )}
                     )}),

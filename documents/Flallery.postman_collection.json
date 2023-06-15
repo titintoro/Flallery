@@ -49,7 +49,8 @@
 							"script": {
 								"exec": [
 									"var json = pm.response.json();\r",
-									"pm.collectionVariables.set(\"token\", json.token);"
+									"pm.collectionVariables.set(\"token\", json.token);\r",
+									"pm.collectionVariables.set(\"refresh_token\",json.refresToken);"
 								],
 								"type": "text/javascript"
 							}
@@ -256,6 +257,97 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token\", json.token);\r",
+									"pm.collectionVariables.set(\"refresh_token\",json.refresh_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshtoken\":\"95389e23-e895-4c94-b567-5ce1f67d87b8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/refreshtoken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"refreshtoken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"e641d9ec-ca50-4002-b87b-464b6c7686a9\",\r\n    \"avatar\":\"https://avatar.com\",\r\n    \"fullName\": \"Luis Antonio\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/editUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"editUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Ban Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/e641d9ec-ca50-4002-b87b-464b6c7686a9/changeStatus",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"e641d9ec-ca50-4002-b87b-464b6c7686a9",
+								"changeStatus"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
@@ -303,11 +395,11 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/tola.roval21/Pictures/Screenshots/Captura de pantalla_20230109_084818.png"
+									"src": "/C:/Users/titin/Pictures/223736.jpg"
 								},
 								{
 									"key": "artwork",
-									"value": "{\n    \"name\": \"Guerra Romana en témperas\",\n    \"description\": \"Guerra de los años 90 hecha en témperas\"\n}",
+									"value": "{\n    \"name\": \"Guerra Romana en témperas\",\n    \"description\": \"Guerra de los años 90 hecha en témperas\",\"categoryName\":\"Esculturas\"\n}",
 									"contentType": "application/vnd.api+json",
 									"type": "text"
 								}
@@ -509,6 +601,145 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "ArtworkCategory",
+			"item": [
+				{
+					"name": "Get all Artwork Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/category/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Artwork Category by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/category/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Graffiti\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/category/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/category/Esculturas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"Esculturas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Artwork Category Names",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/categoryNames/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categoryNames",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ventas",
+			"item": [
+				{
+					"name": "Get All Ventas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/venta/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"venta",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

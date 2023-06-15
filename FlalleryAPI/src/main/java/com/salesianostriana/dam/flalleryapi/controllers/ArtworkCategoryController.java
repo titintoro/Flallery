@@ -102,15 +102,55 @@ public class ArtworkCategoryController {
                             array = @ArraySchema(schema = @Schema(implementation = ArtworkCategory.class)),
                             examples = {@ExampleObject(
                                     value = """
-                                            [
-                                                {
-                                                     "name": "Guerra Romana en témperas",
-                                                     "uuid": "c0a8002c-8659-1f7a-8186-5a0082f10001",
-                                                     "comments": [],
-                                                     "owner": "Titin",
-                                                     "description": "Guerra de los años 90 hecha en témperas"
-                                                 }
-                                            ]                                        \s
+                                            {
+                                                "name": "Cuadros",
+                                                "artworkResponseList": [
+                                                    {
+                                                        "name": "Loner (Woetoli)",
+                                                        "uuid": "e641d9ec-ca50-4002-b87b-464b6c7686a5",
+                                                        "comments": [],
+                                                        "imgUrl": "1586283508_022049_1586284162_noticia_normal_recorte1.jpg",
+                                                        "disponibleParaComprar": true,
+                                                        "owner": "mcampos",
+                                                        "categoryName": "Cuadros",
+                                                        "numberOfLikes": 0,
+                                                        "description": "Horror|Thriller"
+                                                    },
+                                                    {
+                                                        "name": "Dreamworlds II: Desire, Sex, Power in Music Video",
+                                                        "uuid": "e641d9ec-ca50-4002-b87b-464b6c7686a6",
+                                                        "comments": [],
+                                                        "imgUrl": "arte pintura.jpg",
+                                                        "disponibleParaComprar": true,
+                                                        "owner": "mcampos",
+                                                        "categoryName": "Cuadros",
+                                                        "numberOfLikes": 0,
+                                                        "description": "Documentary"
+                                                    },
+                                                    {
+                                                        "name": "Order of Myths, The",
+                                                        "uuid": "e641d9ec-ca50-4002-b87b-464b6c7686a7",
+                                                        "comments": [],
+                                                        "imgUrl": "arte-moderno.jpg",
+                                                        "disponibleParaComprar": true,
+                                                        "owner": "mcampos",
+                                                        "categoryName": "Cuadros",
+                                                        "numberOfLikes": 0,
+                                                        "description": "Documentary"
+                                                    },
+                                                    {
+                                                        "name": "Last Kiss, The (Ultimo bacio, L')",
+                                                        "uuid": "e641d9ec-ca50-4002-b87b-464b6c7686a8",
+                                                        "comments": [],
+                                                        "imgUrl": "el-temerario-remolcado.jpg",
+                                                        "disponibleParaComprar": true,
+                                                        "owner": "mcampos",
+                                                        "categoryName": "Cuadros",
+                                                        "numberOfLikes": 0,
+                                                        "description": "Comedy|Drama|Romance"
+                                                    }
+                                                ]
+                                            }                                        \s
                                             """
                             )}
                     )}),
@@ -150,15 +190,10 @@ public class ArtworkCategoryController {
                             array = @ArraySchema(schema = @Schema(implementation = ArtworkCategory.class)),
                             examples = {@ExampleObject(
                                     value = """
-                                            [
-                                                {
-                                                     "name": "Guerra Romana en témperas",
-                                                     "uuid": "c0a8002c-8659-1f7a-8186-5a0082f10001",
-                                                     "comments": [],
-                                                     "owner": "Titin",
-                                                     "description": "Guerra de los años 90 hecha en témperas"
-                                                 }
-                                            ]                                          
+                                            {
+                                                "name": "Graffiti",
+                                                "artworkResponseList": null
+                                            }                                          
                                             """
                             )}
                     )}),
